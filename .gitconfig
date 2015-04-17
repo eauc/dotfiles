@@ -1,0 +1,66 @@
+[alias]
+	s = status
+	co = checkout
+        ######
+        # log
+	ls = log --graph --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(blue)%an"
+	ll = log --graph --all --stat --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(blue)%an"
+	ld = log --graph --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
+	lld = log --graph --all --stat --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
+        #########
+        # commit
+	c = commit
+	unstage = reset HEAD
+	discard = checkout --
+	addrm = "!git rm $(git ls-files --deleted)"
+        #######
+        # diff
+	d = diff
+	dsw = diff -M
+	dhw = diff -M HEAD
+	dhs = diff -M --cached
+        #########
+        # branch
+	b = branch
+	bl = branch
+	blr = branch -r
+	bla = branch -a
+        blc = branc --contains
+        blm = branch --merged
+        blnm = branch --no-merged
+        m = merge --no-commit
+        ########
+        # Reset
+        rh = reset --soft
+        rhs = reset
+        rhsm = reset --merge
+        rhsw = reset --hard
+        #######
+        # file
+        g = grep -I --break
+        gw = grep -I --break
+        gwa = grep --untracked -I --break
+        gs = grep --cached -I --break
+        fl = rev-list --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(blue)%an"
+	fld = rev-list --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
+        ########
+        # clean
+        clean = clean -d
+        purge = clean -x -f
+        #######
+        # misc
+	lalias = "!git config -l | grep alias | cut -c 7-"
+	lasttag = describe --tags --abbrev=0
+[user]
+	name = Auclair Emmanuel
+	email = auclair.emmanuel@gmail.com
+[merge]
+	tool = kdiff3
+        conflictstyle = diff3
+[color]
+	ui = true
+[filter "ws"]
+	clean = remove_trailing_whitespaces.sh
+	smudge = cat
+[grep]
+        lineNumber = true

@@ -1,0 +1,67 @@
+[ui]
+username = Emmanuel Auclair <>
+merge = kdiff3
+#editor = ~/hgeditor
+
+[alias]
+### one letters shortcut
+l = log -v
+d = diff
+u = update
+c = commit
+b = branch
+bs = branches
+i = incoming
+o = outgoing
+### status 
+# show everything except clean files
+s = status -mardu
+# full status - show everything
+sa = status -A
+### add
+unadd = forget "set:added()"
+### log
+ls = log -l22 -G --template "\x1B[1m\x1B[31m({branches})\x1B[34m \{{bookmarks}} \x1B[32m [{tags}]\x1B[33m {rev}:{node|short}\x1B[0m - {desc|firstline}\n"
+ll = log -l22 -G --stat --template "\x1B[1m\x1B[31m({branches})\x1B[34m \{{bookmarks}} \x1B[32m [{tags}]\x1B[33m {rev}:{node|short}\x1B[0m - {desc|firstline}\n"
+ld = log -l22 -G --template "\x1B[1m\x1B[31m({branches})\x1B[34m \{{bookmarks}} \x1B[32m [{tags}]\x1B[33m {rev}:{node|short}\x1B[0m - {desc|firstline} -\x1B[1m\x1B[36m {author|person} - \x1B[35m{date|age}\x1B[0m\n"
+lds = log -l22 -G --template "\x1B[1m\x1B[31m({branches})\x1B[34m] \{{bookmarks}} \x1B[32m [{tags}]\x1B[33m {rev}:{node|short}\x1B[0m - {desc|firstline} -\x1B[1m\x1B[36m {author|person} - \x1B[35m{date|date}\x1B[0m\n"
+lld = log -l22 -G --stat --template "\x1B[1m\x1B[31m({branches})\x1B[34m \{{bookmarks}} \x1B[32m [{tags}]\x1B[33m {rev}:{node|short}\x1B[0m - {desc|firstline} -\x1B[1m\x1B[36m {author|person} - \x1B[35m{date|date}\x1B[0m\n"
+stat = log -l1 --stat -v
+tip = tip -v
+rsum = summary --remote
+tags = tags -v
+### blame 
+# display rev changeset user date line-number
+blame = blame -ncudl
+### find
+f = locate
+g = grep --all
+grep = grep --all -ud
+### queues
+qn = qnew
+qr = qrefresh
+qt = qtop
+qs = qseries
+qa = qapplied
+qu = qunapplied
+qg = qgoto
+qq = qqueue
+
+[pager]
+pager = LESS='FRX' less
+
+[extensions]
+# eol - convert End Of Lines
+eol =
+# color - colorize CLI output
+color =
+# graphlog - add -G option to log
+graphlog = 
+pager =
+hgext.purge = 
+rebase = 
+record = 
+mq =
+remotebranches = ~/.hgrc-extensions/hg_remotebranches.py
+shelve = ~/.hgrc-extensions/hg_shelve.py
+prompt = ~/.hgrc-extensions/hg_prompt.py
