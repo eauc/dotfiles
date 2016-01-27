@@ -1,0 +1,21 @@
+(global-set-key "\C-z"    'advertised-undo)
+(global-set-key "\C-l"    'goto-line)
+(global-set-key (kbd "<C-prior>")  'previous-buffer)
+(global-set-key (kbd "<C-next>")   'next-buffer)
+(global-set-key (kbd "<s-SPC>")    'just-one-space)
+
+(global-set-key (kbd "<f1>")    'find-file)
+(global-set-key (kbd "<f2>")    'save-buffer)
+(global-set-key (kbd "<C-f2>")  'write-file)
+(global-set-key (kbd "<f3>")    'other-window)
+(global-set-key (kbd "<C-f3>")  'buffer-menu-other-window)
+(global-set-key (kbd "<f4>")    'comment-or-uncomment-region)
+(global-set-key (kbd "<f10>")   'kill-this-buffer)
+(global-set-key (kbd "<C-f10>") 'save-buffers-kill-terminal)
+
+(global-set-key (kbd "<M-up>")    'windmove-up)
+(global-set-key (kbd "<M-down>")  'windmove-down)
+(global-set-key (kbd "<M-left>")  'windmove-left)
+(global-set-key (kbd "<M-right>") 'windmove-right)
+
+(global-set-key (kbd "<RET>") 'newline-and-indent)
