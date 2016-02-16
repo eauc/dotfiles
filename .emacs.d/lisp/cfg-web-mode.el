@@ -1,7 +1,6 @@
-(require-package 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.phtml\\'"     . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'"       . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'"     . web-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'"       . web-mode))
-(add-hook 'web-mode-hook 'js2-minor-mode)
+(use-package web-mode
+  :ensure t
+  :mode "\\.jsx\\'"
+  :init
+  (add-hook 'web-mode-hook 'js2-minor-mode)
+  )

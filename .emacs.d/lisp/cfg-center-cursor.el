@@ -1,2 +1,5 @@
-(require 'centered-cursor-mode)
-(global-centered-cursor-mode +1)
+(use-package centered-cursor-mode
+  :ensure t
+  :config
+  (global-centered-cursor-mode +1)
+  )

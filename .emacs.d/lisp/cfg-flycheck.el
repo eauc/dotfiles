@@ -1,17 +1,16 @@
-(require-package 'let-alist)
-(require-package 'flycheck-clojure)
-(require-package 'flycheck)
-(defun flycheck-setup ()
-       (progn (setq-default flycheck-disabled-checkers
+(use-package let-alist
+  :ensure t)
+(use-package flycheck-clojure
+  :ensure t)
+(use-package flycheck
+  :ensure t
+  :config
+  (add-hook 'after-init-hook #'global-flycheck-mode)
+  (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
                         '(javascript-jshint)))
-              (flycheck-add-mode 'javascript-eslint 'web-mode)
-              (flycheck-add-mode 'javascript-eslint 'js-mode)
-              (flycheck-add-mode 'javascript-eslint 'js2-mode)
-              (flycheck-clojure-setup)
-              )
-       )
-
-(eval-after-load 'flycheck '(flycheck-setup))
-(add-hook 'after-init-hook #'global-flycheck-mode)
-
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (flycheck-add-mode 'javascript-eslint 'js-mode)
+  (flycheck-add-mode 'javascript-eslint 'js2-mode)
+  (flycheck-clojure-setup)
+  )

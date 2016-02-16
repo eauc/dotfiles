@@ -1,6 +1,8 @@
-(require-package 'paredit)
-
-(add-hook 'lisp-mode-hook #'paredit-mode)
-(add-hook 'emacs-lisp-mode-hook #'paredit-mode)
-(add-hook 'clojure-mode-hook #'paredit-mode)
-(add-hook 'cider-repl-mode-hook #'paredit-mode)
+(use-package 'paredit
+  :ensure t
+  :config
+  (add-hook 'lisp-mode-hook #'paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  (add-hook 'clojure-mode-hook #'paredit-mode)
+  (add-hook 'cider-repl-mode-hook #'paredit-mode)
+  )

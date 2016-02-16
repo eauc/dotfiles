@@ -13,48 +13,34 @@
 
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives 
+(add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
-
-(defun require-package (package &optional min-version no-refresh)
-  "Install given PACKAGE, optionally requiring MIN-VERSION.
-If NO-REFRESH is non-nil, the available package lists will not be
-re-downloaded in order to locate PACKAGE."
-  (if (package-installed-p package min-version)
-      t
-    (if (or (assoc package package-archive-contents) no-refresh)
-        (package-install package)
-      (progn
-        (package-refresh-contents)
-        (require-package package min-version t)))))
-
-(setq package-enable-at-startup nil) ; Don't initialize later as well
 
 (package-initialize)
 
-;; show opening, closing parens
-(show-paren-mode)
+(require 'use-package)
+(setq use-package-always-pin "melpa-stable")
+(setq use-package-verbose t)
 
-(require-package 'epl)
-
-(require-package 'exec-path-from-shell)
-
-(dolist (file '("cfg-center-cursor.el"
+(dolist (file '("cfg-align-array.el"
+                "cfg-center-cursor.el"
                 "cfg-cider.el"
                 "cfg-cljrefactor.el"
                 "cfg-flycheck.el"
-                "cfg-hlsexp.el"
+                ;; "cfg-hlsexp.el"
                 "cfg-ido.el"
                 "cfg-js2-mode.el"
                 "cfg-json-mode.el"
                 "cfg-scss-mode.el"
                 "cfg-set-keys.el"
                 "cfg-sudo.el"
-                "cfg-web-mode.el"))
+                "cfg-web-mode.el"
+                ))
   (load (concat dotfiles-lisp-dir file)))
 
 (setq backup-directory-alist `(("." . "~/.saves")))
 (global-linum-mode 1)
+(show-paren-mode)
 (defalias 'yes-or-no-p 'y-or-n-p)
 ;; (setq split-height-threshold nil)
 ;; (setq split-width-threshold 200)
