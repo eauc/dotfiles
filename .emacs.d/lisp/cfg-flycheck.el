@@ -14,3 +14,9 @@
   (flycheck-add-mode 'javascript-eslint 'js2-mode)
   (flycheck-clojure-setup)
   )
+
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize)
+  )
