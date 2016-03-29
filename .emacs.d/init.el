@@ -38,6 +38,7 @@
                 "cfg-set-keys.el"
                 "cfg-sudo.el"
                 "cfg-web-mode.el"
+                "cfg-which-key.el"
                 ))
   (load (concat dotfiles-lisp-dir file)))
 
