@@ -23,6 +23,7 @@
   )
 ;; autocompletion
 (use-package company
+  :ensure t
   :init
   ;; company mode for completion
   (add-hook 'cider-repl-mode-hook #'company-mode)
