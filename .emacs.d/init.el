@@ -34,6 +34,8 @@
                 "cfg-ido.el"
                 "cfg-js2-mode.el"
                 "cfg-json-mode.el"
+                "cfg-multiple-cursors.el"
+                "cfg-org-bbcode.el"
                 "cfg-scss-mode.el"
                 "cfg-set-keys.el"
                 "cfg-sudo.el"
