@@ -30,12 +30,12 @@
                 "cfg-cider.el"
                 "cfg-cljrefactor.el"
                 "cfg-flycheck.el"
-                ;; "cfg-hlsexp.el"
                 "cfg-ido.el"
                 "cfg-js2-mode.el"
                 "cfg-json-mode.el"
                 "cfg-multiple-cursors.el"
                 "cfg-org-bbcode.el"
+                "cfg-rainbow-delimiters-mode.el"
                 "cfg-scss-mode.el"
                 "cfg-set-keys.el"
                 "cfg-sudo.el"
@@ -86,5 +86,15 @@
  '(js2-external-variable ((t (:foreground "orchid"))))
  '(js2-function-param ((t (:foreground "lime green"))))
  '(js2-private-function-call ((t (:foreground "dark orange"))))
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "green" :weight bold))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "magenta" :weight bold))))
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "yellow" :weight normal))))
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "dodger blue" :weight bold))))
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "chocolate" :weight bold))))
+ '(rainbow-delimiters-depth-6-face ((t (:foreground "SpringGreen1" :weight bold))))
+ '(rainbow-delimiters-depth-7-face ((t (:foreground "magenta" :weight bold))))
+ '(rainbow-delimiters-depth-8-face ((t (:foreground "green" :weight bold))))
+ '(rainbow-delimiters-depth-9-face ((t (:foreground "dodger blue" :weight bold))))
+ '(rainbow-delimiters-unmatched-face ((t (:foreground "red" :weight bold))))
  '(show-paren-match ((t (:background "SpringGreen4"))))
  '(trailing-whitespace ((t (:background "goldenrod1")))))
