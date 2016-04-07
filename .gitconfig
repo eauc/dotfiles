@@ -64,3 +64,5 @@
 	smudge = cat
 [grep]
         lineNumber = true
+[push]
+	default = simple
