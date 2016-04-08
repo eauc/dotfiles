@@ -1,5 +1,2 @@
-(use-package centered-cursor-mode
-  :ensure t
-  :config
-  (global-centered-cursor-mode +1)
-  )
+(setq scroll-margin 8)
+(setq scroll-conservatively 100)
