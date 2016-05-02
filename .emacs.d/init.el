@@ -26,6 +26,7 @@
 (setq use-package-verbose t)
 
 (dolist (file '("cfg-align-array.el"
+                "cfg-avy.el"
                 "cfg-center-cursor.el"
                 "cfg-cider.el"
                 "cfg-cljrefactor.el"
