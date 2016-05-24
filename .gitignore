@@ -3,3 +3,4 @@
 .emacs.d/ido.last
 cider-history
 .mc-lists.el
+*.elc

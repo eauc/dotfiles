@@ -30,6 +30,7 @@
                 "cfg-center-cursor.el"
                 "cfg-cider.el"
                 "cfg-cljrefactor.el"
+                "cfg-crux.el"
                 "cfg-flycheck.el"
                 "cfg-ido.el"
                 "cfg-js2-mode.el"
