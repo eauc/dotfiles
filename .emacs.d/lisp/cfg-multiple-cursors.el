@@ -6,8 +6,8 @@
   :config
   (global-set-key (kbd "C-. >") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-. <") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-. M-<") 'mc/mark-all-like-this)
-  (global-set-key (kbd "C-. M->") 'mc/mark-all-like-this-in-defun)
+  (global-set-key (kbd "C-. a") 'mc/mark-all-like-this)
+  (global-set-key (kbd "C-. f") 'mc/mark-all-like-this-in-defun)
   (global-set-key (kbd "C-. <left>") 'mc/cycle-backward)
   (global-set-key (kbd "C-. <right>") 'mc/cycle-forward)
   (global-set-key (kbd "C-. [") 'mc/edit-beginnings-of-lines)
