@@ -41,6 +41,7 @@
                 "cfg-scss-mode.el"
                 "cfg-set-keys.el"
                 "cfg-sudo.el"
+                "cfg-try.el"
                 "cfg-web-mode.el"
                 "cfg-which-key.el"
                 ))
