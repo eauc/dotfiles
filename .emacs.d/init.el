@@ -33,6 +33,7 @@
                 "cfg-cider.el"
                 "cfg-cljrefactor.el"
                 "cfg-crux.el"
+                "cfg-dired.el"
                 "cfg-flycheck.el"
                 "cfg-ido.el"
                 "cfg-js2-mode.el"
@@ -66,6 +67,14 @@
  '(column-number-mode t)
  '(custom-buffer-indent 2)
  '(custom-enabled-themes (quote (deeper-blue)))
+ '(dired-filter-saved-filters
+   (quote
+    (("es6"
+      (not
+       (or
+        (extension . "map")
+        (extension . "js")))))))
+ '(dired-subtree-use-backgrounds nil)
  '(electric-indent-mode t)
  '(global-subword-mode t)
  '(indent-tabs-mode nil)
