@@ -1,4 +1,3 @@
 (use-package scss-mode
   :ensure t
-  :mode "\\.scss\\'"
-  )
+  :mode "\\.scss\\'")

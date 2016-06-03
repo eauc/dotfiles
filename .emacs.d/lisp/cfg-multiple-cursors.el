@@ -1,18 +1,15 @@
 (use-package mc-extras
-  :ensure t
-  )
+  :ensure t)
 (use-package multiple-cursors
   :ensure t
-  :config
-  (global-set-key (kbd "C-. >") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-. <") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-. a") 'mc/mark-all-like-this)
-  (global-set-key (kbd "C-. f") 'mc/mark-all-like-this-in-defun)
-  (global-set-key (kbd "C-. <left>") 'mc/cycle-backward)
-  (global-set-key (kbd "C-. <right>") 'mc/cycle-forward)
-  (global-set-key (kbd "C-. [") 'mc/edit-beginnings-of-lines)
-  (global-set-key (kbd "C-. ]") 'mc/edit-ends-of-lines)
-  (global-set-key (kbd "C-. i") 'mc/insert-numbers)
-  ;; (global-set-key (kbd "C-. >") 'mc/mark-all-like-this-dwim)
-  (global-set-key (kbd "C-. u") 'mc/remove-current-cursor)
-  )
+  :bind (("C-. >" . mc/mark-next-like-this)
+         ("C-. <" . mc/mark-previous-like-this)
+         ("C-. a" . mc/mark-all-like-this)
+         ("C-. f" . mc/mark-all-like-this-in-defun)
+         ("C-. <left>" . mc/cycle-backward)
+         ("C-. <right>" . mc/cycle-forward)
+         ("C-. [" . mc/edit-beginnings-of-lines)
+         ("C-. ]" . mc/edit-ends-of-lines)
+         ("C-. i" . mc/insert-numbers)
+         ;; ("C-. >" . mc/mark-all-like-this-dwim)
+         ("C-. u" . mc/remove-current-cursor)))
