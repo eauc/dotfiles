@@ -1,0 +1,11 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: test-context
+# group: test
+# key: cx
+# binding: C-c C-y c
+# --
+context('when $1', function() {
+$2;
+}, function() {
+`yas-selected-text`$0
+});

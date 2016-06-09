@@ -47,6 +47,7 @@
                 "cfg-try.el"
                 "cfg-web-mode.el"
                 "cfg-which-key.el"
+                "cfg-yasnippet.el"
                 ))
   (load (concat dotfiles-lisp-dir file)))
 

@@ -1,0 +1,9 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: test-it
+# group: test
+# key: it
+# binding: C-c C-y i
+# --
+it('should $1', function() {
+`yas-selected-text`$0
+});

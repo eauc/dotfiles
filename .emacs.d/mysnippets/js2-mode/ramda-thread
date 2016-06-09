@@ -1,0 +1,9 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: thread
+# group: ramda
+# key: rth
+# binding: C-c C-y t
+# --
+R.thread($1)(
+$2
+);

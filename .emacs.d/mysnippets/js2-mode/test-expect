@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: test-expect
+# group: test
+# key: exp
+# binding: C-c C-y x
+# --
+expect($1)
+${2:.not}.${3:$$(yas-choose-value '("toBe" "toEqual" "toHaveBeenCalledWith" "toHaveBeenCalled"))}($4);
