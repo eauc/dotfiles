@@ -4,3 +4,6 @@
 cider-history
 .mc-lists.el
 *.elc
+.emacs.d/tramp
+npm-debug.log
+.emacs.d/session.*
