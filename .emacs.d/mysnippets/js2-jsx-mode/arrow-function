@@ -1,8 +1,8 @@
 # -*- mode: snippet; require-final-newline: nil -*-
-# name: function
-# key: fun
-# binding: C-c C-y f
+# name: arrow-function
+# key: =>
+# binding: <f5> >
 # --
-function $1($2) {
+($1) => {
 `yas-selected-text`$0
 }

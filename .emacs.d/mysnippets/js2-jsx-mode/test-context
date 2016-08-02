@@ -2,7 +2,7 @@
 # name: test-context
 # group: test
 # key: cx
-# binding: C-c C-y c
+# binding: <f5> c
 # --
 context('when $1', function() {
 $2;

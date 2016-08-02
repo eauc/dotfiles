@@ -2,7 +2,7 @@
 # name: test-beforeEach
 # group: test
 # key: bef
-# binding: C-c C-y b
+# binding: <f5> b
 # --
 beforeEach(function() {
 `yas-selected-text`$0

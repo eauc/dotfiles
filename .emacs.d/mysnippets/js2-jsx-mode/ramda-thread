@@ -2,7 +2,7 @@
 # name: thread
 # group: ramda
 # key: rth
-# binding: C-c C-y t
+# binding: <f5> t
 # --
 R.thread($1)(
 $2

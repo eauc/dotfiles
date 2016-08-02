@@ -2,7 +2,7 @@
 # name: test-it
 # group: test
 # key: it
-# binding: C-c C-y i
+# binding: <f5> i
 # --
 it('should $1', function() {
 `yas-selected-text`$0

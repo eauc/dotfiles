@@ -2,7 +2,7 @@
 # name: test-describe
 # group: test
 # key: des
-# binding: C-c C-y d
+# binding: <f5> d
 # --
 describe('$1', function() {
 ${2:beforeEach(function() {
