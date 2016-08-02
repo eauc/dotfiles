@@ -36,6 +36,7 @@
                 "cfg-dired.el"
                 "cfg-flycheck.el"
                 "cfg-ido.el"
+                "cfg-indent-buffer.el"
                 "cfg-js2-mode.el"
                 "cfg-json-mode.el"
                 "cfg-multiple-cursors.el"

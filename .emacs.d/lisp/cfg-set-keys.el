@@ -20,5 +20,6 @@
 (global-set-key (kbd "<f3>")      'other-window)
 (global-set-key (kbd "<C-f3>")    'buffer-menu-other-window)
 (global-set-key (kbd "<f4>")      'comment-or-uncomment-region)
+(global-set-key (kbd "<C-f4>")    'eauc/indent-buffer)
 (global-set-key (kbd "<f10>")     'kill-this-buffer)
 (global-set-key (kbd "<C-f10>")   'save-buffers-kill-terminal)
