@@ -35,6 +35,7 @@
                 "cfg-crux.el"
                 "cfg-dired.el"
                 "cfg-flycheck.el"
+                "cfg-haskell-mode.el"
                 "cfg-ido.el"
                 "cfg-indent-buffer.el"
                 "cfg-js2-mode.el"
