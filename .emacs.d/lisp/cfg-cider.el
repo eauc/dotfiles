@@ -1,6 +1,3 @@
-;; Clojure IDE and REPL for Emacs
-(use-package clojure-mode
-  :ensure t)
 (use-package cider
   :ensure t
   :init
@@ -20,12 +17,4 @@
   (setq cider-show-error-buffer nil)
   ;; eldoc for clojure
   (add-hook 'cider-mode-hook #'eldoc-mode)
-  )
-;; autocompletion
-(use-package company
-  :ensure t
-  :init
-  ;; company mode for completion
-  (add-hook 'cider-repl-mode-hook #'company-mode)
-  (add-hook 'cider-mode-hook #'company-mode)
   )
