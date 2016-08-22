@@ -7,3 +7,4 @@ cider-history
 .emacs.d/tramp
 npm-debug.log
 .emacs.d/session.*
+.emacs.d/url
