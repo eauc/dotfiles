@@ -1,11 +1,14 @@
 (use-package let-alist
   :ensure t)
+
 (use-package flycheck-clojure
   :ensure t)
+
 (use-package flycheck
   :ensure t
-  :config
+  :init
   (add-hook 'after-init-hook #'global-flycheck-mode)
+  :config
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
                         '(javascript-jshint)))

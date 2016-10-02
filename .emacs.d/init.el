@@ -13,10 +13,10 @@
 
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-;; (add-to-list 'package-archives
-;;              '("melpa" . "https://melpa.org/packages/"))
-;; (add-to-list 'package-archives
-;;              '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 (package-initialize)
 (unless (package-installed-p 'use-package)
@@ -30,26 +30,26 @@
 (dolist (file '("cfg-align-array.el"
                 "cfg-avy.el"
                 "cfg-center-cursor.el"
-                "cfg-clojure-mode.el"
-                "cfg-cider.el"
-                "cfg-cljrefactor.el"
+                "cfg-clojure.el"
                 "cfg-company.el"
                 "cfg-crux.el"
                 "cfg-dired.el"
                 "cfg-flycheck.el"
-                "cfg-haskell-mode.el"
+                "cfg-haskell.el"
+                "cfg-hippie.el"
                 "cfg-ido.el"
                 "cfg-indent-buffer.el"
-                "cfg-js2-mode.el"
-                "cfg-json-mode.el"
+                "cfg-js.el"
                 "cfg-multiple-cursors.el"
-                "cfg-org-bbcode.el"
+                "cfg-org.el"
                 "cfg-rainbow-delimiters-mode.el"
-                "cfg-scss-mode.el"
+                "cfg-scss.el"
                 "cfg-set-keys.el"
-                "cfg-sudo.el"
+                "cfg-tagedit.el"
                 "cfg-try.el"
-                "cfg-web-mode.el"
+                "cfg-smartparens.el"
+                "cfg-smex.el"
+                "cfg-uniquify.el"
                 "cfg-which-key.el"
                 "cfg-yasnippet.el"
                 ))
@@ -58,6 +58,7 @@
 (setq backup-directory-alist `(("." . "~/.saves")))
 (global-linum-mode 1)
 (show-paren-mode)
+(global-hl-line-mode 1)
 (defalias 'yes-or-no-p 'y-or-n-p)
 ;; (setq split-height-threshold nil)
 ;; (setq split-width-threshold 200)

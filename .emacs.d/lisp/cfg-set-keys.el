@@ -5,7 +5,7 @@
 (global-set-key (kbd "<C-next>")  'next-buffer)
 (global-set-key (kbd "<S-SPC>")   'just-one-space)
 (global-set-key (kbd "<M-left>")  'back-to-indentation)
-(global-set-key (kbd "<M-M>")     'kmacro-call-macro)
+(global-set-key (kbd "<M-m>")     'kmacro-call-macro)
 
 (progn
   ;; define a prefix keymap

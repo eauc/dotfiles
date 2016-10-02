@@ -1,5 +1,6 @@
 (use-package mc-extras
   :ensure t)
+
 (use-package multiple-cursors
   :ensure t
   :bind (("C-. >" . mc/mark-next-like-this)
