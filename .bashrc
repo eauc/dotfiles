@@ -78,8 +78,8 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
-alias ll='ls -l'
-alias la='ls -la'
+alias ll='ls -lh'
+alias la='ls -lha'
 alias l='ls -CF'
 alias lsdir='tree -F'
 alias lldir='tree -phugDF' 
