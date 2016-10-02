@@ -53,6 +53,8 @@
         # misc
 	lalias = "!git config -l | grep alias | cut -c 7-"
 	lasttag = describe --tags --abbrev=0
+        changed = update-index --no-assume-unchanged
+        unchanged = update-index --assume-unchanged
 [user]
 	name = Auclair Emmanuel
 	email = auclair.emmanuel@gmail.com
