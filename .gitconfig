@@ -1,33 +1,31 @@
 [alias]
 	s = status
 	co = checkout
-        ######
-        # log
-	ls = log --graph --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(blue)%an"
-	ll = log --graph --all --stat --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(blue)%an"
-	ld = log --graph --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
-	lld = log --graph --all --stat --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
-        #########
-        # commit
-	c = commit
-	unstage = reset HEAD
-	discard = checkout --
-	addrm = "!git rm $(git ls-files --deleted)"
         #######
         # diff
 	d = diff
 	dsw = diff -M
 	dhw = diff -M HEAD
 	dhs = diff -M --cached
+        ######
+        # log
+	ls = log --graph --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(blue)%an"
+	ll = "!git ls --stat"
+	ld = log --graph --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
+	lld = "!git ld --stat"
         #########
-        # branch
-	b = branch
-	bl = branch
-	blr = branch -r
-	bla = branch -a
-        blc = branc --contains
-        blm = branch --merged
-        blnm = branch --no-merged
+        # stash
+        stsw = stash save -u
+        stw = stash save -k -u
+        sta = stash apply --index
+        stp = stash pop --index
+        ststats = stash show
+        stdiff = stash show -p
+        #########
+        # commit
+	c = commit
+	unstage = reset HEAD
+	addrm = "!git rm $(git ls-files --deleted)"
         m = merge --no-commit
         ########
         # Reset
@@ -35,18 +33,22 @@
         rhs = reset
         rhsm = reset --merge
         rhsw = reset --hard
+        ########
+        # clean
+	discard = checkout --
+        clean = clean -d
+        purge = clean -x -f
+        #########
+        # branch
+	b = branch
+        bc = checkout -b
         #######
         # file
         g = grep -I --break
-        gw = grep -I --break
-        gwa = grep --untracked -I --break
+        gw = grep --untracked -I --break
         gs = grep --cached -I --break
         fl = rev-list --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(blue)%an"
 	fld = rev-list --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
-        ########
-        # clean
-        clean = clean -d
-        purge = clean -x -f
         #######
         # misc
 	lalias = "!git config -l | grep alias | cut -c 7-"
