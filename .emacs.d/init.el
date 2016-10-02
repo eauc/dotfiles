@@ -101,6 +101,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:stipple nil :background "#181a26" :foreground "gray80" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
+ '(highlight ((t (:background "#103050"))))
  '(hl-sexp-face ((t (:background "gray20"))))
  '(js2-error ((t (:foreground "red"))))
  '(js2-external-variable ((t (:foreground "orchid"))))
@@ -116,5 +117,6 @@
  '(rainbow-delimiters-depth-8-face ((t (:foreground "green" :weight bold))))
  '(rainbow-delimiters-depth-9-face ((t (:foreground "dodger blue" :weight bold))))
  '(rainbow-delimiters-unmatched-face ((t (:foreground "red" :weight bold))))
+ '(region ((t (:background "DodgerBlue4"))))
  '(show-paren-match ((t (:background "SpringGreen4"))))
  '(trailing-whitespace ((t (:background "goldenrod1")))))
