@@ -110,3 +110,9 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 #. /opt/Xilinx/14.2/ISE_DS/settings32.sh # Xilinx environnement
 
 PATH=$HOME/bin:$HOME/.local/bin:$PATH
+
+export NVM_DIR="/home/auclair/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+eval "$(stack --bash-completion-script stack)"
+
