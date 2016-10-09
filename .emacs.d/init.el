@@ -70,6 +70,7 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
+ '(case-fold-search t)
  '(column-number-mode t)
  '(custom-buffer-indent 2)
  '(custom-enabled-themes (quote (deeper-blue)))
@@ -86,6 +87,7 @@
  '(indent-tabs-mode nil)
  '(js-indent-level 2)
  '(js2-basic-offset 2)
+ '(js2-strict-trailing-comma-warning nil)
  '(jsx-indent-level 2)
  '(scss-compile-at-save nil)
  '(show-paren-mode t)
