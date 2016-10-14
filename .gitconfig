@@ -1,72 +1,109 @@
 [alias]
+	# lazy
 	s = status
 	co = checkout
-        #######
-        # diff
+	#######
+	# diff
+	#
+	# lazy
 	d = diff
+	# diff staging > working
 	dsw = diff -M
+	# diff HEAD > working
 	dhw = diff -M HEAD
+	# diff HEAD > staging
 	dhs = diff -M --cached
-        ######
-        # log
+	######
+	# log
+	#
+	# trees
 	ls = log --graph --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(blue)%an"
 	ll = "!git ls --stat"
 	ld = log --graph --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
 	lld = "!git ld --stat"
-        #########
-        # stash
-        stsw = stash save -u
-        stw = stash save -k -u
-        sta = stash apply --index
-        stp = stash pop --index
-        ststats = stash show
-        stdiff = stash show -p
-        #########
-        # commit
+	# one file history
+	lf = log --follow --graph --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
+	#########
+	# stash
+	#
+	# stash [staging + working]
+	stsw = stash save -u
+	# stash [working]
+	stw = stash save -k -u
+	# apply/pop conserving [staging]
+	sta = stash apply --index
+	stp = stash pop --index
+	# inspect stashes
+	ststats = stash show
+	stdiff = stash show -p
+	#########
+	# commit
+	#
+	# lazy
 	c = commit
 	unstage = reset HEAD
+	# stage files deletions
 	addrm = "!git rm $(git ls-files --deleted)"
-        m = merge --no-commit
-        ########
-        # Reset
-        rh = reset --soft
-        rhs = reset
-        rhsm = reset --merge
-        rhsw = reset --hard
-        ########
-        # clean
+	# prefers FF merges
+	m = merge --no-commit
+	########
+	# reset
+	#
+	# reset HEAD (keep changes in [staging+working])
+	rh = reset --soft
+	# reset [HEAD+staging] (keep changes in [working], update [working] with <commit>)
+	# ==> rh + unstage
+	rhs = reset --merge
+	# reset [HEAD+staging+working] (loose all local modifications)
+	rhsw = reset --hard
+	########
+	# clean
+	#
+	# clean [local modifications], keep [untracked]
 	discard = checkout --
-        clean = clean -d
-        purge = clean -x -f
-        #########
-        # branch
+	# clean [untracked]
+	clean = clean -d
+	# clean [untracked+ignored]
+	purge = clean -x -f
+	#########
+	# branch
+	#
 	b = branch
-        bc = checkout -b
-        #######
-        # file
-        g = grep -I --break
-        gw = grep --untracked -I --break
-        gs = grep --cached -I --break
-        fl = rev-list --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(blue)%an"
-	fld = rev-list --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
-        #######
-        # misc
-	lalias = "!git config -l | grep alias | cut -c 7-"
+	# create branche on commit
+	bc = checkout -b
+	#######
+	# file
+	#
+	# grep pattern in [tracked] files (ignore bin, empty lines between matches)
+	g = grep -I --break
+	# grep in [tracked+untracked]
+	gw = grep --untracked -I --break
+	# grep in [staging]
+	gs = grep --cached -I --break
+	#######
+	# misc
+	#
+	# list aliases
+	lal = "!git config -l | grep alias | cut -c 7-"
+	# last tag name
 	lasttag = describe --tags --abbrev=0
-        changed = update-index --no-assume-unchanged
-        unchanged = update-index --assume-unchanged
+	# toggle ignore local modifications on <path>
+	changed = update-index --no-assume-unchanged
+	unchanged = update-index --assume-unchanged
 [user]
 	name = Auclair Emmanuel
 	email = auclair.emmanuel@gmail.com
 [merge]
 	tool = kdiff3
-        conflictstyle = diff3
+	conflictstyle = diff3
 [color]
 	ui = true
 [filter "ws"]
 	clean = remove_trailing_whitespaces.sh
 	smudge = cat
 [grep]
-        lineNumber = true
+	lineNumber = true
 [push]
 	default = simple
+[blame]
+	date = relative
