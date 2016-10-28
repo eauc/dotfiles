@@ -96,6 +96,15 @@
 	# grep in [staging]
 	gs = grep --cached -I --break
 	grep-staging = "!git gs"
+	#########
+	# remote
+	#
+	# fetch all new  tags + prune branches
+	f = fetch -p -t
+	# synch tags with origin server
+	ft = fetch -p origin +refs/tags/*:refs/tags/*
+	fetch-tags = "!git ft"
+	p = push
 	#######
 	# misc
 	#
