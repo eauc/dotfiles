@@ -9,32 +9,43 @@
 	d = diff
 	# diff staging > working
 	dsw = diff -M
+	diff-staging-working = "!git dsw"
 	# diff HEAD > working
 	dhw = diff -M HEAD
+	diff-head-working = "!git dhw"
 	# diff HEAD > staging
 	dhs = diff -M --cached
+	diff-head-staging = "!git dhs"
 	######
 	# log
 	#
 	# trees
 	l = log --graph --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
-	ls = "!git l --all"
-	ll = "!git ls --stat"
+	la = "!git l --all"
+	log-all = "!git la"
+	ll = "!git la --stat"
 	# one file history
 	lf = log --follow --graph --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
+	log-file = "!git lf"
 	#########
 	# stash
 	#
 	# stash [staging + working]
 	stsw = stash save -u
+	stash-staging-working = "!git stsw"
 	# stash [working]
 	stw = stash save -k -u
+	stash-working = "!git stw"
 	# apply/pop conserving [staging]
 	sta = stash apply --index
+	stash-apply = "!git sta"
 	stp = stash pop --index
+	stash-pop = "!git stp"
 	# inspect stashes
 	ststats = stash show
+	stash-stats = "!git ststats"
 	stdiff = stash show -p
+	stash-diff = "!git stdiff"
 	#########
 	# commit
 	#
@@ -50,11 +61,14 @@
 	#
 	# reset HEAD (keep changes in [staging+working])
 	rh = reset --soft
+	reset-head = "!git rh"
 	# reset [HEAD+staging] (keep changes in [working], update [working] with <commit>)
 	# ==> rh + unstage
 	rhs = reset --merge
+	reset-head-staging = "!git rhs"
 	# reset [HEAD+staging+working] (loose all local modifications)
-	rhsw = reset --hard
+	ra = reset --hard
+	reset-all = "!git ra"
 	########
 	# clean
 	#
@@ -70,6 +84,7 @@
 	b = branch
 	# create branche on commit
 	bc = checkout -b
+	branch-create = "!git bc"
 	#######
 	# file
 	#
@@ -77,13 +92,16 @@
 	g = grep -I --break
 	# grep in [tracked+untracked]
 	gw = grep --untracked -I --break
+	grep-working = "!git gw"
 	# grep in [staging]
 	gs = grep --cached -I --break
+	grep-staging = "!git gs"
 	#######
 	# misc
 	#
 	# list aliases
 	lal = "!git config -l | grep alias | cut -c 7-"
+	list-aliases = "!git lal"
 	# last tag name
 	lasttag = describe --tags --abbrev=0
 	# toggle ignore local modifications on <path>
