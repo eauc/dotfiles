@@ -6,15 +6,15 @@
 	# diff
 	#
 	# lazy
-	d = diff
+	d = diff -w --color-words
 	# diff staging > working
-	dsw = diff -M
+	dsw = "!git d -M"
 	diff-staging-working = "!git dsw"
 	# diff HEAD > working
-	dhw = diff -M HEAD
+	dhw = "!git d -M HEAD"
 	diff-head-working = "!git dhw"
 	# diff HEAD > staging
-	dhs = diff -M --cached
+	dhs = "!git d -M --cached"
 	diff-head-staging = "!git dhs"
 	######
 	# log
