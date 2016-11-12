@@ -32,6 +32,7 @@
                 "cfg-center-cursor.el"
                 "cfg-clojure.el"
                 "cfg-company.el"
+                "cfg-cucumber.el"
                 "cfg-crux.el"
                 "cfg-dired.el"
                 "cfg-flycheck.el"
