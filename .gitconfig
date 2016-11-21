@@ -105,6 +105,8 @@
 	ft = fetch -p origin +refs/tags/*:refs/tags/*
 	fetch-tags = "!git ft"
 	p = push
+	pup = push --set-upstream
+	push-upstream = "!git pup"
 	#######
 	# misc
 	#
@@ -116,6 +118,8 @@
 	# toggle ignore local modifications on <path>
 	changed = update-index --no-assume-unchanged
 	unchanged = update-index --assume-unchanged
+	# cheat
+	ch = "!cheat git"
 [user]
 	name = Auclair Emmanuel
 	email = auclair.emmanuel@gmail.com
