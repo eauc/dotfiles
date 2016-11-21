@@ -16,6 +16,11 @@
 	# diff HEAD > staging
 	dhs = "!git d -M --cached"
 	diff-head-staging = "!git dhs"
+        # submodules
+        dm = '!git d; git submodule foreach "git diff"'
+        dmsw = '!git dsw; git submodule foreach "git dsw"'
+        dmhs = '!git dhs; git submodule foreach "git dhs"'
+        dmhw = '!git dhw; git submodule foreach "git dhw"'
 	######
 	# log
 	#
@@ -107,6 +112,20 @@
 	p = push
 	pup = push --set-upstream
 	push-upstream = "!git pup"
+        purc= push --recurse-submodules=check
+        push-recurse-check = '!git purc'
+        purd= push --recurse-submodules=on-demand
+        push-recurse-demand = '!git purd'
+        ############
+        # Submodules
+        #
+        ms = submodule status
+        ml = submodule summary
+        mlhs = submodule summary --cached -- HEAD
+        mlsw = submodule summary --files
+        mf = submodule foreach
+        mup = submodule update
+        mupr = submodule update --remote
 	#######
 	# misc
 	#
@@ -139,3 +158,5 @@
 	date = relative
 [credential]
 	helper = store
+[diff]
+	submodule = log
