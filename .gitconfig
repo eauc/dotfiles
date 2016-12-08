@@ -16,11 +16,11 @@
 	# diff HEAD > staging
 	dhs = "!git d -M --cached"
 	diff-head-staging = "!git dhs"
-        # submodules
-        dm = '!git d; git submodule foreach "git diff"'
-        dmsw = '!git dsw; git submodule foreach "git dsw"'
-        dmhs = '!git dhs; git submodule foreach "git dhs"'
-        dmhw = '!git dhw; git submodule foreach "git dhw"'
+  # submodules
+  dm = "!git d; git submodule foreach 'git d'"
+  dmsw = "!git dsw; git submodule foreach 'git dsw'"
+  dmhs = "!git dhs; git submodule foreach 'git dhs'"
+  dmhw = "!git dhw; git submodule foreach 'git dhw'"
 	######
 	# log
 	#
@@ -112,51 +112,51 @@
 	p = push
 	pup = push --set-upstream
 	push-upstream = "!git pup"
-        purc= push --recurse-submodules=check
-        push-recurse-check = '!git purc'
-        purd= push --recurse-submodules=on-demand
-        push-recurse-demand = '!git purd'
-        ############
-        # Submodules
-        #
-        ms = submodule status
-        ml = submodule summary
-        mlhs = submodule summary --cached -- HEAD
-        mlsw = submodule summary --files
-        mf = submodule foreach
-        mup = submodule update
-        mupr = submodule update --remote
-	#######
-	# misc
-	#
-	# list aliases
-	lal = "!git config -l | grep alias | cut -c 7-"
-	list-aliases = "!git lal"
-	# last tag name
-	lasttag = describe --tags --abbrev=0
-	# toggle ignore local modifications on <path>
-	changed = update-index --no-assume-unchanged
-	unchanged = update-index --assume-unchanged
-	# cheat
-	ch = "!cheat git"
+  purc= push --recurse-submodules=check
+  push-recurse-check = "!git purc"
+  purd= push --recurse-submodules=on-demand
+  push-recurse-demand = "!git purd"
+  ############
+  # Submodules
+  #
+  ms = submodule status
+  ml = submodule summary
+  mlhs = submodule summary --cached -- HEAD
+  mlsw = submodule summary --files
+  mf = submodule foreach
+  mup = submodule update
+  mupr = submodule update --remote
+  #######
+  # misc
+  #
+  # list aliases
+  lal = "!git config -l | grep alias | cut -c 7-"
+  list-aliases = "!git lal"
+  # last tag name
+  lasttag = describe --tags --abbrev=0
+  # toggle ignore local modifications on <path>
+  changed = update-index --no-assume-unchanged
+  unchanged = update-index --assume-unchanged
+  # cheat
+  ch = "!cheat git"
 [user]
-	name = Auclair Emmanuel
-	email = auclair.emmanuel@gmail.com
+  name = Auclair Emmanuel
+  email = auclair.emmanuel@gmail.com
 [merge]
-	tool = kdiff3
-	conflictstyle = diff3
+  tool = kdiff3
+  conflictstyle = diff3
 [color]
-	ui = true
+  ui = true
 [filter "ws"]
-	clean = remove_trailing_whitespaces.sh
-	smudge = cat
+  clean = remove_trailing_whitespaces.sh
+  smudge = cat
 [grep]
-	lineNumber = true
+  lineNumber = true
 [push]
-	default = simple
+  default = simple
 [blame]
-	date = relative
+  date = relative
 [credential]
-	helper = store
+  helper = store
 [diff]
-	submodule = log
+  submodule = log
