@@ -1,5 +1,6 @@
 (use-package let-alist
-  :ensure t)
+  :ensure t
+  :pin gnu)
 
 (use-package flycheck-clojure
   :ensure t)

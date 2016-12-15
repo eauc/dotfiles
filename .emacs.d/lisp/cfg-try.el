@@ -1,2 +1,3 @@
 (use-package try
-  :ensure t)
+  :ensure t
+	:pin melpa)

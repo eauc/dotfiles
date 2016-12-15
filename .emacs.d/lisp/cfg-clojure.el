@@ -17,6 +17,7 @@
 
 (use-package clojurescript-mode
   :ensure t
+	:pin marmalade
   :mode ("\\.cljs\\'" . clojurescript-mode)
   )
 
