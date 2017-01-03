@@ -1,3 +1,5 @@
+(define-key input-decode-map [?\C-m] [C-m])
+
 (global-set-key "\C-z"            'advertised-undo)
 (global-set-key "\C-l"            'goto-line)
 (global-set-key (kbd "<RET>")     'newline-and-indent)
@@ -5,7 +7,7 @@
 (global-set-key (kbd "<C-next>")  'next-buffer)
 (global-set-key (kbd "<S-SPC>")   'just-one-space)
 (global-set-key (kbd "<M-left>")  'back-to-indentation)
-(global-set-key (kbd "<M-m>")     'kmacro-call-macro)
+(global-set-key (kbd "<C-m>")     'kmacro-call-macro)
 
 (progn
   ;; define a prefix keymap
@@ -19,6 +21,7 @@
 (global-set-key (kbd "<C-f2>")    'write-file)
 (global-set-key (kbd "<f3>")      'other-window)
 (global-set-key (kbd "<C-f3>")    'buffer-menu-other-window)
+(global-set-key (kbd "<S-f3>")    'ido-switch-buffer)
 (global-set-key (kbd "<f4>")      'comment-or-uncomment-region)
 (global-set-key (kbd "<C-f4>")    'eauc/indent-buffer)
 (global-set-key (kbd "<f10>")     'kill-this-buffer)

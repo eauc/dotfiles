@@ -1,7 +1,7 @@
 (use-package crux
   :ensure t
-  :bind (("<s-return>" . crux-smart-open-line)
-         ("<M-s-return>" . crux-smart-open-line-above)
+  :bind (("<S-return>" . crux-smart-open-line)
+         ("<s-return>" . crux-smart-open-line-above)
          ("s-$" . crux-sudo-edit)
          ("s-<" . crux-move-beginning-of-line)
          ("s-i" . crux-find-user-init-file)
