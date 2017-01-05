@@ -29,6 +29,8 @@
 	la = "!git l --all"
 	log-all = "!git la"
 	ll = "!git la --stat"
+	lh = log -n 1 --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
+	log-head = "!git lh"
 	# one file history
 	lf = log --follow --graph --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
 	log-file = "!git lf"
@@ -123,7 +125,7 @@
   ml = submodule summary
   mlhs = submodule summary --cached -- HEAD
   mlsw = submodule summary --files
-  mf = submodule foreach
+  mf = "!foreach() { git submodule foreach \"$1 || :\"; }; foreach"
   mup = submodule update
   mupr = submodule update --remote
   #######
