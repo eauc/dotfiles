@@ -1,119 +1,120 @@
 [alias]
-	# lazy
-	s = status
-	co = checkout
-	#######
-	# diff
-	#
-	# lazy
-	d = diff -w --color-words
-	# diff staging > working
-	dsw = "!git d -M"
-	diff-staging-working = "!git dsw"
-	# diff HEAD > working
-	dhw = "!git d -M HEAD"
-	diff-head-working = "!git dhw"
-	# diff HEAD > staging
-	dhs = "!git d -M --cached"
-	diff-head-staging = "!git dhs"
+  # lazy
+  s = status
+  co = checkout
+  #######
+  # diff
+  #
+  # lazy
+  d = diff -w --color-words
+  # diff staging > working
+  dsw = "!git d -M"
+  diff-staging-working = "!git dsw"
+  # diff HEAD > working
+  dhw = "!git d -M HEAD"
+  diff-head-working = "!git dhw"
+  # diff HEAD > staging
+  dhs = "!git d -M --cached"
+  diff-head-staging = "!git dhs"
   # submodules
   dm = "!git d; git submodule foreach 'git d'"
   dmsw = "!git dsw; git submodule foreach 'git dsw'"
   dmhs = "!git dhs; git submodule foreach 'git dhs'"
   dmhw = "!git dhw; git submodule foreach 'git dhw'"
-	######
-	# log
-	#
-	# trees
-	l = log --graph --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
-	la = "!git l --all"
-	log-all = "!git la"
-	ll = "!git la --stat"
-	lh = log -n 1 --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
-	log-head = "!git lh"
-	# one file history
-	lf = log --follow --graph --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
-	log-file = "!git lf"
-	#########
-	# stash
-	#
-	# stash [staging + working]
-	stsw = stash save -u
-	stash-staging-working = "!git stsw"
-	# stash [working]
-	stw = stash save -k -u
-	stash-working = "!git stw"
-	# apply/pop conserving [staging]
-	sta = stash apply --index
-	stash-apply = "!git sta"
-	stp = stash pop --index
-	stash-pop = "!git stp"
-	# inspect stashes
-	ststats = stash show
-	stash-stats = "!git ststats"
-	stdiff = stash show -p
-	stash-diff = "!git stdiff"
-	#########
-	# commit
-	#
-	# lazy
-	c = commit
-	unstage = reset HEAD
-	# stage files deletions
-	addrm = "!git rm $(git ls-files --deleted)"
-	# prefers FF merges
-	m = merge --no-commit
-	########
-	# reset
-	#
-	# reset HEAD (keep changes in [staging+working])
-	rh = reset --soft
-	reset-head = "!git rh"
-	# reset [HEAD+staging] (keep changes in [working], update [working] with <commit>)
-	# ==> rh + unstage
-	rhs = reset --merge
-	reset-head-staging = "!git rhs"
-	# reset [HEAD+staging+working] (loose all local modifications)
-	ra = reset --hard
-	reset-all = "!git ra"
-	########
-	# clean
-	#
-	# clean [local modifications], keep [untracked]
-	discard = checkout --
-	# clean [untracked]
-	clean = clean -d
-	# clean [untracked+ignored]
-	purge = clean -x -f
-	#########
-	# branch
-	#
-	b = branch
-	# create branche on commit
-	bc = checkout -b
-	branch-create = "!git bc"
-	#######
-	# file
-	#
-	# grep pattern in [tracked] files (ignore bin, empty lines between matches)
-	g = grep -I --break
-	# grep in [tracked+untracked]
-	gw = grep --untracked -I --break
-	grep-working = "!git gw"
-	# grep in [staging]
-	gs = grep --cached -I --break
-	grep-staging = "!git gs"
-	#########
-	# remote
-	#
-	# fetch all new  tags + prune branches
-	f = fetch -p -t
-	# synch tags with origin server
-	ft = fetch -p origin +refs/tags/*:refs/tags/*
-	fetch-tags = "!git ft"
-	p = push
-	pup = push --set-upstream
-	push-upstream = "!git pup"
+  ######
+  # log
+  #
+  # trees
+  l = log --graph --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
+  la = "!git l --all"
+  log-all = "!git la"
+  ll = "!git la --stat"
+  lh = log -n 1 --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
+  log-head = "!git lh"
+  # one file history
+  lf = log --follow --graph --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
+  log-file = "!git lf"
+  #########
+  # stash
+  #
+  # stash [staging + working]
+  stsw = stash save -u
+  stash-staging-working = "!git stsw"
+  # stash [working]
+  stw = stash save -k -u
+  stash-working = "!git stw"
+  # apply/pop conserving [staging]
+  sta = stash apply --index
+  stash-apply = "!git sta"
+  stp = stash pop --index
+  stash-pop = "!git stp"
+  # inspect stashes
+  ststats = stash show
+  stash-stats = "!git ststats"
+  stdiff = stash show -p
+  stash-diff = "!git stdiff"
+  #########
+  # commit
+  #
+  # lazy
+  c = commit
+  unstage = reset HEAD
+  # stage files deletions
+  addrm = "!git rm $(git ls-files --deleted)"
+  # prefers FF merges
+  m = merge --no-commit
+  ########
+  # reset
+  #
+  # reset HEAD (keep changes in [staging+working])
+  rh = reset --soft
+  reset-head = "!git rh"
+  # reset [HEAD+staging] (keep changes in [working], update [working] with <commit>)
+  # ==> rh + unstage
+  rhs = reset --merge
+  reset-head-staging = "!git rhs"
+  # reset [HEAD+staging+working] (loose all local modifications)
+  ra = reset --hard
+  reset-all = "!git ra"
+  ########
+  # clean
+  #
+  # clean [local modifications], keep [untracked]
+  discard = checkout --
+  # clean [untracked]
+  clean = clean -d
+  # clean [untracked+ignored]
+  purge = clean -x -f
+  #########
+  # branch
+  #
+  b = branch
+  ba = branch --all
+  # create branche on commit
+  bc = checkout -b
+  branch-create = "!git bc"
+  #######
+  # file
+  #
+  # grep pattern in [tracked] files (ignore bin, empty lines between matches)
+  g = grep -I --break
+  # grep in [tracked+untracked]
+  gw = grep --untracked -I --break
+  grep-working = "!git gw"
+  # grep in [staging]
+  gs = grep --cached -I --break
+  grep-staging = "!git gs"
+  #########
+  # remote
+  #
+  # fetch all new  tags + prune branches
+  f = fetch -p -t
+  # synch tags with origin server
+  ft = fetch -p origin +refs/tags/*:refs/tags/*
+  fetch-tags = "!git ft"
+  p = push
+  pup = push --set-upstream
+  push-upstream = "!git pup"
   purc= push --recurse-submodules=check
   push-recurse-check = "!git purc"
   purd= push --recurse-submodules=on-demand
@@ -144,14 +145,37 @@
 [user]
   name = Auclair Emmanuel
   email = auclair.emmanuel@gmail.com
+[pager]
+  # ==> npm install -g diff-so-fancy
+  diff = diff-so-fancy | less --tabs=2 -RFX
+  show = diff-so-fancy | less --tabs=2 -RFX
+[interactive]
+  diffFilter = "diff-so-fancy"
 [merge]
   tool = kdiff3
   conflictstyle = diff3
 [color]
   ui = true
-[filter "ws"]
-  clean = remove_trailing_whitespaces.sh
-  smudge = cat
+[color "diff"]
+  meta = yellow bold
+  commit = green bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = "red bold 52"
+  newNormal = "green bold"
+  newHighlight = "green bold 22"
+[color "branch"]
+  current = green reverse
+  local = green
+  remote = yellow
+[color "status"]
+  added = green
+  changed = red
+  untracked = cyan
 [grep]
   lineNumber = true
 [push]
@@ -162,3 +186,6 @@
   helper = store
 [diff]
   submodule = log
+[help]
+  autocorrect = 1
+
