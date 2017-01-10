@@ -17,10 +17,10 @@
   dhs = "!git d -M --cached"
   diff-head-staging = "!git dhs"
   # submodules
-  dm = "!git d; git submodule foreach 'git d'"
-  dmsw = "!git dsw; git submodule foreach 'git dsw'"
-  dmhs = "!git dhs; git submodule foreach 'git dhs'"
-  dmhw = "!git dhw; git submodule foreach 'git dhw'"
+  dsm = "!git d; git submodule foreach 'git d'"
+  dsmsw = "!git dsw; git submodule foreach 'git dsw'"
+  dsmhs = "!git dhs; git submodule foreach 'git dhs'"
+  dsmhw = "!git dhw; git submodule foreach 'git dhw'"
   ######
   # log
   #
@@ -122,13 +122,13 @@
   ############
   # Submodules
   #
-  ms = submodule status
-  ml = submodule summary
-  mlhs = submodule summary --cached -- HEAD
-  mlsw = submodule summary --files
-  mf = "!foreach() { git submodule foreach \"$1 || :\"; }; foreach"
-  mup = submodule update
-  mupr = submodule update --remote
+  sms = submodule status
+  sml = submodule summary
+  smlhs = submodule summary --cached -- HEAD
+  smlsw = submodule summary --files
+  smf = "!foreach() { git submodule foreach \"$1 || :\"; }; foreach"
+  smu = submodule update
+  smur = submodule update --remote
   #######
   # misc
   #
