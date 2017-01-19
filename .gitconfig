@@ -150,7 +150,7 @@
   diff = diff-so-fancy | less --tabs=2 -RFX
   show = diff-so-fancy | less --tabs=2 -RFX
 [interactive]
-  diffFilter = "diff-so-fancy"
+  diffFilter = "less --tabs=2 -RFX"
 [merge]
   tool = kdiff3
   conflictstyle = diff3
