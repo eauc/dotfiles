@@ -8,6 +8,8 @@
 (global-set-key (kbd "<S-SPC>")   'just-one-space)
 (global-set-key (kbd "<M-left>")  'back-to-indentation)
 (global-set-key (kbd "<C-m>")     'kmacro-call-macro)
+(bind-key "C-x p" 'pop-to-mark-command)
+(setq set-mark-command-repeat-pop t)
 
 (progn
   ;; define a prefix keymap

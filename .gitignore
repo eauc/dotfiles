@@ -9,3 +9,4 @@ cider-history
 npm-debug.log
 .emacs.d/session.*
 .emacs.d/url
+.emacs.d/#ido.last#

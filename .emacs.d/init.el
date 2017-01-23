@@ -124,5 +124,6 @@
  '(rainbow-delimiters-depth-9-face ((t (:foreground "dodger blue" :weight bold))))
  '(rainbow-delimiters-unmatched-face ((t (:foreground "red" :weight bold))))
  '(region ((t (:background "DodgerBlue4"))))
+ '(sh-heredoc ((t (:foreground "dark orange" :weight bold))))
  '(show-paren-match ((t (:background "SpringGreen4"))))
  '(trailing-whitespace ((t (:background "goldenrod1")))))
