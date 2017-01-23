@@ -50,6 +50,7 @@
                 "cfg-smex.el"
                 "cfg-tagedit.el"
                 "cfg-try.el"
+                "cfg-undo-tree.el"
                 "cfg-uniquify.el"
                 "cfg-which-key.el"
                 "cfg-yasnippet.el"
