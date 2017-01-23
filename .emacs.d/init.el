@@ -72,7 +72,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
-	 ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
+   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
  '(case-fold-search t)
  '(column-number-mode t)
  '(custom-buffer-indent 2)
@@ -93,6 +93,20 @@
  '(js2-strict-trailing-comma-warning nil)
  '(jsx-indent-level 2)
  '(org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
+ '(org-src-lang-modes
+   (quote
+    (("ocaml" . tuareg)
+     ("elisp" . emacs-lisp)
+     ("ditaa" . artist)
+     ("asymptote" . asy)
+     ("dot" . fundamental)
+     ("sqlite" . sql)
+     ("calc" . fundamental)
+     ("C" . c)
+     ("cpp" . c++)
+     ("C++" . c++)
+     ("screen" . shell-script)
+     ("js" . js2))))
  '(scss-compile-at-save nil)
  '(show-paren-mode t)
  '(show-trailing-whitespace t)
