@@ -8,8 +8,6 @@
 (global-set-key (kbd "<S-SPC>")   'just-one-space)
 (global-set-key (kbd "<M-left>")  'back-to-indentation)
 (global-set-key (kbd "<C-m>")     'kmacro-call-macro)
-(bind-key "C-x p" 'pop-to-mark-command)
-(setq set-mark-command-repeat-pop t)
 
 (progn
   ;; define a prefix keymap
@@ -31,5 +29,6 @@
 (global-set-key (kbd "<C-S-f5>")  'bookmark-set)
 (global-set-key (kbd "<S-f5>")    'bookmark-jump)
 (global-set-key (kbd "<f6>")      'pop-to-mark-command)
+(global-set-key (kbd "<C-f6>")    'pop-global-mark)
 (global-set-key (kbd "<f10>")     'kill-this-buffer)
 (global-set-key (kbd "<C-f10>")   'save-buffers-kill-terminal)
