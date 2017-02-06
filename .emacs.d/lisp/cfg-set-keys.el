@@ -30,5 +30,6 @@
 (global-set-key (kbd "<f5>")      '(lambda () (interactive) (bookmark-jump "SAVED")))
 (global-set-key (kbd "<C-S-f5>")  'bookmark-set)
 (global-set-key (kbd "<S-f5>")    'bookmark-jump)
+(global-set-key (kbd "<f6>")      'pop-to-mark-command)
 (global-set-key (kbd "<f10>")     'kill-this-buffer)
 (global-set-key (kbd "<C-f10>")   'save-buffers-kill-terminal)
