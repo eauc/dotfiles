@@ -12,9 +12,8 @@
 (progn
   ;; define a prefix keymap
   (define-prefix-command 'my-modes-key-map)
-  (define-key my-modes-key-map (kbd "a") 'eauc/align-array)
-  )
-(global-set-key (kbd "C-c")      my-modes-key-map)
+  (define-key my-modes-key-map (kbd "a") 'eauc/align-array))
+(global-set-key (kbd "C-e")      my-modes-key-map)
 
 (global-set-key (kbd "<f1>")      'find-file)
 (global-set-key (kbd "<f2>")      'save-buffer)
