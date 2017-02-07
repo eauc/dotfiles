@@ -10,3 +10,5 @@ npm-debug.log
 .emacs.d/session.*
 .emacs.d/url
 .emacs.d/#ido.last#
+.emacs.d/bookmarks
+.emacs.d/var
