@@ -29,7 +29,6 @@
 
 (dolist (file '("cfg-align-array.el"
                 "cfg-avy.el"
-                "cfg-center-cursor.el"
                 "cfg-clojure.el"
                 "cfg-company.el"
                 "cfg-crux.el"
@@ -47,6 +46,7 @@
                 "cfg-org.el"
                 ;; "cfg-paredit.el"
                 "cfg-rainbow-delimiters-mode.el"
+                "cfg-scroll.el"
                 "cfg-scss.el"
                 "cfg-set-keys.el"
                 ;; "cfg-smartparens.el"
@@ -89,7 +89,9 @@
         (extension . "map")
         (extension . "js")))))))
  '(dired-subtree-use-backgrounds nil)
+ '(display-time-mode t)
  '(electric-indent-mode t)
+ '(fringe-mode 0 nil (fringe))
  '(global-subword-mode t)
  '(indent-tabs-mode nil)
  '(js-indent-level 2)
@@ -111,6 +113,7 @@
      ("C++" . c++)
      ("screen" . shell-script)
      ("js" . js2))))
+ '(scroll-bar-mode nil)
  '(scss-compile-at-save nil)
  '(show-paren-mode t)
  '(show-trailing-whitespace t)
