@@ -1,3 +1,6 @@
+(use-package realgud
+  :ensure t)
+
 (use-package js2-mode
   :ensure t
   :mode ("\\.js\\'"  . js2-jsx-mode)
@@ -12,6 +15,12 @@
   :ensure t
   :mode "\\.json\\'")
 
+(use-package js2-refactor
+  :ensure t
+  :config
+  (add-hook 'js2-mode-hook #'js2-refactor-mode)
+  (js2r-add-keybindings-with-prefix "C-c"))
+
 (use-package mocha
   :ensure t
   :commands (mocha-test-at-point
@@ -19,6 +28,3 @@
              mocha-test-project)
   :init
   (setq mocha-command "./node_modules/.bin/mocha"))
-
-(use-package realgud
-	:ensure t)
