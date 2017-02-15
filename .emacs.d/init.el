@@ -14,11 +14,11 @@
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives
-						 '("melpa" . "https://melpa.org/packages/"))
+             '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
-						 '("marmalade" . "http://marmalade-repo.org/packages/"))
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives
-						 '("org" . "http://orgmode.org/elpa/") t)
+             '("org" . "http://orgmode.org/elpa/") t)
 
 (package-initialize)
 (unless (package-installed-p 'use-package)
@@ -29,18 +29,14 @@
 (setq use-package-always-pin "melpa-stable")
 (setq use-package-verbose t)
 
-(dolist (file '("cfg-align-array.el"
-                "cfg-avy.el"
+(dolist (file '("cfg-misc.el"
                 "cfg-clojure.el"
                 "cfg-company.el"
-                "cfg-crux.el"
                 "cfg-cucumber.el"
                 "cfg-dired.el"
                 "cfg-flycheck.el"
                 "cfg-haskell.el"
-                "cfg-hippie.el"
                 "cfg-ido.el"
-                "cfg-indent-buffer.el"
                 "cfg-js.el"
                 "cfg-lisp.el"
                 ;; "cfg-mark.el"
@@ -53,14 +49,9 @@
                 "cfg-set-keys.el"
                 ;; "cfg-smartparens.el"
                 "cfg-smex.el"
-                ;; "cfg-sudo.el"
                 "cfg-tagedit.el"
-                "cfg-try.el"
                 "cfg-undo-tree.el"
-                "cfg-uniquify.el"
-                "cfg-which-key.el"
-                "cfg-yasnippet.el"
-                ))
+                "cfg-yasnippet.el"))
   (load (concat dotfiles-lisp-dir file)))
 
 (setq backup-directory-alist `(("." . "~/.saves")))
