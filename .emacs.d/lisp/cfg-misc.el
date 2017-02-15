@@ -31,6 +31,20 @@
          ("s-j" . crux-top-join-line)
          ("s-k" . crux-kill-whole-line)))
 
+(use-package cycle-quotes
+  :pin gnu
+  :ensure t
+  :bind (("C-'" . cycle-quotes)))
+
+(use-package discover
+  :ensure t)
+
+(use-package dumb-jump
+  :ensure t
+  :bind (("M-g o" . dumb-jump-go-other-window)
+         ("M-g j" . dumb-jump-go)
+         ("M-g b" . dumb-jump-back)))
+
 (global-set-key (kbd "M-/") 'hippie-expand)
 ;; Lisp-friendly hippie expand
 (setq hippie-expand-try-functions-list
