@@ -24,7 +24,9 @@
      (ruby . t)
      (dot . t)
      (css . t)
-     (plantuml . t))))
+     (plantuml . t)))
+  (cheatsheet-add-group 'Org
+                        '(:key "C-c '" :description "Edit code block")))
 (use-package org-plus-contrib
   :pin org
   :ensure t)

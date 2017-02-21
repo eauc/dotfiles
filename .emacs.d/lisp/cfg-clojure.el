@@ -12,14 +12,12 @@
                  ("(\\(background?\\)"
                   (1 font-lock-keyword-face))))
               (define-clojure-indent (fact 1))
-              (define-clojure-indent (facts 1))))
-  )
+              (define-clojure-indent (facts 1)))))
 
 (use-package clojurescript-mode
   :ensure t
-	:pin marmalade
-  :mode ("\\.cljs\\'" . clojurescript-mode)
-  )
+  :pin marmalade
+  :mode ("\\.cljs\\'" . clojurescript-mode))
 
 (use-package clojure-mode-extra-font-locking
   :ensure t)
@@ -35,7 +33,8 @@
   :config
   (setq cljr-auto-sort-ns nil)
   (setq cljr-favor-prefix-notation nil)
-  )
+  (cheatsheet-add-group 'Clojure
+                        '(:key "C-c RET" :description "Refactor")))
 
 (use-package cider
   :ensure t
@@ -60,5 +59,4 @@
   (setq cider-show-error-buffer t)
   (setq cider-auto-select-error-buffer nil)
   ;; eldoc for clojure
-  (add-hook 'cider-mode-hook #'eldoc-mode)
-  )
+  (add-hook 'cider-mode-hook #'eldoc-mode))
