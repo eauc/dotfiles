@@ -35,6 +35,7 @@
                 "cfg-cucumber.el"
                 "cfg-dired.el"
                 "cfg-flycheck.el"
+                "cfg-git.el"
                 "cfg-haskell.el"
                 "cfg-ido.el"
                 "cfg-js.el"
