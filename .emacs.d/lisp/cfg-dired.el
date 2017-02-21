@@ -8,17 +8,16 @@
               ("C-k" . dired-subtree-remove)
               ("C-<up>" . dired-subtree-beginning)
               ("C-<down>" . dired-subtree-end))
-  :config
-  (cheatsheet-add-group 'Dired
-                        '(:key "C-i" :description "Insert subtree")
-                        '(:key "C-k" :description "Kill subtree")
-                        '(:key "C-Up" :description "Beginning of subtree")
-                        '(:key "C-Down" :description "End of subtree")))
+  :init
+  (cheatsheet-add :group 'Dired :key "C-Down" :description "End of subtree")
+  (cheatsheet-add :group 'Dired :key "C-Up" :description "Beginning of subtree")
+  (cheatsheet-add :group 'Dired :key "C-k" :description "Kill subtree")
+  (cheatsheet-add :group 'Dired :key "C-i" :description "Insert subtree"))
 
 (use-package dired-filter
   :ensure t
   :pin melpa
+  :init
+  (cheatsheet-add :group 'Dired :key "C-/" :description "Filter")
   :config
-  (define-key dired-mode-map (kbd "C-/") dired-filter-map)
-  (cheatsheet-add-group 'Dired
-                        '(:key "C-/" :description "Filter")))
+  (define-key dired-mode-map (kbd "C-/") dired-filter-map))
