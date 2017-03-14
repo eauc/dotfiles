@@ -4,7 +4,7 @@
 
 (use-package org
   :pin org
-  :ensure t
+  :ensure org-plus-contrib
   :init
   (add-hook 'after-save-hook 'tangle-on-save-org-mode-file)
   :config
@@ -26,10 +26,14 @@
      (css . t)
      (plantuml . t)))
   (cheatsheet-add-group 'Org
-                        '(:key "C-c '" :description "Edit code block")))
-(use-package org-plus-contrib
-  :pin org
-  :ensure t)
+                        '(:key "C-c '" :description "Edit code block")
+                        '(:key "C-c C-c" :description "Evaluate code block")
+                        '(:key "C-c C-e" :description "Export file")
+                        '(:key "C-c C-x C-v" :description "Toggle inline images")
+                        '(:key "C-c C-x C-M-v" :description "Refresh inline images")))
+;; (use-package org-plus-contrib
+;;   :pin org
+;;   :ensure t)
 
 ;; (use-package ox-bbcode
 ;;      :load-path "~/.emacs.d/org-ox-bbcode/")
