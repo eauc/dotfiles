@@ -58,6 +58,7 @@
   #
   # lazy
   c = commit
+  ca = commit --amend
   unstage = reset HEAD
   # stage files deletions
   addrm = "!git rm $(git ls-files --deleted)"
