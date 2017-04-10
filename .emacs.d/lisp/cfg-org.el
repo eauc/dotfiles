@@ -29,6 +29,7 @@
                         '(:key "C-c '" :description "Edit code block")
                         '(:key "C-c C-c" :description "Evaluate code block")
                         '(:key "C-c C-e" :description "Export file")
+                        '(:key "C-c C-v t" :description "Tangle file")
                         '(:key "C-c C-x C-v" :description "Toggle inline images")
                         '(:key "C-c C-x C-M-v" :description "Refresh inline images")))
 ;; (use-package org-plus-contrib
