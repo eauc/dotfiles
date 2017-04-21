@@ -12,3 +12,5 @@ npm-debug.log
 .emacs.d/#ido.last#
 .emacs.d/bookmarks
 .emacs.d/var
+.emacs.d/*recentf*
+.emacs.d/semanticdb/
