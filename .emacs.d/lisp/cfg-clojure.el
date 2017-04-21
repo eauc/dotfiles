@@ -36,12 +36,17 @@
   (cheatsheet-add-group 'Clojure
                         '(:key "C-c RET" :description "Refactor")))
 
+(use-package flycheck-clojure
+  :ensure t)
+
 (use-package cider
+  :pin melpa-stable
   :ensure t
   :defer t
   :init
   (add-hook 'clojure-mode-hook 'cider-mode)
   :config
+  (flycheck-clojure-setup)
   (setq cider-repl-pop-to-buffer-on-connect t)
   ;; REPL history file
   (setq cider-repl-history-file "~/.emacs.d/cider-history")

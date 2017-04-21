@@ -2,9 +2,6 @@
   :ensure t
   :pin gnu)
 
-(use-package flycheck-clojure
-  :ensure t)
-
 (use-package flycheck
   :ensure t
   :init
@@ -16,8 +13,7 @@
   (flycheck-add-mode 'javascript-eslint 'web-mode)
   (flycheck-add-mode 'javascript-eslint 'js-mode)
   (flycheck-add-mode 'javascript-eslint 'js2-mode)
-  (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
-  (flycheck-clojure-setup))
+  (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode))
 
 (use-package exec-path-from-shell
   :ensure t
