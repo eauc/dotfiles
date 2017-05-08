@@ -3,9 +3,9 @@
   :bind (:map lispy-mode-map
               ("M-[" . lispy-backward)
               ("M-]" . lispy-forward)
-              ("(" . self-insert-command)
+              ;; ("(" . self-insert-command)
               (")" . self-insert-command)
-              ("{" . self-insert-command)
+              ;; ("{" . self-insert-command)
               ("}" . self-insert-command)
               ("[" . self-insert-command)
               ("]" . self-insert-command)
