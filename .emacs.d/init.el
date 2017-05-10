@@ -73,6 +73,7 @@
  '(ansi-color-names-vector
    ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
  '(case-fold-search t)
+ '(clojure-indent-style :align-arguments)
  '(column-number-mode t)
  '(custom-buffer-indent 2)
  '(custom-enabled-themes (quote (deeper-blue)))
