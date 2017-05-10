@@ -44,6 +44,7 @@
                 ;; "cfg-mark.el"
                 "cfg-org.el"
                 ;; "cfg-paredit.el"
+                "cfg-plantuml.el"
                 "cfg-rainbow-delimiters-mode.el"
                 "cfg-scroll.el"
                 "cfg-scss.el"
