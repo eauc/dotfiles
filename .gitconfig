@@ -64,6 +64,8 @@
   addrm = "!git rm $(git ls-files --deleted)"
   # prefers FF merges
   m = merge --no-commit
+  # fixup
+  fix = commit --fixup
   ########
   # reset
   #
@@ -189,4 +191,5 @@
   submodule = log
 [help]
   autocorrect = 1
-
+[rebase]
+  autosquash = true
