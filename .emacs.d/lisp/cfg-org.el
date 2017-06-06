@@ -26,6 +26,7 @@
      (css . t)
      (plantuml . t)))
   (cheatsheet-add-group 'Org
+                        '(:key "<s-tab" :description "Insert source code block")
                         '(:key "C-c '" :description "Edit code block")
                         '(:key "C-c C-c" :description "Evaluate code block")
                         '(:key "C-c C-e" :description "Export file")
