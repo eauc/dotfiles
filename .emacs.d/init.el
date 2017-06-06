@@ -46,6 +46,7 @@
                 ;; "cfg-paredit.el"
                 "cfg-plantuml.el"
                 "cfg-rainbow-delimiters-mode.el"
+                "cfg-restclient.el"
                 "cfg-scroll.el"
                 "cfg-scss.el"
                 "cfg-set-keys.el"
