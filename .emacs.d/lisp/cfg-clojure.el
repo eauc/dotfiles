@@ -12,7 +12,14 @@
                  ("(\\(background?\\)"
                   (1 font-lock-keyword-face))))
               (define-clojure-indent (fact 1))
-              (define-clojure-indent (facts 1)))))
+              (define-clojure-indent (facts 1))))
+	:config
+	(cheatsheet-add-group 'Clojure
+                        '(:key "C-c RET" :description "Refactor")
+												'(:key "C-c M-J" :description "Cider Jack-in CLJS")
+												'(:key "C-c C-k" :description "Cider load & compile file")
+												'(:key "C-c C-c" :description "Cider execute top sexp")
+												'(:key "C-x C-e" :description "Cider execute last sexp")))
 
 (use-package clojurescript-mode
   :ensure t
@@ -32,9 +39,7 @@
               (cljr-add-keybindings-with-prefix "C-c RET")))
   :config
   (setq cljr-auto-sort-ns nil)
-  (setq cljr-favor-prefix-notation nil)
-  (cheatsheet-add-group 'Clojure
-                        '(:key "C-c RET" :description "Refactor")))
+  (setq cljr-favor-prefix-notation nil))
 
 (use-package flycheck-clojure
   :ensure t)
