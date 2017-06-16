@@ -17,25 +17,6 @@
   :bind (("<f7>" . magit-status)
          ("<S-f7>" . magit-blame)))
 
-(use-package git-gutter
-  :ensure t
-  :bind (("C-<f7>" . git-gutter-mode)
-         ("C-x v =" . git-gutter:popup-hunk)
-         ("C-x v n" . git-gutter:next-hunk)
-         ("C-x v p" . git-gutter:previous-hunk)
-         ("C-x v s" . git-gutter:stage-hunk)
-         ("C-x v r" . git-gutter:revert-hunk))
-  :init
-  (cheatsheet-add-group 'GitGutter
-                        '(:key "C-x v r" :description "Revert hunk")
-                        '(:key "C-x v s" :description "Stage hunk")
-                        '(:key "C-x v p" :description "Previous hunk")
-                        '(:key "C-x v n" :description "Next hunk")
-                        '(:key "C-x v =" :description "Hunk popup")
-                        '(:key "C-F7" :description "Toggle gutter mode"))
-  (custom-set-variables
-   '(git-gutter:diff-option "-w"))
-  (custom-set-variables
-   '(git-gutter:update-interval 1))
-  :config
-  (git-gutter:linum-setup))
+(use-package git-complete
+	:load-path "~/.emacs.d/git-complete/"
+	:bind (("C-<f7>" . git-complete)))

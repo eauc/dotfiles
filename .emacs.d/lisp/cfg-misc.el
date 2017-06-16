@@ -34,7 +34,7 @@
                         '(:key "F8" :description "Cheatsheet")
                         '(:key "Spe-F7" :description "Git timemachine")
                         '(:key "S-F7" :description "MaGit blame")
-                        '(:key "C-F7" :description "Git gutter")
+                        '(:key "C-F7" :description "Git complete")
                         '(:key "F7" :description "MaGit status")
                         '(:key "C-F6" :description "Pop mark global")
                         '(:key "F6" :description "Pop mark")
