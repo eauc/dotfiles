@@ -89,6 +89,8 @@ alias pd='popd'
 
 alias hgc='hg-cheat'
 
+alias npmx=PATH=$(npm bin):$PATH
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
