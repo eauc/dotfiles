@@ -1,6 +1,6 @@
-(defun eauc/align-array (s e)
-  (interactive "r")
-  (align-regexp s e "\\(\\s-*\\)\\(],\\|, \\)" 1 1 t))
+;; (defun eauc/align-array (s e)
+;;   (interactive "r")
+;;   (align-regexp s e "\\(\\s-*\\)\\(],\\|, \\)" 1 1 t))
 
 (defun eauc/indent-buffer ()
   "Indents an entire buffer using the default intenting scheme."
@@ -10,17 +10,22 @@
     (indent-region (point-min) (point-max) nil)
     (untabify (point-min) (point-max))))
 
-(defun eauc/sudo ()
-  "Use TRAMP to `sudo' the current buffer"
-  (interactive)
-  (when buffer-file-name
-    (find-alternate-file
-     (concat "/sudo:root@localhost:"
-             buffer-file-name))))
+;; (defun eauc/sudo ()
+;;   "Use TRAMP to `sudo' the current buffer"
+;;   (interactive)
+;;   (when buffer-file-name
+;;     (find-alternate-file
+;;      (concat "/sudo:root@localhost:"
+;;              buffer-file-name))))
 
 (use-package avy
   :ensure t
   :bind (("M-s a" . avy-goto-word-1)))
+
+(use-package browse-kill-ring
+  :ensure t
+  :config
+  (browse-kill-ring-default-keybindings))
 
 (use-package cheatsheet
   :pin melpa
@@ -43,7 +48,7 @@
                         '(:key "C-F5" :description "Jump to bookmark")
                         '(:key "F5" :description "Set bookmark")
                         '(:key "C-F4" :description "Indent Buffer")
-												'(:key "F4" :description "Comment")
+                        '(:key "F4" :description "Comment")
                         '(:key "S-F3" :description "Ido switch buffer")
                         '(:key "C-F3" :description "Buffer menu other window")
                         '(:key "F3" :description "Other window")
@@ -62,7 +67,8 @@
                         '(:key "C-S-z" :description "Undo tree")
                         '(:key "C-M-z" :description "Undo tree view")
                         '(:key "C-m" :description "Call macro")
-                        '(:key "M-/" :description "Expand")))
+                        '(:key "M-/" :description "Complete (hippie)")))
+
 (use-package crux
   :ensure t
   :bind (("<S-return>" . crux-smart-open-line)
