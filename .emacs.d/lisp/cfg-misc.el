@@ -56,6 +56,7 @@
                         '(:key "F2" :description "Save buffer")
                         '(:key "F1" :description "Find file"))
   (cheatsheet-add-group 'Edition
+                        '(:key "C-<" :description "Expand region")
                         '(:key "Spe-<" :description "Move beginning of line")
                         '(:key "M-s a" :description "Goto word")
                         '(:key "S-RET" :description "Open line below")
@@ -97,6 +98,10 @@
                         '(:key "M-g j" :description "Jump to definition")
                         '(:key "M-g o" :description "Jump (other window)")
                         '(:key "M-g b" :description "Jump back")))
+
+(use-package expand-region
+  :ensure t
+  :bind (("C-<" . er/expand-region)))
 
 (global-set-key (kbd "M-/") 'hippie-expand)
 ;; Lisp-friendly hippie expand
