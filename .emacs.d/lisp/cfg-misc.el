@@ -103,6 +103,11 @@
   :ensure t
   :bind (("C-<" . er/expand-region)))
 
+(use-package google-this
+  :ensure t
+  :bind-keymap (("C-x g" . google-this-mode-submap))
+  :config (google-this-mode 1))
+
 (global-set-key (kbd "M-/") 'hippie-expand)
 ;; Lisp-friendly hippie expand
 (setq hippie-expand-try-functions-list
