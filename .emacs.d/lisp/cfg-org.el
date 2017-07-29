@@ -58,9 +58,9 @@
 ;;   :ensure t)
 
 ;; (use-package ox-bbcode
-;; 	:load-path "~/.emacs.d/org-ox-bbcode/")
+;;      :load-path "~/.emacs.d/org-ox-bbcode/")
 (use-package ox-confluence
-	:load-path "~/.emacs.d/org-ox-confluence/")
+  :load-path "~/.emacs.d/org-ox-confluence/")
 (require 'ox-latex)
 (add-to-list 'org-latex-classes
              '("beamer"
