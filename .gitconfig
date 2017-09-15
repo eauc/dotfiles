@@ -116,6 +116,7 @@
   ft = fetch -p origin +refs/tags/*:refs/tags/*
   fetch-tags = "!git ft"
   p = push
+  pf = push --force-with-lease
   pup = push --set-upstream
   push-upstream = "!git pup"
   purc= push --recurse-submodules=check
@@ -145,6 +146,8 @@
   unchanged = update-index --assume-unchanged
   # cheat
   ch = "!cheat git"
+  # retry
+  bourrin = "!retry() { until $(git $1); do sleep 2; echo "Retrying"; date; done; }; retry"
 [user]
   name = Auclair Emmanuel
   email = auclair.emmanuel@gmail.com
