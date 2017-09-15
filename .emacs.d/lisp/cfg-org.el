@@ -27,32 +27,44 @@
      (plantuml . t)))
   (cheatsheet-add-group 'Org
 
-												'(:key "M-left/right" :description "Decrease/Increase header level")
-												'(:key "C-c C-u" :description "Back to top level header")
-												'(:key "C-c C-n" :description "Next header (any level)")
-												'(:key "C-c C-p" :description "Previous header (any level)")
-												'(:key "C-c C-f" :description "Next header (same level)")
-												'(:key "C-c C-b" :description "Previous header (same level)")
+                        '(:key "M-left/right" :description "Decrease/Increase header level")
+                        '(:key "C-c C-u" :description "Back to top level header")
+                        '(:key "C-c C-n" :description "Next header (any level)")
+                        '(:key "C-c C-p" :description "Previous header (any level)")
+                        '(:key "C-c C-f" :description "Next header (same level)")
+                        '(:key "C-c C-b" :description "Previous header (same level)")
 
-												'(:key "M-<RET>" :description "List: insert new item at same level")
-												'(:key "S-<up>" :description "List: previous item")
-												'(:key "S-<down>" :description "List: next item")
-												'(:key "S-<left/right>" :description "List: cycle bullet type")
-												'(:key "M-<up>" :description "List: move item up")
-												'(:key "M-<down>" :description "List: move item down")
-												'(:key "M-<left>" :description "List: decrease item indentation")
-												'(:key "M-<right>" :description "List: increase item indentation")
-												'(:key "M-S-<left>" :description "List: decrease item+children indentation")
-												'(:key "M-S-<right>" :description "List: increase item+children indentation")
+                        '(:key "C-c ^" :description "Table: sort rows by current col")
+                        '(:key "M-S-<right>" :description "Table: insert column to the left")
+                        '(:key "M-S-<left>" :description "Table: kill column")
+                        '(:key "M-<left/right>" :description "Table: move column left/right")
+                        '(:key "C-c -" :description "Table: insert horizontal line below")
+                        '(:key "M-S-<down>" :description "Table: insert row below")
+                        '(:key "M-S-<up>" :description "Table: kill row")
+                        '(:key "M-<up/down>" :description "Table: move row up/down")
+
+                        '(:key "M-<RET>" :description "List: insert new item at same level")
+                        '(:key "S-<up>" :description "List: previous item")
+                        '(:key "S-<down>" :description "List: next item")
+                        '(:key "S-<left/right>" :description "List: cycle bullet type")
+                        '(:key "M-<up>" :description "List: move item up")
+                        '(:key "M-<down>" :description "List: move item down")
+                        '(:key "M-<left>" :description "List: decrease item indentation")
+                        '(:key "M-<right>" :description "List: increase item indentation")
+                        '(:key "M-S-<left>" :description "List: decrease item+children indentation")
+                        '(:key "M-S-<right>" :description "List: increase item+children indentation")
 
                         '(:key "<s-tab" :description "Insert source code block")
-												'(:key "C-c '" :description "Edit code block")
+                        '(:key "C-c '" :description "Edit code block")
                         '(:key "C-c C-c" :description "Evaluate code block")
                         '(:key "C-c C-e" :description "Export file")
                         '(:key "C-c C-v t" :description "Tangle file")
 
                         '(:key "C-c C-x C-v" :description "Toggle inline images")
-                        '(:key "C-c C-x C-M-v" :description "Refresh inline images")))
+                        '(:key "C-c C-x C-M-v" :description "Refresh inline images")
+
+                        '(:key "C-c C-o" :description "Follow link")
+                        '(:key "C-c C-l" :description "Create/edit link")))
 ;; (use-package org-plus-contrib
 ;;   :pin org
 ;;   :ensure t)
@@ -77,3 +89,8 @@
   :ensure t)
 (use-package htmlize
   :ensure t)
+
+(use-package toc-org
+  :ensure t
+  :init
+  (add-hook 'org-mode-hook 'toc-org-enable))
