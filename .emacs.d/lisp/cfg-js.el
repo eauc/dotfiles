@@ -34,3 +34,9 @@
   (cheatsheet-add :group 'Javascript :key "C-c m i" :description "Mocha test at point")
   :config
   (setq mocha-command "./node_modules/.bin/mocha"))
+
+
+(use-package npm-mode
+  :ensure t
+	:config
+  (add-hook 'js2-mode-hook #'npm-mode))
