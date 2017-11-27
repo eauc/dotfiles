@@ -117,6 +117,10 @@
         try-complete-lisp-symbol-partially
         try-complete-lisp-symbol))
 
+(use-package pcre2el
+	:ensure t
+	:config (pcre-mode 1))
+
 (use-package try
   :ensure t
   :pin melpa)
