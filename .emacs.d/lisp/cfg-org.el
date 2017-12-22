@@ -80,6 +80,7 @@
                ("\\section\{%s\}" . "\\section*\{%s\}")
                ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
                ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
+(require 'ox-md)
 
 (use-package ox-reveal
   :pin melpa
