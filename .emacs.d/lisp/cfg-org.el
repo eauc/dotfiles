@@ -70,6 +70,11 @@
 ;;   :pin org
 ;;   :ensure t)
 
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
 ;; (use-package ox-bbcode
 ;;      :load-path "~/.emacs.d/org-ox-bbcode/")
 (use-package ox-confluence
