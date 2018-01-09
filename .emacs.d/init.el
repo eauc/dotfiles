@@ -2,13 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(setq dotfiles-lisp-dir
-      (file-name-as-directory
-       (concat (file-name-directory
-                (or (buffer-file-name) load-file-name))
-               "lisp")))
-(add-to-list 'load-path dotfiles-lisp-dir)
-
 (require 'package)
 
 (add-to-list 'package-archives
@@ -21,6 +14,7 @@
              '("org" . "http://orgmode.org/elpa/") t)
 
 (package-initialize)
+
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -29,42 +23,8 @@
 (setq use-package-always-pin "melpa-stable")
 (setq use-package-verbose t)
 
-(dolist (file '("cfg-misc.el"
-                "cfg-clojure.el"
-                "cfg-company.el"
-                "cfg-cucumber.el"
-                "cfg-cursors.el"
-                "cfg-dired.el"
-                "cfg-flycheck.el"
-                "cfg-git.el"
-                "cfg-haskell.el"
-                "cfg-ido.el"
-                "cfg-js.el"
-                "cfg-lisp.el"
-                "cfg-mark.el"
-                "cfg-org.el"
-                ;; "cfg-paredit.el"
-                "cfg-plantuml.el"
-                "cfg-rainbow-delimiters-mode.el"
-                "cfg-restclient.el"
-                "cfg-scroll.el"
-                "cfg-scss.el"
-                "cfg-set-keys.el"
-                ;; "cfg-smartparens.el"
-                "cfg-smex.el"
-                "cfg-tagedit.el"
-                ;; "cfg-undo-tree.el"
-                "cfg-yasnippet.el"))
-  (load (concat dotfiles-lisp-dir file)))
-
-(setq backup-directory-alist `(("." . "~/.saves")))
-(global-linum-mode 1)
-(global-auto-revert-mode)
-(show-paren-mode)
-(global-hl-line-mode 1)
-(defalias 'yes-or-no-p 'y-or-n-p)
-;; (setq split-height-threshold nil)
-;; (setq split-width-threshold 200)
+(org-babel-load-file
+ (expand-file-name "~/.emacs.d/myinit.org"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

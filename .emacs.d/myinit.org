@@ -1,0 +1,983 @@
+#+STARTUP: overview
+
+* Global config
+
+** Files & buffers
+
+   Place all backup files in user home.
+   #+BEGIN_SRC emacs-lisp
+     (setq backup-directory-alist `(("." . "~/.saves")))
+   #+END_SRC
+
+   Automatically reload buffers pointing to modified files.
+   #+BEGIN_SRC emacs-lisp
+     (global-auto-revert-mode)
+   #+END_SRC
+
+** UI tweaks
+
+   Display line numbers.
+   #+BEGIN_SRC emacs-lisp
+     (global-linum-mode 1)
+   #+END_SRC
+
+   Highlight current line.
+   #+BEGIN_SRC emacs-lisp
+     (global-hl-line-mode 1)
+   #+END_SRC
+
+   Highlight matching parens.
+   #+BEGIN_SRC emacs-lisp
+     (show-paren-mode)
+   #+END_SRC
+
+   Shorter yes-or-no prompt.
+   #+BEGIN_SRC emacs-lisp
+     (defalias 'yes-or-no-p 'y-or-n-p)
+   #+END_SRC
+
+   Usefull on small screen to split windows vertically
+   #+BEGIN_SRC emacs-lisp
+   ;; (setq split-height-threshold nil)
+   ;; (setq split-width-threshold 200)
+   #+END_SRC
+
+   Discover Emacs functions.
+   #+BEGIN_SRC emacs-lisp
+     (use-package discover
+       :ensure t
+       :config
+       (global-discover-mode 1))
+   #+END_SRC
+
+   Menu suggestions.
+   - enable partial matching.
+   #+BEGIN_SRC emacs-lisp
+   (ido-mode 1)
+   (setq ido-everywhere t)
+   (setq ido-enable-flex-matching t)
+   (setq ido-auto-merge-work-directories-length -1)
+   (setq ido-use-virtual-buffers t)
+   #+END_SRC
+
+   PERL regexp everywhere.
+   #+BEGIN_SRC emacs-lisp
+     (use-package pcre2el
+             :ensure t
+             :config (pcre-mode 1))
+   #+END_SRC
+
+   Rainbow delimiters.
+   #+BEGIN_SRC emacs-lisp
+     (use-package rainbow-delimiters
+       :ensure t
+       :init
+       (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+   #+END_SRC
+
+   Remember/suggest commands between sessions.
+   #+BEGIN_SRC emacs-lisp
+     (use-package smex
+       :ensure t
+       :bind ("M-x" . smex)
+       :config
+       (setq smex-save-file (concat user-emacs-directory ".smex-items"))
+       (smex-initialize))
+   #+END_SRC
+
+   Shorten buffer names but keep uniqueness.
+   #+BEGIN_SRC emacs-lisp
+     (use-package uniquify
+       :config
+       (setq uniquify-buffer-name-style 'forward))
+   #+END_SRC
+
+   Display available key bindings.
+   #+BEGIN_SRC emacs-lisp
+     (use-package which-key
+       :ensure t
+       :config (which-key-mode))
+   #+END_SRC
+
+** Scroll
+
+   - keep 8 lignes between cursor & edge of screen.
+   - smooth scrolling x100.
+   #+BEGIN_SRC emacs-lisp
+     (setq scroll-margin 8)
+     (setq scroll-conservatively 100)
+   #+END_SRC
+
+   Nyancat scrollbar.
+   #+BEGIN_SRC emacs-lisp
+     (use-package nyan-mode
+       :ensure t
+       :config
+       (nyan-mode 1))
+
+     (setq scroll-margin 8)
+     (setq scroll-conservatively 100)
+   #+END_SRC
+
+** Global keybindings
+
+   Emacs interprets =C-m= as =RET=. Disable this.
+   #+BEGIN_SRC emacs-lisp
+   (define-key input-decode-map [?\C-m] [C-m])
+   #+END_SRC
+
+   Common bindings.
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key "\C-z"            'advertised-undo)
+     (global-set-key "\C-l"            'goto-line)
+     (global-set-key (kbd "<RET>")     'newline-and-indent)
+     (global-set-key (kbd "<C-prior>") 'previous-buffer)
+     (global-set-key (kbd "<C-next>")  'next-buffer)
+     (global-set-key (kbd "<C-m>")     'kmacro-call-macro)
+     (global-set-key (kbd "<M-left>")  'back-to-indentation)
+   #+END_SRC
+
+   Reduce multiple spaces to one space.
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "<S-SPC>")   'just-one-space)
+   #+END_SRC
+
+   <Fn> keys.
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "<f1>")    'find-file)
+     (global-set-key (kbd "<f2>")    'save-buffer)
+     (global-set-key (kbd "<C-f2>")  'write-file)
+     (global-set-key (kbd "<f3>")    'other-window)
+     (global-set-key (kbd "<C-f3>")  'buffer-menu-other-window)
+     (global-set-key (kbd "<S-f3>")  'ido-switch-buffer)
+     (global-set-key (kbd "<f4>")    'comment-or-uncomment-region)
+     (global-set-key (kbd "<C-f4>")  'eauc/indent-buffer)
+     (global-set-key (kbd "<f5>")    'bookmark-set)
+     (global-set-key (kbd "<C-f5>")  'bookmark-jump)
+     (global-set-key (kbd "<f6>")    'pop-to-mark-command)
+     (global-set-key (kbd "<C-f6>")  'pop-global-mark)
+     (global-set-key (kbd "<f10>")   'kill-this-buffer)
+     (global-set-key (kbd "<C-f10>") 'save-buffers-kill-terminal)
+   #+END_SRC
+
+   Example of custom keymap.
+   #+BEGIN_SRC emacs-lisp
+   ;; (progn
+   ;;   ;; define a prefix keymap
+   ;;   (define-prefix-command 'my-modes-key-map)
+   ;;   (define-key my-modes-key-map (kbd "a") 'eauc/align-array))
+   ;; (global-set-key (kbd "C-e")      my-modes-key-map)
+   #+END_SRC
+
+* Custom functions
+
+** Indent-buffer
+
+   Indent current buffer.
+   Remove trailing whitespace.
+   Convert tabs to space.
+   #+BEGIN_SRC emacs-lisp
+     (defun eauc/indent-buffer ()
+       "Indent an entire buffer using the default intenting scheme."
+       (interactive)
+       (save-excursion
+         (delete-trailing-whitespace)
+         (indent-region (point-min) (point-max) nil)
+         (untabify (point-min) (point-max))))
+   #+END_SRC
+
+** Sudo
+
+   Re-open current file with sudo.
+   #+BEGIN_SRC emacs-lisp
+     (defun eauc/sudo ()
+       "Use TRAMP to `sudo' the current buffer"
+       (interactive)
+       (when buffer-file-name
+         (find-alternate-file
+          (concat "/sudo:root@localhost:"
+                  buffer-file-name))))
+   #+END_SRC
+
+** Tangle current org file
+
+   #+BEGIN_SRC emacs-lisp
+     (defun eauc/tangle-current-org-file ()
+       (when (string= (message "%s" major-mode) "org-mode")
+         (org-babel-tangle)))
+   #+END_SRC
+
+* Directory browser
+
+  - hide details when opening dired buffer.
+  - do not use background color on subtrees.
+  #+BEGIN_SRC emacs-lisp
+    (use-package dired
+      :init
+      (add-hook 'dired-mode-hook
+                (lambda ()
+                  (dired-hide-details-mode)))
+      :config
+      (setq dired-subtree-use-backgrounds nil))
+  #+END_SRC
+
+  Embedded subtrees.
+  #+BEGIN_SRC emacs-lisp
+    (use-package dired-subtree
+      :ensure t
+      :pin melpa
+      :bind (:map dired-mode-map
+                  ("C-i" . dired-subtree-insert)
+                  ("C-k" . dired-subtree-remove)
+                  ("C-<up>" . dired-subtree-beginning)
+                  ("C-<down>" . dired-subtree-end)))
+  #+END_SRC
+
+  Filter trees.
+  #+BEGIN_SRC emacs-lisp
+    (use-package dired-filter
+      :ensure t
+      :pin melpa
+      :config
+      (define-key dired-mode-map (kbd "C-/") dired-filter-map))
+  #+END_SRC
+
+* Edition
+
+** Completion
+
+   Hippie auto-complete.
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-c x") 'hippie-expand)
+     ;; Lisp-friendly hippie expand
+     (setq hippie-expand-try-functions-list
+           '(try-expand-dabbrev
+             try-expand-dabbrev-all-buffers
+             try-expand-dabbrev-from-kill
+             try-complete-lisp-symbol-partially
+             try-complete-lisp-symbol))
+   #+END_SRC
+
+   Company mode for Clojure.
+   #+BEGIN_SRC emacs-lisp
+     (use-package company
+       :ensure t
+       :init
+       (add-hook 'cider-repl-mode-hook #'company-mode)
+       (add-hook 'cider-mode-hook #'company-mode)
+       :bind
+       (("C-c c" . company-complete))
+       :config
+       (setq company-idle-delay nil)
+       (cheatsheet-add-group 'Completion
+                             '(:key "C-c x"   :description "Completion (hippie)")
+                             '(:key "C-c c"   :description "Completion (company)")))
+   #+END_SRC
+
+   Completion from git.
+   #+BEGIN_SRC emacs-lisp
+     (use-package git-complete
+       :load-path "~/.emacs.d/git-complete/"
+       :bind (("C-<f7>" . git-complete)))
+   #+END_SRC
+
+** Jump
+
+   Jump to word.
+   #+BEGIN_SRC emacs-lisp
+     (use-package avy
+       :ensure t
+       :bind (("C-c a" . avy-goto-word-1)))
+   #+END_SRC
+
+   Jump to definition.
+   #+BEGIN_SRC emacs-lisp
+     (use-package dumb-jump
+       :ensure t
+       :bind (("C-c j o" . dumb-jump-go-other-window)
+              ("C-c j g" . dumb-jump-go)
+              ("C-c j b" . dumb-jump-back)))
+   #+END_SRC
+
+** Kill ring
+
+   Navigate kill ring with =M-y=.
+   #+BEGIN_SRC emacs-lisp
+     (use-package browse-kill-ring
+       :ensure t
+       :config
+       (browse-kill-ring-default-keybindings))
+   #+END_SRC
+
+** Mark
+
+   Visible mark.
+   #+BEGIN_SRC emacs-lisp
+     (use-package visible-mark
+       :ensure t
+       :config
+       (setq visible-mark-max 5)
+       (global-visible-mark-mode 1))
+   #+END_SRC
+
+   Back button.
+   #+BEGIN_SRC emacs-lisp
+     ;; (use-package back-button
+     ;;   :ensure t
+     ;;   :config
+     ;;   (back-button-mode 1))
+   #+END_SRC
+
+** Multicursors
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package mc-extras
+       :ensure t)
+
+     (use-package multiple-cursors
+       :ensure t
+       :bind (("C-c . >" . mc/mark-next-like-this)
+              ("C-c . <" . mc/mark-previous-like-this)
+              ("C-c . a" . mc/mark-all-like-this)
+              ("C-c . f" . mc/mark-all-like-this-in-defun)
+              ("C-c . <left>" . mc/cycle-backward)
+              ("C-c . <right>" . mc/cycle-forward)
+              ("C-c . [" . mc/edit-beginnings-of-lines)
+              ("C-c . ]" . mc/edit-ends-of-lines)
+              ("C-c . i" . mc/insert-numbers)
+              ;; ("C-c . >" . mc/mark-all-like-this-dwim)
+              ("C-c . u" . mc/remove-current-cursor))
+       :config
+       (cheatsheet-add-group 'Cursors
+                             '(:key "C-c . u" :description "Remove current cursor")
+                             '(:key "C-c . [" :description "Edit beginning of lines")
+                             '(:key "C-c . ]" :description "Edit end of lines")
+                             '(:key "C-c . right" :description "Cycle backward")
+                             '(:key "C-c . left" :description "Cycle forward")
+                             '(:key "C-c . f" :description "Mark all like this in defun")
+                             '(:key "C-c . a" :description "Mark all like this")
+                             '(:key "C-c . <" :description "Mark previous like this")
+                             '(:key "C-c . >" :description "Mark next like this")))
+   #+END_SRC
+
+** Snippets
+
+   Yasnippets.
+   #+BEGIN_SRC emacs-lisp
+     (use-package yasnippet
+       :ensure t
+       :config
+       (setq yas-snippet-dirs '("~/.emacs.d/mysnippets"))
+       (setq yas-prompt-functions '(yas-ido-prompt))
+       (yas-global-mode 1)
+       (define-key yas-minor-mode-map (kbd "<tab>") nil)
+       (define-key yas-minor-mode-map (kbd "TAB") nil)
+       (define-key yas-minor-mode-map (kbd "C-c y") 'yas-expand)
+       (cheatsheet-add-group 'Yasnippet
+                             '(:key "C-c y" :description "Insert yasnippet")))
+   #+END_SRC
+
+** Miscellaneous
+   #+BEGIN_SRC emacs-lisp
+    (use-package crux
+      :ensure t
+      :bind (("<S-return>" . crux-smart-open-line)
+             ("<s-return>" . crux-smart-open-line-above)
+             ("s-$" . crux-sudo-edit)
+             ("s-<" . crux-move-beginning-of-line)
+             ("s-i" . crux-find-user-init-file)
+             ("s-j" . crux-top-join-line)
+             ("s-k" . crux-kill-whole-line)))
+   #+END_SRC
+
+   Cycle quotes type.
+   #+BEGIN_SRC emacs-lisp
+    (use-package cycle-quotes
+      :pin gnu
+      :ensure t
+      :bind (("C-'" . cycle-quotes)))
+   #+END_SRC
+
+   Expand selected region.
+   #+BEGIN_SRC emacs-lisp
+    (use-package expand-region
+      :ensure t
+      :bind (("C-<" . er/expand-region)))
+   #+END_SRC
+
+* Git
+
+** Magit
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package magit
+       :ensure t
+       :bind (("<f7>" . magit-status)
+              ("S-<f7>" . magit-blame)))
+   #+END_SRC
+
+** Time machine
+
+   Step through file history.
+   #+BEGIN_SRC emacs-lisp
+     (use-package git-timemachine
+       :ensure t
+       :init
+       (cheatsheet-add-group 'GitTimemachine
+                             '(:key "q" :description "Quit")
+                             '(:key "w" :description "Copy short hash of current version")
+                             '(:key "p" :description "Previous revision")
+                             '(:key "n" :description "Next revision")))
+   #+END_SRC
+
+** Messenger
+
+   Display last git commit message for current line.
+   #+BEGIN_SRC emacs-lisp
+     (use-package git-messenger
+       :ensure t
+       :bind (("s-<f7>" . git-messenger:popup-message))
+       :config
+       (setq git-messenger:show-detail t))
+   #+END_SRC
+
+** Config mode
+
+   Mode to edit git config files.
+   #+BEGIN_SRC emacs-lisp
+     (use-package gitconfig-mode
+       :ensure t)
+   #+END_SRC
+
+* Languages
+** Flycheck
+
+   Some needed support package...
+   #+BEGIN_SRC emacs-lisp
+     (use-package let-alist
+       :ensure t
+       :pin gnu)
+
+     (use-package exec-path-from-shell
+       :ensure t
+       :config
+       (exec-path-from-shell-initialize))
+   #+END_SRC
+
+   Flycheck:
+   - enable for all buffers.
+   - disable jshint checker for javascript.
+   #+BEGIN_SRC emacs-lisp
+     (use-package flycheck
+       :ensure t
+       :init
+       (add-hook 'after-init-hook #'global-flycheck-mode)
+       :config
+       (setq-default flycheck-disabled-checkers
+                     (append flycheck-disabled-checkers
+                             '(javascript-jshint)))
+       (flycheck-add-mode 'javascript-eslint 'web-mode)
+       (flycheck-add-mode 'javascript-eslint 'js-mode)
+       (flycheck-add-mode 'javascript-eslint 'js2-mode)
+       (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode))
+   #+END_SRC
+
+** Clojure
+*** Mode
+
+    Clojure.
+    #+BEGIN_SRC emacs-lisp
+      (use-package clojure-mode
+        :ensure t
+        :mode ("\\.clj\\'" . clojure-mode)
+        :init
+        (add-hook 'clojure-mode-hook
+                  (lambda ()
+                    (setq inferior-lisp-program "lein repl")))
+        :config
+        (setq clojure-indent-style :align-arguments)
+        (cheatsheet-add-group 'Clojure
+                              '(:key "C-c RET" :description "Refactor")
+                              '(:key "C-c c"   :description "Complete suggestions")
+                              '(:key "C-c M-J" :description "Cider Jack-in CLJS")
+                              '(:key "C-c C-k" :description "Cider load & compile file")
+                              '(:key "C-c C-c" :description "Cider execute top sexp")
+                              '(:key "C-x C-e" :description "Cider execute last sexp")))
+
+      (use-package clojure-mode-extra-font-locking
+        :ensure t)
+    #+END_SRC
+
+    Clojurescript.
+    #+BEGIN_SRC emacs-lisp
+      (use-package clojurescript-mode
+        :ensure t
+        :pin marmalade
+        :mode ("\\.cljs\\'" . clojurescript-mode))
+    #+END_SRC
+
+*** Flycheck
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package flycheck-clojure
+        :ensure t)
+    #+END_SRC
+
+*** Refactor
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package clj-refactor
+        :ensure t
+        :defer t
+        :init
+        (add-hook 'clojure-mode-hook
+                  (lambda ()
+                    (clj-refactor-mode 1)
+                    (cljr-add-keybindings-with-prefix "C-c RET")))
+        :config
+        (setq cljr-auto-sort-ns nil)
+        (setq cljr-favor-prefix-notation nil))
+    #+END_SRC
+
+*** Cider
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package cider
+        :pin melpa-stable
+        :ensure t
+        :defer t
+        :init
+        (add-hook 'clojure-mode-hook 'cider-mode)
+        :config
+        (flycheck-clojure-setup)
+        (setq cider-repl-pop-to-buffer-on-connect t)
+        ;; REPL history file
+        (setq cider-repl-history-file "~/.emacs.d/cider-history")
+        ;; nice pretty printing
+        (setq cider-repl-use-pretty-printing t)
+        ;; nicer font lock in REPL
+        (setq cider-repl-use-clojure-font-lock t)
+        ;; result prefix for the REPL
+        (setq cider-repl-result-prefix ";; => ")
+        ;; never ending REPL history
+        (setq cider-repl-wrap-history t)
+        ;; looong history
+        (setq cider-repl-history-size 3000)
+        ;; error buffer not popping up
+        (setq cider-show-error-buffer t)
+        (setq cider-auto-select-error-buffer nil)
+        ;; eldoc for clojure
+        (add-hook 'cider-mode-hook #'eldoc-mode))
+    #+END_SRC
+
+** Cucumber
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package feature-mode
+       :ensure t
+       :mode ("\\.feature\\'" . feature-mode))
+   #+END_SRC
+
+** Haskell
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package haskell-mode
+       :ensure t
+       :mode ("\\.hs\\'" . haskell-mode))
+   #+END_SRC
+
+** Javascript
+
+*** Mode
+
+    JS2 mode:
+    - add mocha package key bindings to js2 mode.
+    #+BEGIN_SRC emacs-lisp
+      (use-package js2-mode
+        :ensure t
+        :mode ("\\.js\\'"  . js2-jsx-mode)
+        :mode ("\\.jsx\\'" . js2-jsx-mode)
+        :mode ("\\.es6\\'" . js2-jsx-mode)
+        :bind (:map js2-mode-map
+                    ("C-c m i" . mocha-test-at-point)
+                    ("C-c m f" . mocha-test-file)
+                    ("C-c m p" . mocha-test-project))
+        :config
+        (cheatsheet-add-group 'Javascript
+                              '(:key "C-c m p" :description "Mocha test project")
+                              '(:key "C-c m f" :description "Mocha test file")
+                              '(:key "C-c m i" :description "Mocha test at point")
+                              '(:key "C-c n v" :description "NPM visit project file")
+                              '(:key "C-c n r" :description "NPM run")
+                              '(:key "C-c n l" :description "NPM list")
+                              '(:key "C-c n d" :description "NPM install save-dev")
+                              '(:key "C-c n s" :description "NPM install save")
+                              '(:key "C-c n n" :description "NPM init")
+                              '(:key "C-c RET" :description "Refactor"))
+        (setq js-indent-level 2)
+        (setq js2-strict-trailing-comma-warning nil)
+        (setq jsx-indent-level 2))
+    #+END_SRC
+
+*** Mocha
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package mocha
+        :ensure t
+        :commands (mocha-test-at-point
+                   mocha-test-file
+                   mocha-test-project)
+        :config
+        (setq mocha-command "./node_modules/.bin/mocha"))
+    #+END_SRC
+
+*** Npm
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package npm-mode
+        :ensure t
+        :config
+        (add-hook 'js2-mode-hook #'npm-mode))
+    #+END_SRC
+
+*** Refactor
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package js2-refactor
+        :ensure t
+        :config
+        (add-hook 'js2-mode-hook #'js2-refactor-mode)
+        (js2r-add-keybindings-with-prefix "C-c <return>"))
+    #+END_SRC
+
+** JSON
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package json-mode
+       :ensure t
+       :mode "\\.json\\'")
+   #+END_SRC
+
+** Lisp
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package lispy
+       :ensure t
+       :bind (:map lispy-mode-map
+                   ("M-[" . lispy-backward)
+                   ("M-]" . lispy-forward)
+                   ;; ("(" . self-insert-command)
+                   (")" . self-insert-command)
+                   ;; ("{" . self-insert-command)
+                   ("}" . self-insert-command)
+                   ("[" . self-insert-command)
+                   ("]" . self-insert-command)
+                   (";" . self-insert-command)
+                   ("\"" . self-insert-command)
+                   ("DEL" . backward-delete-char-untabify)
+                   ("M-DEL" . lispy-delete-backward))
+       :init
+       (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
+       (add-hook 'clojure-mode-hook (lambda () (lispy-mode 1)))
+       (add-hook 'clojurescript-mode-hook (lambda () (lispy-mode 1)))
+       (cheatsheet-add-group 'Lispy
+                             '(:key "p" :description "Eval (other window)")
+                             '(:key "E" :description "Eval and insert")
+                             '(:key "e" :description "Eval sexp")
+                             '(:key "C-2" :description "Arglist inline")
+                             '(:key "C-1" :description "Describe inline")
+                             '(:key "M-k" :description "Kill sentence")
+                             '(:key "M-d" :description "Kill word")
+                             '(:key "C-," :description "Kill at point")
+                             '(:key "xu" :description "Unbind")
+                             '(:key "xl" :description "Defun to lambda")
+                             '(:key "xi" :description "Conds to ifs")
+                             '(:key "xd" :description "Lambda to defun")
+                             '(:key "xc" :description "Ifs to cond")
+                             '(:key "xb" :description "Bind")
+                             '(:key "C" :description "Convolute")
+                             '(:key "R" :description "Raise following sexp (replace parent with sexp and followin siblings)")
+                             '(:key "r" :description "Raise sexp (replace parent with sexp)")
+                             '(:key "O" :description "Oneline")
+                             '(:key "M" :description "Multiline")
+                             '(:key "S" :description "Transform sexp into string")
+                             '(:key "/" :description "Splice into parent")
+                             '(:key "<" :description "Barf")
+                             '(:key ">" :description "Slurp")
+                             '(:key "t" :description "Teleport sexp")
+                             '(:key "w" :description "Move sexp up")
+                             '(:key "s" :description "Move sexp down")
+                             '(:key "M-DEL" :description "Delete sexp backward")
+                             '(:key "c" :description "Clone sexp below")
+                             '(:key "n" :description "Copy sexp")
+                             '(:key "M-m" :description "Mark symbol")
+                             '(:key "m" :description "Mark sexp")
+                             '(:key "i" :description "Indent")
+                             '(:key "M-," :description "Jump back")
+                             '(:key "F" :description "Follow : jump to first/marked symbol")
+                             '(:key "M-." :description "Jump to symbol")
+                             '(:key "g" :description "Jump to tag in current directory")
+                             '(:key "G" :description "Jump to tag in current file")
+                             '(:key "Q" :description "Jump to char in sexp")
+                             '(:key "q" :description "Jump to paren")
+                             '(:key "d" :description "Switch to other side of sexp")
+                             '(:key "A" :description "Beginning of defun")
+                             '(:key "M-]" :description "End of sexp")
+                             '(:key "M-[" :description "Beginning of sexp")
+                             '(:key "b" :description "Back history")
+                             '(:key "f" :description "Flow")
+                             '(:key "l" :description "Right")
+                             '(:key "h" :description "Left")
+                             '(:key "j" :description "Down")
+                             '(:key "k" :description "Up")))
+   #+END_SRC
+
+** PlantUML
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package plantuml-mode
+       :ensure t
+       :mode ("\\.plantuml\\'" . plantuml-mode))
+   #+END_SRC
+
+** SCSS
+
+   - disable compilation at save.
+   #+BEGIN_SRC emacs-lisp
+     (use-package scss-mode
+       :ensure t
+       :mode "\\.scss\\'"
+       :config
+       (setq scss-compile-at-save nil))
+   #+END_SRC
+
+* Org
+
+  Replace Emacs default org package with last distribution.
+  - tangle-on-save-org-mode-file :: auto-tangle org files on save.
+  - org-confirm-babel-evaluate :: do not prompt before code block evaluation.
+  - org-src-fontify-natively :: code block syntax highlighting.
+  - org-src-tab-acts-natively :: use language indent rules in code blocks.
+  - org-babel-do-load-languages :: enable default languages.
+  #+BEGIN_SRC emacs-lisp
+    (use-package org
+      :pin org
+      :ensure org-plus-contrib
+      :init
+      (add-hook 'after-save-hook 'eauc/tangle-current-org-file)
+      :config
+      (setq org-confirm-babel-evaluate nil
+            org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar"
+            org-src-fontify-natively t
+            org-src-tab-acts-natively t)
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((shell . t)
+         (js . t)
+         (emacs-lisp . t)
+         (calc . t)
+         ;; (perl . t)
+         ;; (scala . t)
+         (clojure . t)
+         (python . t)
+         (ruby . t)
+         (dot . t)
+         (css . t)
+         (plantuml . t)))
+      (cheatsheet-add-group 'Org
+
+                            '(:key "M-left/right" :description "Decrease/Increase header level")
+                            '(:key "C-c C-u" :description "Back to top level header")
+                            '(:key "C-c C-n" :description "Next header (any level)")
+                            '(:key "C-c C-p" :description "Previous header (any level)")
+                            '(:key "C-c C-f" :description "Next header (same level)")
+                            '(:key "C-c C-b" :description "Previous header (same level)")
+
+                            '(:key "C-c ^" :description "Table: sort rows by current col")
+                            '(:key "M-S-<right>" :description "Table: insert column to the left")
+                            '(:key "M-S-<left>" :description "Table: kill column")
+                            '(:key "M-<left/right>" :description "Table: move column left/right")
+                            '(:key "C-c -" :description "Table: insert horizontal line below")
+                            '(:key "M-S-<down>" :description "Table: insert row below")
+                            '(:key "M-S-<up>" :description "Table: kill row")
+                            '(:key "M-<up/down>" :description "Table: move row up/down")
+
+                            '(:key "M-<RET>" :description "List: insert new item at same level")
+                            '(:key "S-<up>" :description "List: previous item")
+                            '(:key "S-<down>" :description "List: next item")
+                            '(:key "S-<left/right>" :description "List: cycle bullet type")
+                            '(:key "M-<up>" :description "List: move item up")
+                            '(:key "M-<down>" :description "List: move item down")
+                            '(:key "M-<left>" :description "List: decrease item indentation")
+                            '(:key "M-<right>" :description "List: increase item indentation")
+                            '(:key "M-S-<left>" :description "List: decrease item+children indentation")
+                            '(:key "M-S-<right>" :description "List: increase item+children indentation")
+
+                            '(:key "<s-tab" :description "Insert source code block")
+                            '(:key "C-c '" :description "Edit code block")
+                            '(:key "C-c C-c" :description "Evaluate code block")
+                            '(:key "C-c C-e" :description "Export file")
+                            '(:key "C-c C-v t" :description "Tangle file")
+
+                            '(:key "C-c C-x C-v" :description "Toggle inline images")
+                            '(:key "C-c C-x C-M-v" :description "Refresh inline images")
+
+                            '(:key "C-c C-o" :description "Follow link")
+                            '(:key "C-c C-l" :description "Create/edit link")))
+  #+END_SRC
+
+** Bullets
+
+   UTF-8 bullets.
+   #+BEGIN_SRC emacs-lisp
+     (use-package org-bullets
+       :ensure t
+       :config
+       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+   #+END_SRC
+
+** Exports
+
+   Confluence wiki.
+   #+BEGIN_SRC emacs-lisp
+     (use-package ox-confluence
+       :load-path "~/.emacs.d/org-ox-confluence/")
+   #+END_SRC
+
+   BB code.
+   #+BEGIN_SRC emacs-lisp
+     ;; (use-package ox-bbcode
+     ;;      :load-path "~/.emacs.d/org-ox-bbcode/")
+   #+END_SRC
+
+   Latex beamer presentations.
+   #+BEGIN_SRC emacs-lisp
+     (require 'ox-latex)
+     (add-to-list 'org-latex-classes
+                  '("beamer"
+                    "\\documentclass\[presentation\]\{beamer\}"
+                    ("\\section\{%s\}" . "\\section*\{%s\}")
+                    ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
+                    ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
+   #+END_SRC
+
+   Markdown.
+   #+BEGIN_SRC emacs-lisp
+     (require 'ox-md)
+   #+END_SRC
+
+   Reveal.js presentations.
+   #+BEGIN_SRC emacs-lisp
+     (use-package ox-reveal
+       :pin melpa
+       :ensure t)
+   #+END_SRC
+
+** Syntax highlighting
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package htmlize
+       :ensure t)
+   #+END_SRC
+
+** Table of contents.
+
+   Generate TOC at top of org files.
+   #+BEGIN_SRC emacs-lisp
+     ;; (use-package toc-org
+     ;;   :ensure t
+     ;;   :init
+     ;;   (add-hook 'org-mode-hook 'toc-org-enable))
+   #+END_SRC
+
+* Miscellaneous Tools
+
+** Cheatsheet
+
+   Emacs cheat sheet.
+   #+BEGIN_SRC emacs-lisp
+     (use-package cheatsheet
+       :pin melpa
+       :ensure t
+       :bind (("<f8>" . cheatsheet-show))
+       :config
+       (cheatsheet-add-group 'Commons
+                             '(:key "Spe-i"  :description "Edit config file")
+                             '(:key "C-F10"  :description "Kill emacs")
+                             '(:key "F10"    :description "Kill buffer")
+                             '(:key "F8"     :description "Cheatsheet")
+                             '(:key "Spe-F7" :description "Git message popup")
+                             '(:key "S-F7"   :description "MaGit blame")
+                             '(:key "C-F7"   :description "Git complete")
+                             '(:key "F7"     :description "MaGit status")
+                             '(:key "C-F6"   :description "Pop mark global")
+                             '(:key "F6"     :description "Pop mark")
+                             '(:key "C-S-F5" :description "Jump to named bookmark")
+                             '(:key "S-F5"   :description "Set named bookmark")
+                             '(:key "C-F5"   :description "Jump to bookmark")
+                             '(:key "F5"     :description "Set bookmark")
+                             '(:key "C-F4"   :description "Indent Buffer")
+                             '(:key "F4"     :description "Comment")
+                             '(:key "S-F3"   :description "Ido switch buffer")
+                             '(:key "C-F3"   :description "Buffer menu other window")
+                             '(:key "F3"     :description "Other window")
+                             '(:key "C-F2"   :description "Write file")
+                             '(:key "F2"     :description "Save buffer")
+                             '(:key "F1"     :description "Find file"))
+       (cheatsheet-add-group 'Edition
+                             '(:key "C-m"     :description "Call macro")
+                             '(:key "C-<"     :description "Expand region")
+                             '(:key "C-'"     :description "Cycle quotes")
+                             '(:key "S-RET"   :description "Open line below")
+                             '(:key "Spe-RET" :description "Open line above")
+                             '(:key "S-SPC"   :description "Just one space")
+                             '(:key "Spe-k"   :description "Kill whole line")
+                             '(:key "Spe-<"   :description "Move beginning of line"))
+       (cheatsheet-add-group 'Jump
+                             '(:key "C-c j b" :description "Jump back")
+                             '(:key "C-c j o" :description "Jump (other window)")
+                             '(:key "C-c j g" :description "Jump to definition")
+                             '(:key "C-c a"   :description "Jump to word")))
+   #+END_SRC
+
+** Google
+
+   Search in Google.
+   #+BEGIN_SRC emacs-lisp
+     (use-package google-this
+       :ensure t
+       :config
+       (google-this-mode 1)
+       (cheatsheet-add-group 'Google
+                             '(:key "C-c / SPC" :description "Google this")
+                             '(:key "C-c / g"   :description "Google this lucky")
+                             '(:key "C-c / e"   :description "Google this error")))
+   #+END_SRC
+
+** Rest Client
+
+   Package to make HTTP request.
+   #+BEGIN_SRC emacs-lisp
+     (use-package restclient
+       :ensure t
+       :pin melpa
+       :mode ("\\.http\\'" . restclient-mode)
+       :config
+       (cheatsheet-add-group 'Restclient
+                             '(:key "C-c C-c" :description "Run query under point & switch focus")
+                             '(:key "C-c C-v" :description "Run query under point")
+                             '(:key "C-c C-p" :description "Previous query")
+                             '(:key "C-c C-n" :description "Next query")
+                             '(:key "C-c C-." :description "Mark query under point")
+                             '(:key "C-c C-u" :description "Copy query under point as CURL")))
+   #+END_SRC
+
+** Try
+
+   Try emacs packages without installation.
+   #+BEGIN_SRC emacs-lisp
+     (use-package try
+       :ensure t
+       :pin melpa)
+   #+END_SRC
+

@@ -15,3 +15,4 @@ npm-debug.log
 .emacs.d/*recentf*
 .emacs.d/semanticdb/
 .emacs.d/network-security.data
+.emacs.d/myinit.el
