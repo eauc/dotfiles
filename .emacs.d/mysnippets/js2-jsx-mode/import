@@ -1,6 +1,5 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # name: import
-# key: imp
-# binding: <f5> m
+# binding: C-c y m
 # --
 import $1${2:, }${3:\{ $4 \}} from '$5';

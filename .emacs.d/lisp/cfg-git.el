@@ -5,8 +5,7 @@
                         '(:key "q" :description "Quit")
                         '(:key "w" :description "Copy short hash of current version")
                         '(:key "p" :description "Previous revision")
-                        '(:key "n" :description "Next revision")
-                        '(:key "Spe-F7" :description "Last commit message for current line")))
+                        '(:key "n" :description "Next revision")))
 
 (use-package gitconfig-mode
   :ensure t)

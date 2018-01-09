@@ -41,7 +41,7 @@
                 "cfg-ido.el"
                 "cfg-js.el"
                 "cfg-lisp.el"
-                ;; "cfg-mark.el"
+                "cfg-mark.el"
                 "cfg-org.el"
                 ;; "cfg-paredit.el"
                 "cfg-plantuml.el"
@@ -53,7 +53,7 @@
                 ;; "cfg-smartparens.el"
                 "cfg-smex.el"
                 "cfg-tagedit.el"
-                "cfg-undo-tree.el"
+                ;; "cfg-undo-tree.el"
                 "cfg-yasnippet.el"))
   (load (concat dotfiles-lisp-dir file)))
 
@@ -74,44 +74,21 @@
  '(ansi-color-names-vector
    ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
  '(case-fold-search t)
- '(clojure-indent-style :align-arguments)
  '(column-number-mode t)
  '(custom-buffer-indent 2)
  '(custom-enabled-themes (quote (deeper-blue)))
- '(dired-filter-saved-filters
-   (quote
-    (("es6"
-      (not
-       (or
-        (extension . "map")
-        (extension . "js")))))))
- '(dired-subtree-use-backgrounds nil)
  '(display-time-mode t)
  '(electric-indent-mode t)
  '(fringe-mode 0 nil (fringe))
  '(global-subword-mode t)
  '(indent-tabs-mode nil)
- '(js-indent-level 2)
- '(js2-basic-offset 2)
- '(js2-strict-trailing-comma-warning nil)
- '(jsx-indent-level 2)
- '(org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
- '(org-src-lang-modes
+ '(package-selected-packages
    (quote
-    (("ocaml" . tuareg)
-     ("elisp" . emacs-lisp)
-     ("ditaa" . artist)
-     ("asymptote" . asy)
-     ("dot" . fundamental)
-     ("sqlite" . sql)
-     ("calc" . fundamental)
-     ("C" . c)
-     ("cpp" . c++)
-     ("C++" . c++)
-     ("screen" . shell-script)
-     ("js" . js2))))
+    (back-button visible-mark undo-tree tagedit smex scss-mode nyan-mode restclient rainbow-delimiters plantuml-mode toc-org htmlize inf-ruby ox-reveal which-key use-package try realgud pcre2el org-plus-contrib npm-mode mocha mc-extras magit lispy json-mode js2-refactor haskell-mode google-this gitconfig-mode git-timemachine git-messenger flycheck-clojure feature-mode expand-region exec-path-from-shell dumb-jump discover dired-subtree dired-filter cycle-quotes crux company clojurescript-mode clojure-mode-extra-font-locking clj-refactor cheatsheet browse-kill-ring)))
+ '(safe-local-variable-values
+   (quote
+    ((cider-cljs-lein-repl . "(do (require 'figwheel-sidecar.repl-api) (figwheel-sidecar.repl-api/start-figwheel!) (figwheel-sidecar.repl-api/cljs-repl))"))))
  '(scroll-bar-mode nil)
- '(scss-compile-at-save nil)
  '(show-paren-mode t)
  '(show-trailing-whitespace t)
  '(standard-indent 2)
@@ -119,6 +96,7 @@
  '(web-mode-code-indent-offset 2)
  '(web-mode-css-indent-offset 2)
  '(web-mode-markup-indent-offset 2))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

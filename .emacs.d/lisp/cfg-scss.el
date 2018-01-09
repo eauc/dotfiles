@@ -1,3 +1,5 @@
 (use-package scss-mode
   :ensure t
-  :mode "\\.scss\\'")
+  :mode "\\.scss\\'"
+  :config
+  (setq scss-compile-at-save nil))

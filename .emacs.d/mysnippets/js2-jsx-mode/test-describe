@@ -1,8 +1,7 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # name: test-describe
 # group: test
-# key: des
-# binding: <f5> d
+# binding: C-c y d
 # --
 describe('$1', function() {
 ${2:beforeEach(function() {

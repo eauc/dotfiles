@@ -1,8 +1,7 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # name: test-context
 # group: test
-# key: cx
-# binding: <f5> c
+# binding: C-c y c
 # --
 context('when $1', function() {
 $2;

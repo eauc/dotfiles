@@ -14,8 +14,10 @@
               (define-clojure-indent (fact 1))
               (define-clojure-indent (facts 1))))
   :config
+  (setq clojure-indent-style :align-arguments)
   (cheatsheet-add-group 'Clojure
                         '(:key "C-c RET" :description "Refactor")
+                        '(:key "C-c c"   :description "Complete suggestions")
                         '(:key "C-c M-J" :description "Cider Jack-in CLJS")
                         '(:key "C-c C-k" :description "Cider load & compile file")
                         '(:key "C-c C-c" :description "Cider execute top sexp")

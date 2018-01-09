@@ -1,8 +1,7 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # name: test-beforeEach
 # group: test
-# key: bef
-# binding: <f5> b
+# binding: C-c y b
 # --
 beforeEach(function() {
 `yas-selected-text`$0

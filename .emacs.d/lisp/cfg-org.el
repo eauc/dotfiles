@@ -9,6 +9,7 @@
   (add-hook 'after-save-hook 'tangle-on-save-org-mode-file)
   :config
   (setq org-confirm-babel-evaluate nil
+        org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar"
         org-src-fontify-natively t
         org-src-tab-acts-natively t)
   (org-babel-do-load-languages
@@ -91,7 +92,7 @@
 (use-package htmlize
   :ensure t)
 
-(use-package toc-org
-  :ensure t
-  :init
-  (add-hook 'org-mode-hook 'toc-org-enable))
+;; (use-package toc-org
+;;   :ensure t
+;;   :init
+;;   (add-hook 'org-mode-hook 'toc-org-enable))
