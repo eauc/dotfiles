@@ -63,16 +63,16 @@
    PERL regexp everywhere.
    #+BEGIN_SRC emacs-lisp
      (use-package pcre2el
-             :ensure t
-             :config (pcre-mode 1))
+       :ensure t
+       :config
+       (pcre-mode 1))
    #+END_SRC
 
    Rainbow delimiters.
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-delimiters
        :ensure t
-       :init
-       (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+       :hook (prog-mode . rainbow-delimiters-mode))
    #+END_SRC
 
    Remember/suggest commands between sessions.
@@ -80,16 +80,17 @@
      (use-package smex
        :ensure t
        :bind ("M-x" . smex)
+       :custom
+       (smex-save-file (concat user-emacs-directory ".smex-items"))
        :config
-       (setq smex-save-file (concat user-emacs-directory ".smex-items"))
        (smex-initialize))
    #+END_SRC
 
    Shorten buffer names but keep uniqueness.
    #+BEGIN_SRC emacs-lisp
      (use-package uniquify
-       :config
-       (setq uniquify-buffer-name-style 'forward))
+       :custom
+       (uniquify-buffer-name-style 'post-forward "Eg. name|bar/mumble"))
    #+END_SRC
 
    Display available key bindings.
@@ -209,16 +210,15 @@
 
 * Directory browser
 
+  Standard dired:
   - hide details when opening dired buffer.
-  - do not use background color on subtrees.
   #+BEGIN_SRC emacs-lisp
+    (defun eauc/dired-init ()
+      "Init dired buffer."
+      (dired-hide-details-mode))
+
     (use-package dired
-      :init
-      (add-hook 'dired-mode-hook
-                (lambda ()
-                  (dired-hide-details-mode)))
-      :config
-      (setq dired-subtree-use-backgrounds nil))
+      :hook (dired-mode . eauc/dired-init))
   #+END_SRC
 
   Embedded subtrees.
@@ -230,7 +230,9 @@
                   ("C-i" . dired-subtree-insert)
                   ("C-k" . dired-subtree-remove)
                   ("C-<up>" . dired-subtree-beginning)
-                  ("C-<down>" . dired-subtree-end)))
+                  ("C-<down>" . dired-subtree-end))
+      :custom
+      (dired-subtree-use-backgrounds nil "Do not use background color for subtrees"))
   #+END_SRC
 
   Filter trees.
@@ -262,13 +264,13 @@
    #+BEGIN_SRC emacs-lisp
      (use-package company
        :ensure t
-       :init
-       (add-hook 'cider-repl-mode-hook #'company-mode)
-       (add-hook 'cider-mode-hook #'company-mode)
+       :hook
+       ((cider-repl-mode . company-mode)
+        (cider-mode . company-mode))
        :bind
        (("C-c c" . company-complete))
-       :config
-       (setq company-idle-delay nil))
+       :custom
+       (company-idle-delay nil "Only complete if requested"))
    #+END_SRC
 
    Completion from git.
@@ -312,8 +314,9 @@
    #+BEGIN_SRC emacs-lisp
      (use-package visible-mark
        :ensure t
+       :custom
+       (visible-mark-max 5 "Maximum highlighted marks backwards")
        :config
-       (setq visible-mark-max 5)
        (global-visible-mark-mode 1))
    #+END_SRC
 
@@ -352,9 +355,10 @@
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
        :ensure t
+       :custom
+       (yas-snippet-dirs '("~/.emacs.d/mysnippets"))
+       (yas-prompt-functions '(yas-ido-prompt) "Use ido in yasnippet prompt")
        :config
-       (setq yas-snippet-dirs '("~/.emacs.d/mysnippets"))
-       (setq yas-prompt-functions '(yas-ido-prompt))
        (yas-global-mode 1)
        (define-key yas-minor-mode-map (kbd "<tab>") nil)
        (define-key yas-minor-mode-map (kbd "TAB") nil)
@@ -415,8 +419,8 @@
      (use-package git-messenger
        :ensure t
        :bind (("s-<f7>" . git-messenger:popup-message))
-       :config
-       (setq git-messenger:show-detail t))
+       :custom
+       (git-messenger:show-detail t))
    #+END_SRC
 
 ** Config mode
@@ -448,8 +452,8 @@
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck
        :ensure t
-       :init
-       (add-hook 'after-init-hook #'global-flycheck-mode)
+       :hook
+       (after-init . global-flycheck-mode)
        :config
        (setq-default flycheck-disabled-checkers
                      (append flycheck-disabled-checkers
@@ -465,15 +469,17 @@
 
     Clojure.
     #+BEGIN_SRC emacs-lisp
+      (defun eauc/clojure-mode-init ()
+        "Initialize Clojure mode."
+        (setq inferior-lisp-program "lein repl"))
+
       (use-package clojure-mode
         :ensure t
         :mode ("\\.clj\\'" . clojure-mode)
-        :init
-        (add-hook 'clojure-mode-hook
-                  (lambda ()
-                    (setq inferior-lisp-program "lein repl")))
-        :config
-        (setq clojure-indent-style :align-arguments))
+        :hook
+        (clojure-mode . clojure-mode-init)
+        :custom
+        (clojure-indent-style :align-arguments))
 
       (use-package clojure-mode-extra-font-locking
         :ensure t)
@@ -497,17 +503,19 @@
 *** Refactor
 
     #+BEGIN_SRC emacs-lisp
+      (defun eauc/clojure-refactor-init ()
+        "Initialize Clojure refactor."
+        (clj-refactor-mode 1)
+        (cljr-add-keybindings-with-prefix "C-c RET"))
+
       (use-package clj-refactor
         :ensure t
         :defer t
-        :init
-        (add-hook 'clojure-mode-hook
-                  (lambda ()
-                    (clj-refactor-mode 1)
-                    (cljr-add-keybindings-with-prefix "C-c RET")))
-        :config
-        (setq cljr-auto-sort-ns nil)
-        (setq cljr-favor-prefix-notation nil))
+        :hook
+        (clojure-mode . eauc/clojure-refactor-init)
+        :custom
+        (cljr-auto-sort-ns nil)
+        (cljr-favor-prefix-notation nil))
     #+END_SRC
 
 *** Cider
@@ -517,28 +525,21 @@
         :pin melpa-stable
         :ensure t
         :defer t
-        :init
-        (add-hook 'clojure-mode-hook 'cider-mode)
+        :hook
+        ((clojure-mode . cider-mode)
+         (cider-mode . eldoc-mode))
         :config
         (flycheck-clojure-setup)
-        (setq cider-repl-pop-to-buffer-on-connect t)
-        ;; REPL history file
-        (setq cider-repl-history-file "~/.emacs.d/cider-history")
-        ;; nice pretty printing
-        (setq cider-repl-use-pretty-printing t)
-        ;; nicer font lock in REPL
-        (setq cider-repl-use-clojure-font-lock t)
-        ;; result prefix for the REPL
-        (setq cider-repl-result-prefix ";; => ")
-        ;; never ending REPL history
-        (setq cider-repl-wrap-history t)
-        ;; looong history
-        (setq cider-repl-history-size 3000)
-        ;; error buffer not popping up
-        (setq cider-show-error-buffer t)
-        (setq cider-auto-select-error-buffer nil)
-        ;; eldoc for clojure
-        (add-hook 'cider-mode-hook #'eldoc-mode))
+        :custom
+        (cider-repl-pop-to-buffer-on-connect t)
+        (cider-repl-history-file "~/.emacs.d/cider-history" "REPL history file")
+        (cider-repl-use-pretty-printing t "nice pretty printing")
+        (cider-repl-use-clojure-font-lock t "nicer font lock in REPL")
+        (cider-repl-result-prefix ";; => " "result prefix for the REPL")
+        (cider-repl-wrap-history t "never ending REPL history")
+        (cider-repl-history-size 3000 "looong history")
+        (cider-show-error-buffer t "error buffer not popping up")
+        (cider-auto-select-error-buffer nil "error buffer not popping up"))
     #+END_SRC
 
 ** Cucumber
@@ -573,10 +574,10 @@
                     ("C-c m i" . mocha-test-at-point)
                     ("C-c m f" . mocha-test-file)
                     ("C-c m p" . mocha-test-project))
-        :config
-        (setq js-indent-level 2)
-        (setq js2-strict-trailing-comma-warning nil)
-        (setq jsx-indent-level 2))
+        :custom
+        (js-indent-level 2)
+        (js2-strict-trailing-comma-warning nil)
+        (jsx-indent-level 2))
     #+END_SRC
 
 *** Mocha
@@ -587,8 +588,8 @@
         :commands (mocha-test-at-point
                    mocha-test-file
                    mocha-test-project)
-        :config
-        (setq mocha-command "./node_modules/.bin/mocha"))
+        :custom
+        (mocha-command "./node_modules/.bin/mocha"))
     #+END_SRC
 
 *** Npm
@@ -596,8 +597,8 @@
     #+BEGIN_SRC emacs-lisp
       (use-package npm-mode
         :ensure t
-        :config
-        (add-hook 'js2-mode-hook #'npm-mode))
+        :hook
+        (js2-mode . npm-mode))
     #+END_SRC
 
 *** Refactor
@@ -605,8 +606,9 @@
     #+BEGIN_SRC emacs-lisp
       (use-package js2-refactor
         :ensure t
+        :hook
+        (js2-mode . js2-refactor-mode)
         :config
-        (add-hook 'js2-mode-hook #'js2-refactor-mode)
         (js2r-add-keybindings-with-prefix "C-c <return>"))
     #+END_SRC
 
@@ -621,6 +623,10 @@
 ** Lisp
 
    #+BEGIN_SRC emacs-lisp
+     (defun eauc/lispy-activate ()
+       "Activate lispy mode."
+       (lispy-mode 1))
+
      (use-package lispy
        :ensure t
        :bind (:map lispy-mode-map
@@ -636,10 +642,10 @@
                    ("\"" . self-insert-command)
                    ("DEL" . backward-delete-char-untabify)
                    ("M-DEL" . lispy-delete-backward))
-       :init
-       (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
-       (add-hook 'clojure-mode-hook (lambda () (lispy-mode 1)))
-       (add-hook 'clojurescript-mode-hook (lambda () (lispy-mode 1))))
+       :hook
+       ((emacs-lisp-mode . eauc/lispy-activate)
+        (clojure-mode . eauc/lispy-activate)
+        (clojurescript-mode . eauc/lispy-activate)))
    #+END_SRC
 
 ** PlantUML
@@ -652,34 +658,29 @@
 
 ** SCSS
 
-   - disable compilation at save.
    #+BEGIN_SRC emacs-lisp
      (use-package scss-mode
        :ensure t
        :mode "\\.scss\\'"
-       :config
-       (setq scss-compile-at-save nil))
+       :custom
+       (scss-compile-at-save nil "disable auto-compilation on save"))
    #+END_SRC
 
 * Org
 
   Replace Emacs default org package with last distribution.
-  - tangle-on-save-org-mode-file :: auto-tangle org files on save.
-  - org-confirm-babel-evaluate :: do not prompt before code block evaluation.
-  - org-src-fontify-natively :: code block syntax highlighting.
-  - org-src-tab-acts-natively :: use language indent rules in code blocks.
-  - org-babel-do-load-languages :: enable default languages.
   #+BEGIN_SRC emacs-lisp
     (use-package org
       :pin org
       :ensure org-plus-contrib
-      :init
-      (add-hook 'after-save-hook 'eauc/tangle-current-org-file)
+      :hook
+      (after-save . eauc/tangle-current-org-file)
+      :custom
+      (org-confirm-babel-evaluate nil "auto-tangle org files on save")
+      (org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar" "do not prompt before code block evaluation")
+      (org-src-fontify-natively t "code block syntax highlighting")
+      (org-src-tab-acts-natively t "use language indent rules in code blocks")
       :config
-      (setq org-confirm-babel-evaluate nil
-            org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar"
-            org-src-fontify-natively t
-            org-src-tab-acts-natively t)
       (org-babel-do-load-languages
        'org-babel-load-languages
        '((shell . t)
@@ -700,10 +701,14 @@
 
    UTF-8 bullets.
    #+BEGIN_SRC emacs-lisp
+     (defun eauc/org-bullets-activate ()
+       "Activate org bullets."
+       (org-bullets-mode 1))
+
      (use-package org-bullets
        :ensure t
-       :config
-       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+       :hook
+       (org-mode . eauc/org-bullets-activate))
    #+END_SRC
 
 ** Exports
@@ -736,16 +741,14 @@
      (require 'ox-md)
    #+END_SRC
 
-   Reveal.js presentations:
-   - org-reveal-root :: where to get revealJS lib.
-   - org-reveal-mathjax :: enable latex formula in presentations.
+   Reveal.js presentations.
    #+BEGIN_SRC emacs-lisp
      (use-package ox-reveal
        :pin melpa
        :ensure t
-       :config
-       (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
-       (setq org-reveal-mathjax t))
+       :custom
+       (org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/" "where to get revealJS lib")
+       (org-reveal-mathjax t "enable latex formulae in presentations"))
    #+END_SRC
 
 ** Syntax highlighting
@@ -761,8 +764,8 @@
    #+BEGIN_SRC emacs-lisp
      ;; (use-package toc-org
      ;;   :ensure t
-     ;;   :init
-     ;;   (add-hook 'org-mode-hook 'toc-org-enable))
+     ;;   :hook
+     ;;   (org-mode . toc-org-enable))
    #+END_SRC
 
 * Miscellaneous Tools
