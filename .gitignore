@@ -16,3 +16,4 @@ npm-debug.log
 .emacs.d/semanticdb/
 .emacs.d/network-security.data
 .emacs.d/myinit.el
+.emacs.d/cheatsheet.el
