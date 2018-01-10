@@ -16,6 +16,18 @@
 
 ** UI tweaks
 
+   Theme.
+   #+BEGIN_SRC emacs-lisp
+     (setq custom-enabled-themes (quote (deeper-blue)))
+     (setq ansi-color-names-vector
+           ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
+   #+END_SRC
+
+   Hide toolbar.
+   #+BEGIN_SRC emacs-lisp
+     (tool-bar-mode -1)
+   #+END_SRC
+
    Display line numbers.
    #+BEGIN_SRC emacs-lisp
      (global-linum-mode 1)
@@ -24,6 +36,21 @@
    Highlight current line.
    #+BEGIN_SRC emacs-lisp
      (global-hl-line-mode 1)
+   #+END_SRC
+
+   Hide fringe.
+   #+BEGIN_SRC emacs-lisp
+     (fringe-mode -1)
+   #+END_SRC
+
+   Display column number in mode line.
+   #+BEGIN_SRC emacs-lisp
+     (setq column-number-mode t)
+   #+END_SRC
+
+   Display time in mode line.
+   #+BEGIN_SRC emacs-lisp
+     (display-time-mode 1)
    #+END_SRC
 
    Highlight matching parens.
@@ -120,6 +147,11 @@
      (setq scroll-conservatively 100)
    #+END_SRC
 
+   Hide default scrollbar.
+   #+BEGIN_SRC emacs-lisp
+     (scroll-bar-mode -1)
+   #+END_SRC
+
    Nyancat scrollbar.
    #+BEGIN_SRC emacs-lisp
      (use-package nyan-mode
@@ -129,6 +161,13 @@
 
      (setq scroll-margin 8)
      (setq scroll-conservatively 100)
+   #+END_SRC
+
+** Search
+
+   Search ignore case.
+   #+BEGIN_SRC emacs-lisp
+     (setq case-fold-search t)
    #+END_SRC
 
 ** Global keybindings
@@ -257,6 +296,16 @@
 
 * Edition
 
+  Move cursor by subword.
+  #+BEGIN_SRC emacs-lisp
+    (global-subword-mode)
+  #+END_SRC
+
+  Show trailing whitespace.
+  #+BEGIN_SRC emacs-lisp
+    (setq show-trailing-whitespace t)
+  #+END_SRC
+
 ** Completion
 
    Hippie auto-complete.
@@ -289,6 +338,35 @@
      (use-package git-complete
        :load-path "~/.emacs.d/git-complete/"
        :bind (("C-<f7>" . git-complete)))
+   #+END_SRC
+
+** Indent
+
+   Automatic indentation.
+   #+BEGIN_SRC emacs-lisp
+     (electric-indent-mode +1)
+   #+END_SRC
+
+   Indent with space.
+   #+BEGIN_SRC emacs-lisp
+     (setq indent-tabs-mode nil)
+   #+END_SRC
+
+   Default indent size.
+   #+BEGIN_SRC emacs-lisp
+     (setq standard-indent 2)
+   #+END_SRC
+
+   Nested groups.
+   #+BEGIN_SRC emacs-lisp
+     (setq custom-buffer-indent 2)
+   #+END_SRC
+
+   Web mode specifics.
+   #+BEGIN_SRC emacs-lisp
+     (setq web-mode-code-indent-offset 2)
+     (setq web-mode-css-indent-offset 2)
+     (setq web-mode-markup-indent-offset 2)
    #+END_SRC
 
 ** Jump

@@ -31,31 +31,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
- '(case-fold-search t)
- '(column-number-mode t)
- '(custom-buffer-indent 2)
- '(custom-enabled-themes (quote (deeper-blue)))
- '(display-time-mode t)
- '(electric-indent-mode t)
- '(fringe-mode 0 nil (fringe))
- '(global-subword-mode t)
- '(indent-tabs-mode nil)
  '(package-selected-packages
    (quote
     (org-bullets back-button visible-mark undo-tree tagedit smex scss-mode nyan-mode restclient rainbow-delimiters plantuml-mode toc-org htmlize inf-ruby ox-reveal which-key use-package try realgud pcre2el org-plus-contrib npm-mode mocha mc-extras magit lispy json-mode js2-refactor haskell-mode google-this gitconfig-mode git-timemachine git-messenger flycheck-clojure feature-mode expand-region exec-path-from-shell dumb-jump discover dired-subtree dired-filter cycle-quotes crux company clojurescript-mode clojure-mode-extra-font-locking clj-refactor cheatsheet browse-kill-ring)))
  '(safe-local-variable-values
    (quote
-    ((cider-cljs-lein-repl . "(do (require 'figwheel-sidecar.repl-api) (figwheel-sidecar.repl-api/start-figwheel!) (figwheel-sidecar.repl-api/cljs-repl))"))))
- '(scroll-bar-mode nil)
- '(show-paren-mode t)
- '(show-trailing-whitespace t)
- '(standard-indent 2)
- '(tool-bar-mode nil)
- '(web-mode-code-indent-offset 2)
- '(web-mode-css-indent-offset 2)
- '(web-mode-markup-indent-offset 2))
+    ((cider-cljs-lein-repl . "(do (require 'figwheel-sidecar.repl-api) (figwheel-sidecar.repl-api/start-figwheel!) (figwheel-sidecar.repl-api/cljs-repl))")))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
