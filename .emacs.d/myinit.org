@@ -866,11 +866,16 @@
      (require 'ox-md)
    #+END_SRC
 
-   Reveal.js presentations.
+   Reveal.js presentations:
+   - org-reveal-root :: where to get revealJS lib.
+   - org-reveal-mathjax :: enable latex formula in presentations.
    #+BEGIN_SRC emacs-lisp
      (use-package ox-reveal
        :pin melpa
-       :ensure t)
+       :ensure t
+       :config
+       (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
+       (setq org-reveal-mathjax t))
    #+END_SRC
 
 ** Syntax highlighting
