@@ -38,8 +38,8 @@
 
    Usefull on small screen to split windows vertically
    #+BEGIN_SRC emacs-lisp
-   ;; (setq split-height-threshold nil)
-   ;; (setq split-width-threshold 200)
+     ;; (setq split-height-threshold nil)
+     ;; (setq split-width-threshold 200)
    #+END_SRC
 
    Discover Emacs functions.
@@ -53,11 +53,11 @@
    Menu suggestions.
    - enable partial matching.
    #+BEGIN_SRC emacs-lisp
-   (ido-mode 1)
-   (setq ido-everywhere t)
-   (setq ido-enable-flex-matching t)
-   (setq ido-auto-merge-work-directories-length -1)
-   (setq ido-use-virtual-buffers t)
+     (ido-mode 1)
+     (setq ido-everywhere t)
+     (setq ido-enable-flex-matching t)
+     (setq ido-auto-merge-work-directories-length -1)
+     (setq ido-use-virtual-buffers t)
    #+END_SRC
 
    PERL regexp everywhere.
@@ -72,7 +72,18 @@
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-delimiters
        :ensure t
-       :hook (prog-mode . rainbow-delimiters-mode))
+       :hook (prog-mode . rainbow-delimiters-mode)
+       :custom-face
+       (rainbow-delimiters-depth-1-face ((t (:foreground "green" :weight bold))))
+       (rainbow-delimiters-depth-2-face ((t (:foreground "magenta" :weight bold))))
+       (rainbow-delimiters-depth-3-face ((t (:foreground "yellow" :weight normal))))
+       (rainbow-delimiters-depth-4-face ((t (:foreground "dodger blue" :weight bold))))
+       (rainbow-delimiters-depth-5-face ((t (:foreground "chocolate" :weight bold))))
+       (rainbow-delimiters-depth-6-face ((t (:foreground "SpringGreen1" :weight bold))))
+       (rainbow-delimiters-depth-7-face ((t (:foreground "magenta" :weight bold))))
+       (rainbow-delimiters-depth-8-face ((t (:foreground "green" :weight bold))))
+       (rainbow-delimiters-depth-9-face ((t (:foreground "dodger blue" :weight bold))))
+       (rainbow-delimiters-unmatched-face ((t (:foreground "red" :weight bold)))))
    #+END_SRC
 
    Remember/suggest commands between sessions.
@@ -124,7 +135,7 @@
 
    Emacs interprets =C-m= as =RET=. Disable this.
    #+BEGIN_SRC emacs-lisp
-   (define-key input-decode-map [?\C-m] [C-m])
+     (define-key input-decode-map [?\C-m] [C-m])
    #+END_SRC
 
    Common bindings.
@@ -163,11 +174,11 @@
 
    Example of custom keymap.
    #+BEGIN_SRC emacs-lisp
-   ;; (progn
-   ;;   ;; define a prefix keymap
-   ;;   (define-prefix-command 'my-modes-key-map)
-   ;;   (define-key my-modes-key-map (kbd "a") 'eauc/align-array))
-   ;; (global-set-key (kbd "C-e")      my-modes-key-map)
+     ;; (progn
+     ;;   ;; define a prefix keymap
+     ;;   (define-prefix-command 'my-modes-key-map)
+     ;;   (define-key my-modes-key-map (kbd "a") 'eauc/align-array))
+     ;; (global-set-key (kbd "C-e")      my-modes-key-map)
    #+END_SRC
 
 * Custom functions
@@ -367,30 +378,30 @@
 
 ** Miscellaneous
    #+BEGIN_SRC emacs-lisp
-    (use-package crux
-      :ensure t
-      :bind (("<S-return>" . crux-smart-open-line)
-             ("<s-return>" . crux-smart-open-line-above)
-             ("s-$" . crux-sudo-edit)
-             ("s-<" . crux-move-beginning-of-line)
-             ("s-i" . crux-find-user-init-file)
-             ("s-j" . crux-top-join-line)
-             ("s-k" . crux-kill-whole-line)))
+     (use-package crux
+       :ensure t
+       :bind (("<S-return>" . crux-smart-open-line)
+              ("<s-return>" . crux-smart-open-line-above)
+              ("s-$" . crux-sudo-edit)
+              ("s-<" . crux-move-beginning-of-line)
+              ("s-i" . crux-find-user-init-file)
+              ("s-j" . crux-top-join-line)
+              ("s-k" . crux-kill-whole-line)))
    #+END_SRC
 
    Cycle quotes type.
    #+BEGIN_SRC emacs-lisp
-    (use-package cycle-quotes
-      :pin gnu
-      :ensure t
-      :bind (("C-'" . cycle-quotes)))
+     (use-package cycle-quotes
+       :pin gnu
+       :ensure t
+       :bind (("C-'" . cycle-quotes)))
    #+END_SRC
 
    Expand selected region.
    #+BEGIN_SRC emacs-lisp
-    (use-package expand-region
-      :ensure t
-      :bind (("C-<" . er/expand-region)))
+     (use-package expand-region
+       :ensure t
+       :bind (("C-<" . er/expand-region)))
    #+END_SRC
 
 * Git
@@ -577,7 +588,12 @@
         :custom
         (js-indent-level 2)
         (js2-strict-trailing-comma-warning nil)
-        (jsx-indent-level 2))
+        (jsx-indent-level 2)
+        :custom-face
+        (js2-error ((t (:foreground "red"))))
+        (js2-external-variable ((t (:foreground "orchid"))))
+        (js2-function-param ((t (:foreground "lime green"))))
+        (js2-private-function-call ((t (:foreground "dark orange")))))
     #+END_SRC
 
 *** Mocha
@@ -831,4 +847,3 @@
        :ensure t
        :pin melpa)
    #+END_SRC
-
