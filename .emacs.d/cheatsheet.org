@@ -78,14 +78,16 @@
     (defun eauc/cheat-edition ()
       "Cheatsheet - edition."
       (cheatsheet-add-group 'Edition
-                            '(:key "C-m"     :description "Call macro")
-                            '(:key "C-<"     :description "Expand region")
-                            '(:key "C-'"     :description "Cycle quotes")
-                            '(:key "S-RET"   :description "Open line below")
-                            '(:key "Spe-RET" :description "Open line above")
-                            '(:key "S-SPC"   :description "Just one space")
-                            '(:key "Spe-k"   :description "Kill whole line")
-                            '(:key "Spe-<"   :description "Move beginning of line")))
+			    '(:key "C-m"     :description "Call macro")
+			    '(:key "C-="     :description "Expand region")
+			    '(:key "C-'"     :description "Cycle quotes")
+			    '(:key "S-RET"   :description "Open line below")
+			    '(:key "Spe-RET" :description "Open line above")
+			    '(:key "S-SPC"   :description "Just one space")
+			    '(:key "Spe-k"   :description "Kill whole line")
+			    '(:key "Spe-<"   :description "Move beginning of line")
+			    '(:key "C-x n n" :description "Narrow to region")
+			    '(:key "C-x n w" :description "Widen")))
   #+END_SRC
 
 * Git Timemachine
@@ -99,7 +101,6 @@
                             '(:key "p" :description "Previous revision")
                             '(:key "n" :description "Next revision")))
   #+END_SRC
-
 
 * Javascript
 
