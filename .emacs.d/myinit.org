@@ -80,11 +80,15 @@
    Menu suggestions.
    - enable partial matching.
    #+BEGIN_SRC emacs-lisp
-     (ido-mode 1)
-     (setq ido-everywhere t)
-     (setq ido-enable-flex-matching t)
-     (setq ido-auto-merge-work-directories-length -1)
-     (setq ido-use-virtual-buffers t)
+     (use-package flx-ido
+       :ensure t
+       :config
+       (ido-mode 1)
+       (flx-ido-mode 1)
+       :custom
+       (ido-everywhere 1)
+       (ido-enable-flex-matching t "Enable flexible string matching")
+       (ido-use-faces nil "Show flx-ido highlighting"))
    #+END_SRC
 
    PERL regexp everywhere.
@@ -277,10 +281,10 @@
       :ensure t
       :pin melpa
       :bind (:map dired-mode-map
-                  ("C-i" . dired-subtree-insert)
-                  ("C-k" . dired-subtree-remove)
-                  ("C-<up>" . dired-subtree-beginning)
-                  ("C-<down>" . dired-subtree-end))
+		  ("C-i" . dired-subtree-insert)
+		  ("C-k" . dired-subtree-remove)
+		  ("C-<up>" . dired-subtree-beginning)
+		  ("C-<down>" . dired-subtree-end))
       :custom
       (dired-subtree-use-backgrounds nil "Do not use background color for subtrees"))
   #+END_SRC
