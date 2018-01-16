@@ -17,3 +17,5 @@ npm-debug.log
 .emacs.d/network-security.data
 .emacs.d/myinit.el
 .emacs.d/cheatsheet.el
+.emacs.d/projectile-bookmarks.eld
+.emacs.d/projectile.cache
