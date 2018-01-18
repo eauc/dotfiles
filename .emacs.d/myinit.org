@@ -569,7 +569,7 @@
    #+END_SRC
 
 ** Clojure
-*** COMMENT Mode
+*** Mode
 
     Clojure.
     #+BEGIN_SRC emacs-lisp
@@ -773,6 +773,14 @@
        :mode "\\.scss\\'"
        :custom
        (scss-compile-at-save nil "disable auto-compilation on save"))
+   #+END_SRC
+
+** Typescript
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package typescript-mode
+       :ensure t
+       :mode ("\\.ts\\'" . typescript-mode))
    #+END_SRC
 
 * Org
