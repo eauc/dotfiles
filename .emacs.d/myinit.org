@@ -757,6 +757,13 @@
         (clojurescript-mode . eauc/lispy-activate)))
    #+END_SRC
 
+** PHP
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package php-mode
+       :ensure t)
+   #+END_SRC
+
 ** PlantUML
 
    #+BEGIN_SRC emacs-lisp
