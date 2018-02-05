@@ -654,6 +654,14 @@
        :mode ("\\.feature\\'" . feature-mode))
    #+END_SRC
 
+** Docker
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package dockerfile-mode
+       :ensure t
+       :mode ("\\Dockerfile\\'" . dockerfile-mode))
+   #+END_SRC
+
 ** Haskell
 
    #+BEGIN_SRC emacs-lisp
@@ -661,7 +669,7 @@
        :ensure t
        :mode ("\\.hs\\'" . haskell-mode))
    #+END_SRC
-
+   
 ** Javascript
 
 *** Mode
