@@ -798,6 +798,14 @@
        :mode ("\\.ts\\'" . typescript-mode))
    #+END_SRC
 
+** YAML
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package yaml-mode
+       :ensure t
+       :mode ("\\.ya?ml\\'" . yaml-mode))
+   #+END_SRC
+
 * Org
 
   Replace Emacs default org package with last distribution.
