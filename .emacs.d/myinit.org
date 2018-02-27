@@ -891,6 +891,44 @@
        (org-reveal-mathjax t "enable latex formulae in presentations"))
    #+END_SRC
 
+   PDF.
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'org-latex-classes
+		  '("djcb-org-article"
+		    "\\documentclass[11pt,a4paper]{article}
+		  \\usepackage{minted}
+		  \\usemintedstyle{emacs}
+		  \\newminted{common-lisp}{fontsize=10}
+			  \\usepackage[T1]{fontenc}
+			  \\usepackage{hyperref}
+			  \\usepackage{fontspec}
+			  \\usepackage{graphicx}
+			  \\defaultfontfeatures{Mapping=tex-text}
+			  \\setromanfont{Gentium}
+			  \\setromanfont [BoldFont={Gentium Basic Bold},
+					  ItalicFont={Gentium Basic Italic}]{Gentium Basic}
+			  \\setsansfont{Charis SIL}
+			  \\setmonofont[Scale=0.8]{DejaVu Sans Mono}
+			  \\usepackage{geometry}
+			  \\geometry{a4paper, textwidth=6.5in, textheight=10in,
+				      marginparsep=7pt, marginparwidth=.6in}
+			  \\pagestyle{empty}
+			  \\title{}
+				[NO-DEFAULT-PACKAGES]
+				[NO-PACKAGES]"
+		    ("\\section{%s}" . "\\section*{%s}")
+		    ("\\subsection{%s}" . "\\subsection*{%s}")
+		    ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		    ("\\paragraph{%s}" . "\\paragraph*{%s}")
+		    ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+     (setq org-latex-pdf-process 
+	   '("xelatex --shell-escape -interaction nonstopmode %f"
+	 "xelatex --shell-escape -interaction nonstopmode %f"))
+
+     ;; C-u M-x org-reload
+   #+END_SRC
+
 ** Syntax highlighting
 
    #+BEGIN_SRC emacs-lisp
