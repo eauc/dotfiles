@@ -1,202 +1,420 @@
+# Aliases
+
+
 [alias]
-  # lazy
-  s = status
-  co = checkout
-  #######
-  # diff
-  #
-  # lazy
-  d = diff -w --color-words
-  # diff staging > working
-  dsw = "!git d -M"
-  diff-staging-working = "!git dsw"
-  # diff HEAD > working
-  dhw = "!git d -M HEAD"
-  diff-head-working = "!git dhw"
-  # diff HEAD > staging
-  dhs = "!git d -M --cached"
-  diff-head-staging = "!git dhs"
-  # submodules
-  dsm = "!git d; git submodule foreach 'git d'"
-  dsmsw = "!git dsw; git submodule foreach 'git dsw'"
-  dsmhs = "!git dhs; git submodule foreach 'git dhs'"
-  dsmhw = "!git dhw; git submodule foreach 'git dhw'"
-  ######
-  # log
-  #
-  # trees
-  l = log --graph --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
-  la = "!git l --all"
-  log-all = "!git la"
-  ld = "!git l --author-date-order"
-  log-date = "!git ld"
-  lad = "!git ld --all"
-  log-all-date = "!git lad"
-  ll = "!git la --stat"
-  lh = log -n 1 --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
-  log-head = "!git lh"
-  # one file history
-  lf = log --follow --graph --all --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
-  log-file = "!git lf"
-  #########
-  # stash
-  #
-  # stash [staging + working]
-  stsw = stash save -u
-  stash-staging-working = "!git stsw"
-  # stash [working]
-  stw = stash save -k -u
-  stash-working = "!git stw"
-  # apply/pop conserving [staging]
-  sta = stash apply --index
-  stash-apply = "!git sta"
-  stp = stash pop --index
-  stash-pop = "!git stp"
-  # inspect stashes
-  ststats = stash show
-  stash-stats = "!git ststats"
-  stdiff = stash show -p
-  stash-diff = "!git stdiff"
-  #########
-  # commit
-  #
-  # lazy
-  c = commit
-  ca = commit --amend
-  unstage = reset HEAD
-  # stage files deletions
-  addrm = "!git rm $(git ls-files --deleted)"
-  # prefers FF merges
-  m = merge --no-commit
-  # fixup
-  fix = commit --fixup
-  ########
-  # reset
-  #
-  # reset HEAD (keep changes in [staging+working])
-  rh = reset --soft
-  reset-head = "!git rh"
-  # reset [HEAD+staging] (keep changes in [working], update [working] with <commit>)
-  # ==> rh + unstage
-  rhs = reset --merge
-  reset-head-staging = "!git rhs"
-  # reset [HEAD+staging+working] (loose all local modifications)
-  ra = reset --hard
-  reset-all = "!git ra"
-  ########
-  # clean
-  #
-  # clean [local modifications], keep [untracked]
-  discard = checkout --
-  # clean [untracked]
-  clean = clean -d
-  # clean [untracked+ignored]
-  purge = clean -x -f
-  #########
-  # branch
-  #
-  b = branch
-  ba = branch --all
-  # create branche on commit
-  bc = checkout -b
-  branch-create = "!git bc"
-  #######
-  # file
-  #
-  # grep pattern in [tracked] files (ignore bin, empty lines between matches)
-  g = grep -I --break
-  # grep in [tracked+untracked]
-  gw = grep --untracked -I --break
-  grep-working = "!git gw"
-  # grep in [staging]
-  gs = grep --cached -I --break
-  grep-staging = "!git gs"
-  #########
-  # remote
-  #
-  # fetch all new  tags + prune branches
-  f = fetch -p -t
-  # synch tags with origin server
-  ft = fetch -p origin +refs/tags/*:refs/tags/*
-  fetch-tags = "!git ft"
-  p = push
-  pf = push --force-with-lease
-  pup = push --set-upstream
-  push-upstream = "!git pup"
-  purc= push --recurse-submodules=check
-  push-recurse-check = "!git purc"
-  purd= push --recurse-submodules=on-demand
-  push-recurse-demand = "!git purd"
-  ############
-  # Submodules
-  #
-  sms = submodule status
-  sml = submodule summary
-  smlhs = submodule summary --cached -- HEAD
-  smlsw = submodule summary --files
-  smf = "!foreach() { git submodule foreach \"$1 || :\"; }; foreach"
-  smu = submodule update
-  smur = submodule update --remote
-  #######
-  # misc
-  #
-  # list aliases
-  lal = "!git config -l | grep alias | cut -c 7-"
-  list-aliases = "!git lal"
-  # last tag name
-  lasttag = describe --tags --abbrev=0
-  # toggle ignore local modifications on <path>
-  changed = update-index --no-assume-unchanged
-  unchanged = update-index --assume-unchanged
-  # cheat
-  ch = "!cheat git"
-  # retry
-  bourrin = "!retry() { until $(git $1); do sleep 2; echo "Retrying"; date; done; }; retry"
+
+# Diff
+
+#    Basic configuration:
+#    - ignore all white space, even when whitespaces were added where no whitespace before.
+#    - show a word diff.
+#    - detect file rename with 75% similarity threshold.
+
+d = diff --ignore-all-space --color-words --find-renames=75
+
+
+
+# Diff between staging > working:
+
+dsw = "!git d"
+
+
+
+# Diff between HEAD > working:
+
+dhw = "!git d HEAD"
+
+
+
+# Diff between HEAD > staging:
+
+dhs = "!git d --cached"
+
+
+
+# Diffs including submodules:
+
+dsm = "!git d; git submodule foreach 'git d'"
+dsmsw = "!git dsw; git submodule foreach 'git dsw'"
+dsmhs = "!git dhs; git submodule foreach 'git dhs'"
+dsmhw = "!git dhw; git submodule foreach 'git dhw'"
+
+# Logs
+
+#    Basic format:
+#    - abbreviated commit hash :: %h yellow.
+#    - ref names :: %d green.
+#    - subject :: %s white.
+#    - author date, relative :: %ar magenta.
+#    - author name :: %an blue.
+
+log-format = log --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
+
+
+
+# Basic graph log:
+
+l = "!git log-format --graph"
+
+
+
+# Log all refs:
+
+la = "!git l --all"
+
+
+
+# With diffstat:
+
+ll = "!git la --stat"
+
+
+
+# Log only HEAD:
+
+lh = "!git log-format -n 1"
+llh = "!git lh --stat"
+
+
+
+# Log one file's history:
+
+lf = "!git la --follow"
+
+
+
+# Order by author date:
+
+ld = "!git l --author-date-order"
+lad = "!git ld --all"
+
+# Stash
+
+#    Stash staging + working:
+
+stsw = stash save --inluce-untracked
+
+
+
+# Stash working:
+
+stw = "!git stsw --keep-index"
+
+
+
+# Apply & pop, restoring index:
+
+sta = stash apply --index
+stp = stash pop --index
+
+
+
+# Inspect stashes:
+
+sts = stash show
+
+
+
+# Inspect stashes diff:
+
+stdiff = stash show --patch
+
+# Commit
+
+#    Shortcuts for lazy people:
+
+c = commit
+ca = commit --amend
+
+
+
+# Unstage changes:
+
+unstage = reset HEAD
+
+
+
+# Add file deletions:
+
+addrm = "!git rm $(git ls-files --deleted)"
+
+
+
+# Prefer no-fast-forward merges:
+
+m = merge --no-ff
+
+
+
+# Explicit fast-forward:
+
+ff = merge --no-commit
+
+
+
+# Fix another commit:
+
+fix = "!fixcommit() { git commit --fixup=$1; }; fixcommit"
+
+# Reset
+
+#    Reset HEAD / Keep changes in staging + working:
+
+rh = reset --soft
+
+
+
+# Reset HEAD + staging / Keep changes in working / Update working with <commit>:
+
+rhs = reset --merge
+
+
+
+# Reset HEAD + staging + working:
+
+ra = reset --hard
+
+# Cleanup
+
+#    Discard changes in working / Keep untracked:
+
+discard = checkout --
+
+
+
+# Clean untracked:
+# - remove untracked directories (-d).
+
+clean = clean -d --force
+
+
+
+# Clean untracked + ignored:
+# - remove untracked directories (-d).
+# - remove ignored files (-x).
+
+purge = clean -x -u --force
+
+# Branches
+
+#    Shortcuts for lazy people:
+
+b = branch
+
+
+
+# Display all branches, including remotes:
+
+ba = branch --all
+
+
+
+# Create branch on <commit>:
+
+bc = checkout -b
+
+# Files
+
+#    Grep <pattern> in tracked files:
+#    - ignore binary files :: -I.
+#    - empty line between different files :: --break.
+
+g = grep -I --break
+
+
+
+# Grep all working, also untracked files:
+
+gw = "!git g --untracked"
+
+
+
+# Grep staging:
+
+gs = "!git g --cached"
+
+# Remote
+
+#    Basic fetch:
+#    - remote tags.
+#    - remove remote-tracking branches that do not exists on remote.
+
+f = fetch --prune --tags
+
+
+
+# Synchronize tags with remote:
+
+ft = fetch -p origin +refs/tags/*:refs/tags/*
+
+
+
+# Shortcuts for lazy people:
+
+p = push
+
+
+
+# Push force, respects new changes in remote:
+
+pf = push --force-with-lease
+
+
+
+# Set remote-tracking branch:
+
+pup = push --set-upstream
+
+
+
+# Check that new commits in submodules have been pushed to their remote:
+
+purc= push --recurse-submodules=check
+
+
+
+# Push new commits in submodules when necessary:
+
+purd= push --recurse-submodules=on-demand
+
+# Submodules
+
+#    Shortcuts for lazy people:
+
+sms = submodule status
+
+
+
+# Show commits between last registered commit (HEAD) in super project, and current commit (Working) in submodule:
+
+smhw = submodule summary
+
+
+
+# Show commits between last registered commit (HEAD) in super project, and commit staged (Staging) for submodule:
+
+smhs = submodule summary --cached -- HEAD
+
+
+
+# Show commits between commit staged (Staging) in super project, and current commit (Working) in submodule:
+
+smsw = submodule summary --files
+
+
+
+# Update submodules to commits registered in HEAD of super project:
+
+smu = submodule update
+
+
+
+# Update modules to last commit of remote-tracked branch defined in .gitmodules:
+
+smur = submodule update --remote
+
+# Miscellaneous
+
+#    Shortcuts for lazy people:
+
+s = status
+co = checkout
+
+
+
+# List all aliases:
+
+lal = "!git config -l | grep alias | cut -c 7-"
+
+
+
+# Display last tag name in <commit> history:
+
+lasttag = describe --tags --abbrev=0
+
+
+
+# Toggle ignore local modification on <path>:
+
+changed = update-index --no-assume-unchanged
+unchanged = update-index --assume-unchanged
+
+
+
+# Retry a Git command every 2s until it succeeds:
+
+bourrin = "!retry() { until $(git $1); do sleep 2; echo "Retrying"; date; done; }; retry"
+
+# User Info
+
+
 [user]
-  name = Auclair Emmanuel
-  email = auclair.emmanuel@gmail.com
+        name = Auclair Emmanuel
+        email = auclair.emmanuel@gmail.com
+
+# Pretty diff
+
+#   Pretty diff pager:
+#   - =npm install -g diff-so-fancy=
+#   - one tab = 2 spaces.
+#   - raw control chars :: -R.
+#   - quit if one screen :: -F.
+#   - no init :: -X.
+
 [pager]
-  # ==> npm install -g diff-so-fancy
-  diff = diff-so-fancy | less --tabs=2 -RFX
-  show = diff-so-fancy | less --tabs=2 -RFX
+	diff = diff-so-fancy | less --tabs=2 -RFX
+	show = diff-so-fancy | less --tabs=2 -RFX
 [interactive]
-  diffFilter = "less --tabs=2 -RFX"
-[merge]
-  tool = kdiff3
-  conflictstyle = diff3
-[color]
-  ui = true
-[color "diff"]
-  meta = yellow bold
-  commit = green bold
-  frag = magenta bold
-  old = red bold
-  new = green bold
-  whitespace = red reverse
-[color "diff-highlight"]
-  oldNormal = red bold
-  oldHighlight = "red bold 52"
-  newNormal = "green bold"
-  newHighlight = "green bold 22"
-[color "branch"]
-  current = green reverse
-  local = green
-  remote = yellow
-[color "status"]
-  added = green
-  changed = red
-  untracked = cyan
-[grep]
-  lineNumber = true
-[push]
-  default = simple
-[blame]
-  date = relative
-[credential]
-  helper = store
+	diffFilter = "less --tabs=2 -RFX"
+
+
+
+# Show submodules commit logs in super projet diffs:
+
 [diff]
-  submodule = log
+	submodule = log
+
+# Colors
+
+
+[color]
+	ui = true
+[color "diff"]
+	meta = "yellow bold"
+	commit = "green bold"
+	frag = "magenta bold"
+	old = "red bold"
+	new = "green bold"
+	whitespace = "red reverse"
+[color "diff-highlight"]
+	oldNormal = "red bold"
+	oldHighlight = "red bold 52"
+	newNormal = "green bold"
+	newHighlight = "green bold 22"
+[color "branch"]
+	current = "green reverse"
+	local = green
+	remote = yellow
+[color "status"]
+	added = green
+	changed = red
+	untracked = cyan
+
+# Miscellaneous
+
+
+[grep]
+	lineNumber = true
+[push]
+	default = simple
+[blame]
+	date = relative
 [help]
-  autocorrect = 1
+	autocorrect = 1
 [rebase]
-  autosquash = true
+	autosquash = true
+[credential]
+	helper = store
+[merge]
+	tool = kdiff3
+	conflictstyle = diff3

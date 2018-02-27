@@ -1,0 +1,395 @@
+#+PROPERTY: header-args :comments org :tangle .gitconfig
+
+* Aliases
+
+  #+BEGIN_SRC gitconfig
+    [alias]
+  #+END_SRC
+
+** Diff
+
+   Basic configuration:
+   - ignore all white space, even when whitespaces were added where no whitespace before.
+   - show a word diff.
+   - detect file rename with 75% similarity threshold.
+   #+BEGIN_SRC gitconfig
+             d = diff --ignore-all-space --color-words --find-renames=75
+   #+END_SRC
+
+   Diff between staging > working:
+   #+BEGIN_SRC gitconfig
+             dsw = "!git d"
+   #+END_SRC
+
+   Diff between HEAD > working:
+   #+BEGIN_SRC gitconfig
+             dhw = "!git d HEAD"
+   #+END_SRC
+
+   Diff between HEAD > staging:
+   #+BEGIN_SRC gitconfig
+             dhs = "!git d --cached"
+   #+END_SRC
+
+   Diffs including submodules:
+   #+BEGIN_SRC gitconfig
+             dsm = "!git d; git submodule foreach 'git d'"
+             dsmsw = "!git dsw; git submodule foreach 'git dsw'"
+             dsmhs = "!git dhs; git submodule foreach 'git dhs'"
+             dsmhw = "!git dhw; git submodule foreach 'git dhw'"
+   #+END_SRC
+
+** Logs
+
+   Basic format:
+   - abbreviated commit hash :: %h yellow.
+   - ref names :: %d green.
+   - subject :: %s white.
+   - author date, relative :: %ar magenta.
+   - author name :: %an blue.
+   #+BEGIN_SRC gitconfig
+             log-format = log --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
+   #+END_SRC
+
+   Basic graph log:
+   #+BEGIN_SRC gitconfig
+             l = "!git log-format --graph"
+   #+END_SRC
+
+   Log all refs:
+   #+BEGIN_SRC gitconfig
+             la = "!git l --all"
+   #+END_SRC
+
+   With diffstat:
+   #+BEGIN_SRC gitconfig
+             ll = "!git la --stat"
+   #+END_SRC
+
+   Log only HEAD:
+   #+BEGIN_SRC gitconfig
+             lh = "!git log-format -n 1"
+             llh = "!git lh --stat"
+   #+END_SRC
+
+   Log one file's history:
+   #+BEGIN_SRC gitconfig
+             lf = "!git la --follow"
+   #+END_SRC
+
+   Order by author date:
+   #+BEGIN_SRC gitconfig
+             ld = "!git l --author-date-order"
+             lad = "!git ld --all"
+   #+END_SRC
+
+** Stash
+
+   Stash staging + working:
+   #+BEGIN_SRC gitconfig
+             stsw = stash save --inluce-untracked
+   #+END_SRC
+
+   Stash working:
+   #+BEGIN_SRC gitconfig
+             stw = "!git stsw --keep-index"
+   #+END_SRC
+
+   Apply & pop, restoring index:
+   #+BEGIN_SRC gitconfig
+             sta = stash apply --index
+             stp = stash pop --index
+   #+END_SRC
+
+   Inspect stashes:
+   #+BEGIN_SRC gitconfig
+             sts = stash show
+   #+END_SRC
+
+   Inspect stashes diff:
+   #+BEGIN_SRC gitconfig
+             stdiff = stash show --patch
+   #+END_SRC
+
+** Commit
+
+   Shortcuts for lazy people:
+   #+BEGIN_SRC gitconfig
+             c = commit
+             ca = commit --amend
+   #+END_SRC
+
+   Unstage changes:
+   #+BEGIN_SRC gitconfig
+             unstage = reset HEAD
+   #+END_SRC
+
+   Add file deletions:
+   #+BEGIN_SRC gitconfig
+             addrm = "!git rm $(git ls-files --deleted)"
+   #+END_SRC
+
+   Prefer no-fast-forward merges:
+   #+BEGIN_SRC gitconfig
+             m = merge --no-ff
+   #+END_SRC
+
+   Explicit fast-forward:
+   #+BEGIN_SRC gitconfig
+             ff = merge --no-commit
+   #+END_SRC
+
+   Fix another commit:
+   #+BEGIN_SRC gitconfig
+             fix = "!fixcommit() { git commit --fixup=$1; }; fixcommit"
+   #+END_SRC
+
+** Reset
+
+   Reset HEAD / Keep changes in staging + working:
+   #+BEGIN_SRC gitconfig
+             rh = reset --soft
+   #+END_SRC
+
+   Reset HEAD + staging / Keep changes in working / Update working with <commit>:
+   #+BEGIN_SRC gitconfig
+             rhs = reset --merge
+   #+END_SRC
+
+   Reset HEAD + staging + working:
+   #+BEGIN_SRC gitconfig
+             ra = reset --hard
+   #+END_SRC
+
+** Cleanup
+
+   Discard changes in working / Keep untracked:
+   #+BEGIN_SRC gitconfig
+             discard = checkout --
+   #+END_SRC
+
+   Clean untracked:
+   - remove untracked directories (-d).
+   #+BEGIN_SRC gitconfig
+             clean = clean -d --force
+   #+END_SRC
+
+   Clean untracked + ignored:
+   - remove untracked directories (-d).
+   - remove ignored files (-x).
+   #+BEGIN_SRC gitconfig
+             purge = clean -x -u --force
+   #+END_SRC
+
+** Branches
+
+   Shortcuts for lazy people:
+   #+BEGIN_SRC gitconfig
+             b = branch
+   #+END_SRC
+
+   Display all branches, including remotes:
+   #+BEGIN_SRC gitconfig
+             ba = branch --all
+   #+END_SRC
+
+   Create branch on <commit>:
+   #+BEGIN_SRC gitconfig
+             bc = checkout -b
+   #+END_SRC
+
+** Files
+
+   Grep <pattern> in tracked files:
+   - ignore binary files :: -I.
+   - empty line between different files :: --break.
+   #+BEGIN_SRC gitconfig
+             g = grep -I --break
+   #+END_SRC
+
+   Grep all working, also untracked files:
+   #+BEGIN_SRC gitconfig
+             gw = "!git g --untracked"
+   #+END_SRC
+
+   Grep staging:
+   #+BEGIN_SRC gitconfig
+             gs = "!git g --cached"
+   #+END_SRC
+
+** Remote
+
+   Basic fetch:
+   - remote tags.
+   - remove remote-tracking branches that do not exists on remote.
+   #+BEGIN_SRC gitconfig
+             f = fetch --prune --tags
+   #+END_SRC
+
+   Synchronize tags with remote:
+   #+BEGIN_SRC gitconfig
+             ft = fetch -p origin +refs/tags/*:refs/tags/*
+   #+END_SRC
+
+   Shortcuts for lazy people:
+   #+BEGIN_SRC gitconfig
+             p = push
+   #+END_SRC
+
+   Push force, respects new changes in remote:
+   #+BEGIN_SRC gitconfig
+             pf = push --force-with-lease
+   #+END_SRC
+
+   Set remote-tracking branch:
+   #+BEGIN_SRC gitconfig
+             pup = push --set-upstream
+   #+END_SRC
+
+   Check that new commits in submodules have been pushed to their remote:
+   #+BEGIN_SRC gitconfig
+             purc= push --recurse-submodules=check
+   #+END_SRC
+
+   Push new commits in submodules when necessary:
+   #+BEGIN_SRC gitconfig
+             purd= push --recurse-submodules=on-demand
+   #+END_SRC
+
+** Submodules
+
+   Shortcuts for lazy people:
+   #+BEGIN_SRC gitconfig
+             sms = submodule status
+   #+END_SRC
+
+   Show commits between last registered commit (HEAD) in super project, and current commit (Working) in submodule:
+   #+BEGIN_SRC gitconfig
+             smhw = submodule summary
+   #+END_SRC
+
+   Show commits between last registered commit (HEAD) in super project, and commit staged (Staging) for submodule:
+   #+BEGIN_SRC gitconfig
+             smhs = submodule summary --cached -- HEAD
+   #+END_SRC
+
+   Show commits between commit staged (Staging) in super project, and current commit (Working) in submodule:
+   #+BEGIN_SRC gitconfig
+             smsw = submodule summary --files
+   #+END_SRC
+
+   Update submodules to commits registered in HEAD of super project:
+   #+BEGIN_SRC gitconfig
+             smu = submodule update
+   #+END_SRC
+
+   Update modules to last commit of remote-tracked branch defined in .gitmodules:
+   #+BEGIN_SRC gitconfig
+             smur = submodule update --remote
+   #+END_SRC
+
+** Miscellaneous
+
+   Shortcuts for lazy people:
+   #+BEGIN_SRC gitconfig
+             s = status
+             co = checkout
+   #+END_SRC
+
+   List all aliases:
+   #+BEGIN_SRC gitconfig
+             lal = "!git config -l | grep alias | cut -c 7-"
+   #+END_SRC
+
+   Display last tag name in <commit> history:
+   #+BEGIN_SRC gitconfig
+             lasttag = describe --tags --abbrev=0
+   #+END_SRC
+
+   Toggle ignore local modification on <path>:
+   #+BEGIN_SRC gitconfig
+             changed = update-index --no-assume-unchanged
+             unchanged = update-index --assume-unchanged
+   #+END_SRC
+
+   Retry a Git command every 2s until it succeeds:
+   #+BEGIN_SRC gitconfig
+             bourrin = "!retry() { until $(git $1); do sleep 2; echo "Retrying"; date; done; }; retry"
+   #+END_SRC
+
+* User Info
+
+  #+BEGIN_SRC gitconfig
+    [user]
+            name = Auclair Emmanuel
+            email = auclair.emmanuel@gmail.com
+  #+END_SRC
+
+* Pretty diff
+
+  Pretty diff pager:
+  - =npm install -g diff-so-fancy=
+  - one tab = 2 spaces.
+  - raw control chars :: -R.
+  - quit if one screen :: -F.
+  - no init :: -X.
+  #+BEGIN_SRC gitconfig
+    [pager]
+	    diff = diff-so-fancy | less --tabs=2 -RFX
+	    show = diff-so-fancy | less --tabs=2 -RFX
+    [interactive]
+	    diffFilter = "less --tabs=2 -RFX"
+  #+END_SRC
+
+  Show submodules commit logs in super projet diffs:
+  #+BEGIN_SRC gitconfig
+    [diff]
+	    submodule = log
+  #+END_SRC
+
+* Colors
+
+  #+BEGIN_SRC gitconfig
+    [color]
+	    ui = true
+    [color "diff"]
+	    meta = "yellow bold"
+	    commit = "green bold"
+	    frag = "magenta bold"
+	    old = "red bold"
+	    new = "green bold"
+	    whitespace = "red reverse"
+    [color "diff-highlight"]
+	    oldNormal = "red bold"
+	    oldHighlight = "red bold 52"
+	    newNormal = "green bold"
+	    newHighlight = "green bold 22"
+    [color "branch"]
+	    current = "green reverse"
+	    local = green
+	    remote = yellow
+    [color "status"]
+	    added = green
+	    changed = red
+	    untracked = cyan
+  #+END_SRC
+
+* Miscellaneous
+
+  #+BEGIN_SRC gitconfig
+    [grep]
+	    lineNumber = true
+    [push]
+	    default = simple
+    [blame]
+	    date = relative
+    [help]
+	    autocorrect = 1
+    [rebase]
+	    autosquash = true
+    [credential]
+	    helper = store
+    [merge]
+	    tool = kdiff3
+	    conflictstyle = diff3
+  #+END_SRC
