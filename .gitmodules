@@ -1,3 +1,6 @@
 [submodule ".emacs.d/git-complete"]
 	path = .emacs.d/git-complete
 	url = https://github.com/zk-phi/git-complete.git
+[submodule ".emacs.d/org-html-themes"]
+	path = .emacs.d/org-html-themes
+	url = https://github.com/fniessen/org-html-themes.git
