@@ -225,6 +225,13 @@
      ;; (global-set-key (kbd "C-e")      my-modes-key-map)
    #+END_SRC
 
+   Enable chords globally.
+   #+BEGIN_SRC emacs-lisp
+     (use-package use-package-chords
+       :ensure t
+       :config (key-chord-mode 1))
+   #+END_SRC
+
 * Custom functions
 
 ** Indent-buffer
