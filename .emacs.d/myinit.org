@@ -65,8 +65,13 @@
 
    Usefull on small screen to split windows vertically
    #+BEGIN_SRC emacs-lisp
-     ;; (setq split-height-threshold nil)
-     ;; (setq split-width-threshold 200)
+   ;; (setq split-height-threshold nil)
+   ;; (setq split-width-threshold 200)
+   #+END_SRC
+
+   Set default font size.
+   #+BEGIN_SRC emacs-lisp
+   ;; (set-face-attribute 'default nil :height 100)
    #+END_SRC
 
    Discover Emacs functions.

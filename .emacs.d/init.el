@@ -49,3 +49,7 @@
  '(sh-heredoc ((t (:foreground "dark orange" :weight bold))))
  '(show-paren-match ((t (:background "SpringGreen4"))))
  '(trailing-whitespace ((t (:background "goldenrod1")))))
+
+;; (set-face-attribute 'default nil :height 100)
+;; (setq split-height-threshold nil)
+;; (setq split-width-threshold 200)
