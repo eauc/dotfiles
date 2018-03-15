@@ -663,10 +663,17 @@
 
 ** Docker
 
+   Mode to edit docker files.
    #+BEGIN_SRC emacs-lisp
      (use-package dockerfile-mode
        :ensure t
        :mode ("\\Dockerfile\\'" . dockerfile-mode))
+   #+END_SRC
+
+   Docker integration.
+   #+BEGIN_SRC emacs-lisp
+   (use-package docker
+     :ensure t)
    #+END_SRC
 
 ** Haskell
