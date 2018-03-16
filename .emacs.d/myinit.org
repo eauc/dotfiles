@@ -232,9 +232,12 @@
 
    Enable chords globally.
    #+BEGIN_SRC emacs-lisp
-     (use-package use-package-chords
-       :ensure t
-       :config (key-chord-mode 1))
+   (use-package use-package-chords
+     :ensure t
+     :config 
+     (key-chord-mode 1)
+     (key-chord-define-global "jy" 'aya-create)
+     (key-chord-define-global "jt" 'aya-expand))
    #+END_SRC
 
 * Custom functions
@@ -481,6 +484,11 @@
        (define-key yas-minor-mode-map (kbd "C-c y") 'yas-expand))
    #+END_SRC
 
+   Auto-yasnippet.
+   #+BEGIN_SRC emacs-lisp
+   (use-package auto-yasnippet
+     :ensure t)
+   #+END_SRC
 ** Miscellaneous
    #+BEGIN_SRC emacs-lisp
      (use-package crux

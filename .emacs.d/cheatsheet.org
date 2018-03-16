@@ -18,31 +18,33 @@
 * Commons
 
   #+BEGIN_SRC emacs-lisp
-    (defun eauc/cheat-commons ()
-      "Cheasheet - commons."
-      (cheatsheet-add-group 'Commons
-                            '(:key "Spe-i"  :description "Edit config file")
-                            '(:key "C-F10"  :description "Kill emacs")
-                            '(:key "F10"    :description "Kill buffer")
-                            '(:key "F8"     :description "Cheatsheet")
-                            '(:key "Spe-F7" :description "Git message popup")
-                            '(:key "S-F7"   :description "MaGit blame")
-                            '(:key "C-F7"   :description "Git complete")
-                            '(:key "F7"     :description "MaGit status")
-                            '(:key "C-F6"   :description "Pop mark global")
-                            '(:key "F6"     :description "Pop mark")
-                            '(:key "C-S-F5" :description "Jump to named bookmark")
-                            '(:key "S-F5"   :description "Set named bookmark")
-                            '(:key "C-F5"   :description "Jump to bookmark")
-                            '(:key "F5"     :description "Set bookmark")
-                            '(:key "C-F4"   :description "Indent Buffer")
-                            '(:key "F4"     :description "Comment")
-                            '(:key "S-F3"   :description "Ido switch buffer")
-                            '(:key "C-F3"   :description "Buffer menu other window")
-                            '(:key "F3"     :description "Other window")
-                            '(:key "C-F2"   :description "Write file")
-                            '(:key "F2"     :description "Save buffer")
-                            '(:key "F1"     :description "Find file")))
+  (defun eauc/cheat-commons ()
+    "Cheasheet - commons."
+    (cheatsheet-add-group 'Commons
+			  '(:key "<chords> jt"     :description "Auto yasnippet expand")
+			  '(:key "<chords> jy"     :description "Auto yasnippet create")
+			  '(:key "Spe-i"  :description "Edit config file")
+			  '(:key "C-F10"  :description "Kill emacs")
+			  '(:key "F10"    :description "Kill buffer")
+			  '(:key "F8"     :description "Cheatsheet")
+			  '(:key "Spe-F7" :description "Git message popup")
+			  '(:key "S-F7"   :description "MaGit blame")
+			  '(:key "C-F7"   :description "Git complete")
+			  '(:key "F7"     :description "MaGit status")
+			  '(:key "C-F6"   :description "Pop mark global")
+			  '(:key "F6"     :description "Pop mark")
+			  '(:key "C-S-F5" :description "Jump to named bookmark")
+			  '(:key "S-F5"   :description "Set named bookmark")
+			  '(:key "C-F5"   :description "Jump to bookmark")
+			  '(:key "F5"     :description "Set bookmark")
+			  '(:key "C-F4"   :description "Indent Buffer")
+			  '(:key "F4"     :description "Comment")
+			  '(:key "S-F3"   :description "Ido switch buffer")
+			  '(:key "C-F3"   :description "Buffer menu other window")
+			  '(:key "F3"     :description "Other window")
+			  '(:key "C-F2"   :description "Write file")
+			  '(:key "F2"     :description "Save buffer")
+			  '(:key "F1"     :description "Find file")))
   #+END_SRC
 
 * Completion
