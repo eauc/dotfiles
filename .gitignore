@@ -19,3 +19,4 @@ npm-debug.log
 .emacs.d/cheatsheet.el
 .emacs.d/projectile-bookmarks.eld
 .emacs.d/projectile.cache
+.emacs.d/.org-id-locations
