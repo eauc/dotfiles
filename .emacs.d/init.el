@@ -53,3 +53,6 @@
 ;; (set-face-attribute 'default nil :height 100)
 ;; (setq split-height-threshold nil)
 ;; (setq split-width-threshold 200)
+
+(let ((current-prefix-arg 4))
+  (call-interactively 'org-reload))
