@@ -232,12 +232,12 @@
 
    Enable chords globally.
    #+BEGIN_SRC emacs-lisp
-   (use-package use-package-chords
-     :ensure t
-     :config 
-     (key-chord-mode 1)
-     (key-chord-define-global "jy" 'aya-create)
-     (key-chord-define-global "jt" 'aya-expand))
+   ;; (use-package use-package-chords
+   ;;   :ensure t
+   ;;   :config 
+   ;;   (key-chord-mode 1)
+   ;;   (key-chord-define-global "jy" 'aya-create)
+   ;;   (key-chord-define-global "jt" 'aya-expand))
    #+END_SRC
 
 * Custom functions
