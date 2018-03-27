@@ -844,33 +844,35 @@
 
   Replace Emacs default org package with last distribution.
   #+BEGIN_SRC emacs-lisp
-    (use-package org
-      :pin org
-      :ensure org-plus-contrib
-      :hook
-      (after-save . eauc/tangle-current-org-file)
-      :custom
-      (org-confirm-babel-evaluate nil "no confirmation before running code in blocks")
-      (org-edit-src-content-indentation 0 "number of spaces added to indentation at begining of source block")
-      (org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar" "do not prompt before code block evaluation")
-      (org-src-fontify-natively t "code block syntax highlighting")
-      (org-src-tab-acts-natively t "use language indent rules in code blocks")
-      (org-startup-truncated nil "truncate lines at window edge")
-      :config
-      (org-babel-do-load-languages
-       'org-babel-load-languages
-       '((shell . t)
-         (js . t)
-         (emacs-lisp . t)
-         (calc . t)
-         ;; (perl . t)
-         ;; (scala . t)
-         (clojure . t)
-         (python . t)
-         (ruby . t)
-         (dot . t)
-         (css . t)
-         (plantuml . t))))
+  (use-package org
+    :pin org
+    :ensure org-plus-contrib
+    :hook
+    (after-save . eauc/tangle-current-org-file)
+    :custom
+    (org-confirm-babel-evaluate nil "no confirmation before running code in blocks")
+    (org-edit-src-content-indentation 0 "number of spaces added to indentation at begining of source block")
+    (org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar" "do not prompt before code block evaluation")
+    (org-src-fontify-natively t "code block syntax highlighting")
+    (org-src-tab-acts-natively t "use language indent rules in code blocks")
+    (org-startup-truncated nil "truncate lines at window edge")
+    :config
+    (add-to-list 'org-src-lang-modes '("jsx" . rjsx))
+    (add-to-list 'org-src-lang-modes '("js" . js2))
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((shell . t)
+       (js . t)
+       (emacs-lisp . t)
+       (calc . t)
+       ;; (perl . t)
+       ;; (scala . t)
+       (clojure . t)
+       (python . t)
+       (ruby . t)
+       (dot . t)
+       (css . t)
+       (plantuml . t))))
   #+END_SRC
 
 ** Bullets
@@ -961,8 +963,6 @@
      (setq org-latex-pdf-process 
 	   '("xelatex --shell-escape -interaction nonstopmode %f"
 	 "xelatex --shell-escape -interaction nonstopmode %f"))
-
-     ;; C-u M-x org-reload
    #+END_SRC
 
 ** Syntax highlighting
