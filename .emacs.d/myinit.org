@@ -379,7 +379,7 @@
 
    Indent with space.
    #+BEGIN_SRC emacs-lisp
-     (setq indent-tabs-mode nil)
+   (setq-default indent-tabs-mode nil)
    #+END_SRC
 
    Default indent size.
