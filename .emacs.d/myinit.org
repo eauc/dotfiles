@@ -704,31 +704,35 @@
     JS2 mode:
     - add mocha package key bindings to js2 mode.
     #+BEGIN_SRC emacs-lisp
-      (use-package js2-mode
-        :ensure t
-        :mode ("\\.js\\'"  . js2-jsx-mode)
-        :mode ("\\.jsx\\'" . js2-jsx-mode)
-        :mode ("\\.es6\\'" . js2-jsx-mode)
-        :bind (:map js2-mode-map
-                    ("C-c m i" . mocha-test-at-point)
-                    ("C-c m f" . mocha-test-file)
-                    ("C-c m p" . mocha-test-project))
-        :custom
-        (js-indent-level 2)
-        (js2-strict-trailing-comma-warning nil)
-        (jsx-indent-level 2)
-        :custom-face
-        (js2-error ((t (:foreground "red"))))
-        (js2-external-variable ((t (:foreground "orchid"))))
-        (js2-function-param ((t (:foreground "lime green"))))
-        (js2-private-function-call ((t (:foreground "dark orange")))))
+    (use-package js2-mode
+      :ensure t
+      :interpreter (("node" . js2-jsx-mode))
+      :mode (("\\.js\\'" . js2-jsx-mode)
+             ("\\.es6\\'" . js2-jsx-mode))
+      :bind (:map js2-mode-map
+                  ("C-c m i" . mocha-test-at-point)
+                  ("C-c m f" . mocha-test-file)
+                  ("C-c m p" . mocha-test-project))
+      :custom
+      (js-indent-level 2)
+      (jsx-indent-level 2)
+      (js2-highlight-level 3)
+      (js2-mode-assume-strict 3)
+      (js2-strict-trailing-comma-warning nil)
+      :custom-face
+      (js2-error ((t (:foreground "red"))))
+      (js2-external-variable ((t (:foreground "orchid"))))
+      (js2-function-param ((t (:foreground "lime green"))))
+      (js2-private-function-call ((t (:foreground "dark orange")))))
     #+END_SRC
 
     RJSX mode for JSX files.
     #+BEGIN_SRC emacs-lisp
     (use-package rjsx-mode
       :pin melpa
-      :ensure t)
+      :ensure t
+      :interpreter (("node" . rjsx-mode))
+      :mode (("\\.jsx\\'" . rjsx-mode)))
     #+END_SRC
 
 *** Mocha
@@ -858,7 +862,7 @@
     (org-startup-truncated nil "truncate lines at window edge")
     :config
     (add-to-list 'org-src-lang-modes '("jsx" . rjsx))
-    (add-to-list 'org-src-lang-modes '("js" . js2))
+    (add-to-list 'org-src-lang-modes '("js" . js2-jsx))
     (org-babel-do-load-languages
      'org-babel-load-languages
      '((shell . t)
