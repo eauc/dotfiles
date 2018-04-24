@@ -855,6 +855,7 @@
     (after-save . eauc/tangle-current-org-file)
     :custom
     (org-confirm-babel-evaluate nil "no confirmation before running code in blocks")
+    (org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar" "Ditaa jar path")
     (org-edit-src-content-indentation 0 "number of spaces added to indentation at begining of source block")
     (org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar" "do not prompt before code block evaluation")
     (org-src-fontify-natively t "code block syntax highlighting")
@@ -872,6 +873,7 @@
        ;; (perl . t)
        ;; (scala . t)
        (clojure . t)
+       (ditaa . t)
        (python . t)
        (ruby . t)
        (dot . t)
