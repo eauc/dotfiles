@@ -345,6 +345,12 @@ unchanged = update-index --assume-unchanged
 
 bourrin = "!retry() { until $(git $1); do sleep 2; echo "Retrying"; date; done; }; retry"
 
+
+
+# Retrieve standard ignore files for a language:
+
+ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
+
 # User Info
 
 
@@ -362,59 +368,59 @@ bourrin = "!retry() { until $(git $1); do sleep 2; echo "Retrying"; date; done; 
 #   - no init :: -X.
 
 [pager]
-	diff = diff-so-fancy | less --tabs=2 -RFX
-	show = diff-so-fancy | less --tabs=2 -RFX
+        diff = diff-so-fancy | less --tabs=2 -RFX
+        show = diff-so-fancy | less --tabs=2 -RFX
 [interactive]
-	diffFilter = "less --tabs=2 -RFX"
+        diffFilter = "less --tabs=2 -RFX"
 
 
 
 # Show submodules commit logs in super projet diffs:
 
 [diff]
-	submodule = log
+        submodule = log
 
 # Colors
 
 
 [color]
-	ui = true
+        ui = true
 [color "diff"]
-	meta = "yellow bold"
-	commit = "green bold"
-	frag = "magenta bold"
-	old = "red bold"
-	new = "green bold"
-	whitespace = "red reverse"
+        meta = "yellow bold"
+        commit = "green bold"
+        frag = "magenta bold"
+        old = "red bold"
+        new = "green bold"
+        whitespace = "red reverse"
 [color "diff-highlight"]
-	oldNormal = "red bold"
-	oldHighlight = "red bold 52"
-	newNormal = "green bold"
-	newHighlight = "green bold 22"
+        oldNormal = "red bold"
+        oldHighlight = "red bold 52"
+        newNormal = "green bold"
+        newHighlight = "green bold 22"
 [color "branch"]
-	current = "green reverse"
-	local = green
-	remote = yellow
+        current = "green reverse"
+        local = green
+        remote = yellow
 [color "status"]
-	added = green
-	changed = red
-	untracked = cyan
+        added = green
+        changed = red
+        untracked = cyan
 
 # Miscellaneous
 
 
 [grep]
-	lineNumber = true
+        lineNumber = true
 [push]
-	default = simple
+        default = simple
 [blame]
-	date = relative
+        date = relative
 [help]
-	autocorrect = 1
+        autocorrect = 1
 [rebase]
-	autosquash = true
+        autosquash = true
 [credential]
-	helper = store
+        helper = store
 [merge]
-	tool = kdiff3
-	conflictstyle = diff3
+        tool = kdiff3
+        conflictstyle = diff3
