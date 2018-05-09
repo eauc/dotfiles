@@ -714,6 +714,9 @@
                   ("C-c m f" . mocha-test-file)
                   ("C-c m p" . mocha-test-project))
       :custom
+      (js2-bounce-indent-p t)
+      (js2-mode-indent-ignore-first-tab t)
+      (js2-include-node-externs t)
       (js-indent-level 2)
       (jsx-indent-level 2)
       (js2-highlight-level 3)
@@ -750,21 +753,25 @@
 *** Npm
 
     #+BEGIN_SRC emacs-lisp
-      (use-package npm-mode
-        :ensure t
-        :hook
-        (js2-mode . npm-mode))
+    (use-package npm-mode
+      :ensure t
+      :hook
+      ((js-mode . npm-mode)
+       (js2-mode . npm-mode)
+       (rjsx-mode . npm-mode)))
     #+END_SRC
 
 *** Refactor
 
     #+BEGIN_SRC emacs-lisp
-      (use-package js2-refactor
-        :ensure t
-        :hook
-        (js2-mode . js2-refactor-mode)
-        :config
-        (js2r-add-keybindings-with-prefix "C-c <return>"))
+    (use-package js2-refactor
+      :ensure t
+      :hook
+      ((js-mode . js2-refactor-mode)
+       (js2-mode . js2-refactor-mode)
+       (rjsx-mode . js2-refactor-mode))
+      :config
+      (js2r-add-keybindings-with-prefix "C-c <return>"))
     #+END_SRC
 
 ** JSON
@@ -863,7 +870,7 @@
     (org-startup-truncated nil "truncate lines at window edge")
     :config
     (add-to-list 'org-src-lang-modes '("jsx" . rjsx))
-    (add-to-list 'org-src-lang-modes '("js" . js2-jsx))
+    (add-to-list 'org-src-lang-modes '("js" . js))
     (org-babel-do-load-languages
      'org-babel-load-languages
      '((shell . t)

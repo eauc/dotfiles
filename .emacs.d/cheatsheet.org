@@ -107,19 +107,21 @@
 * Javascript
 
   #+BEGIN_SRC emacs-lisp
-    (defun eauc/cheat-javascript ()
-      "Cheatsheet - javascript."
-      (cheatsheet-add-group 'Javascript
-                            '(:key "C-c m p" :description "Mocha test project")
-                            '(:key "C-c m f" :description "Mocha test file")
-                            '(:key "C-c m i" :description "Mocha test at point")
-                            '(:key "C-c n v" :description "NPM visit project file")
-                            '(:key "C-c n r" :description "NPM run")
-                            '(:key "C-c n l" :description "NPM list")
-                            '(:key "C-c n d" :description "NPM install save-dev")
-                            '(:key "C-c n s" :description "NPM install save")
-                            '(:key "C-c n n" :description "NPM init")
-                            '(:key "C-c RET" :description "Refactor")))
+  (defun eauc/cheat-javascript ()
+    "Cheatsheet - javascript."
+    (cheatsheet-add-group 'Javascript
+                          '(:key "C-c m p" :description "Mocha test project")
+                          '(:key "C-c m f" :description "Mocha test file")
+                          '(:key "C-c m i" :description "Mocha test at point")
+                          '(:key "C-c n v" :description "NPM visit project file")
+                          '(:key "C-c n r" :description "NPM run")
+                          '(:key "C-c n l" :description "NPM list")
+                          '(:key "C-c n d" :description "NPM install save-dev")
+                          '(:key "C-c n s" :description "NPM install save")
+                          '(:key "C-c n n" :description "NPM init")
+                          '(:key "C-c RET" :description "Refactor")
+                          '(:key "C-c C-f" :description "toggle hide functions")
+                          '(:key "C-c C-o" :description "toggle hide element")))
   #+END_SRC
 
 * Jump
