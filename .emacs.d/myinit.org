@@ -800,6 +800,13 @@
        :mode "\\.json\\'")
    #+END_SRC
 
+   Major mode for jq scripts.
+   - call jq-interactively in JSON buffer to evaluate jq filter on buffer.
+   #+BEGIN_SRC emacs-lisp
+   (use-package jq-mode
+     :ensure t
+     :mode ("\\.jq\\'" . jq-mode))
+   #+END_SRC
 ** Lisp
 
    #+BEGIN_SRC emacs-lisp
