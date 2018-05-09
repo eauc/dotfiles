@@ -253,6 +253,19 @@
 			    '(:key "C-c C-t" :description "Next TODO state")))
   #+END_SRC
 
+* Projects
+
+  #+BEGIN_SRC emacs-lisp
+  (defun eauc/cheat-projects ()
+    "Cheatsheet - projectile."
+    (cheatsheet-add-group '
+                          '(:key "C-c C-t" :description "Add TODO to project")
+                          '(:key "C-c p k" :description "Kill all project files")
+                          '(:key "C-c p o" :description "Find regex in project files")
+                          '(:key "C-c p f" :description "Find project file")
+                          '(:key "C-c p p" :description "Open project")))
+  #+END_SRC
+
 * RestClient
 
   #+BEGIN_SRC emacs-lisp

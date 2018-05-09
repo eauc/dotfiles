@@ -1006,6 +1006,8 @@
    #+END_SRC
 
 * Projects
+
+  Manage Git projects.
   #+BEGIN_SRC emacs-lisp
     (use-package projectile
       :ensure t
@@ -1019,39 +1021,55 @@
       :custom
       (projectile-switch-project-action #'projectile-dired "Open root dir in Dired when switching to project"))
   #+END_SRC
+
+  Capture TODO per projectile project.
+  #+BEGIN_SRC emacs-lisp
+  (use-package org-projectile
+    :ensure t
+    :demand t
+    :bind (("C-c t" . org-capture))
+    :config
+    (progn
+      (org-projectile-per-project)
+      (setq org-projectile-per-project-filepath "TODO.org")
+      (setq org-agenda-files (append org-agenda-files (org-projectile-todo-files)))
+      (push (org-projectile-project-todo-entry) org-capture-templates)))
+  #+END_SRC
+
 * Miscellaneous Tools
 
 ** Cheatsheet
 
    Emacs cheat sheet.
    #+BEGIN_SRC emacs-lisp
-     (org-babel-load-file
-      (expand-file-name "~/.emacs.d/cheatsheet.org"))
+   (org-babel-load-file
+    (expand-file-name "~/.emacs.d/cheatsheet.org"))
 
-     (defun eauc/cheatsheet ()
-       "Display cheatsheet."
-       (interactive)
-       (cheatsheet-show)
-       (goto-char (point-min)))
+   (defun eauc/cheatsheet ()
+     "Display cheatsheet."
+     (interactive)
+     (cheatsheet-show)
+     (goto-char (point-min)))
 
-     (use-package cheatsheet
-       :pin melpa
-       :ensure t
-       :bind (("<f8>" . eauc/cheatsheet))
-       :config
-       (eauc/cheat-commons)
-       (eauc/cheat-edition)
-       (eauc/cheat-cursors)
-       (eauc/cheat-jump)
-       (eauc/cheat-completion)
-       (eauc/cheat-snippets)
-       (eauc/cheat-org)
-       (eauc/cheat-clojure)
-       (eauc/cheat-javascript)
-       (eauc/cheat-lisp)
-       (eauc/cheat-git-timemachine)
-       (eauc/cheat-google)
-       (eauc/cheat-rest-client))
+   (use-package cheatsheet
+     :pin melpa
+     :ensure t
+     :bind (("<f8>" . eauc/cheatsheet))
+     :config
+     (eauc/cheat-commons)
+     (eauc/cheat-projects)
+     (eauc/cheat-edition)
+     (eauc/cheat-cursors)
+     (eauc/cheat-jump)
+     (eauc/cheat-completion)
+     (eauc/cheat-snippets)
+     (eauc/cheat-org)
+     (eauc/cheat-clojure)
+     (eauc/cheat-javascript)
+     (eauc/cheat-lisp)
+     (eauc/cheat-git-timemachine)
+     (eauc/cheat-google)
+     (eauc/cheat-rest-client))
    #+END_SRC
 
 ** Google
