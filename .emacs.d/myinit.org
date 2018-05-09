@@ -738,6 +738,24 @@
       :mode (("\\.jsx\\'" . rjsx-mode)))
     #+END_SRC
 
+*** Indium
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package indium
+      :ensure t
+      :hook
+      ((js-mode . indium-interaction-mode)
+       (js2-mode . indium-interaction-mode)
+       (rjsx-mode . indium-interaction-mode)))
+    #+END_SRC
+
+*** REPL
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package nodejs-repl
+      :ensure t)
+    #+END_SRC
+
 *** Mocha
 
     #+BEGIN_SRC emacs-lisp
