@@ -4,3 +4,6 @@
 [submodule ".emacs.d/org-html-themes"]
 	path = .emacs.d/org-html-themes
 	url = https://github.com/fniessen/org-html-themes.git
+[submodule ".emacs.d/ob-javascript"]
+	path = .emacs.d/ob-javascript
+	url = https://github.com/zweifisch/ob-javascript.git

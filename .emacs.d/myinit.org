@@ -895,6 +895,16 @@
        (org-mode . eauc/org-bullets-activate))
    #+END_SRC
 
+** Babel
+
+   Javascript support.
+   #+BEGIN_SRC emacs-lisp
+   (use-package ob-javascript
+     :load-path "~/.emacs.d/ob-javascript/"
+     :custom
+     (ob-javascript:browser-binary "/opt/google/chrome/chrome"))
+   #+END_SRC
+
 ** Exports
 
    Confluence wiki.
