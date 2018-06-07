@@ -326,6 +326,14 @@
     (setq show-trailing-whitespace t)
   #+END_SRC
 
+** Bookmarks
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package breadcrumb
+     :after (hydra)
+     :load-path  "~/.emacs.d/breadcrumb/")
+   #+END_SRC
+
 ** Completion
 
    Hippie auto-complete.

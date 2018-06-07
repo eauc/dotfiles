@@ -7,3 +7,7 @@
 [submodule ".emacs.d/ob-javascript"]
 	path = .emacs.d/ob-javascript
 	url = https://github.com/zweifisch/ob-javascript.git
+
+[submodule ".emacs.d/breadcrumb"]
+	path = .emacs.d/breadcrumb
+	url = https://github.com/pheaver/breadcrumb.git
