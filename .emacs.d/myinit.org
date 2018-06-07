@@ -11,7 +11,10 @@
 
    Automatically reload buffers pointing to modified files.
    #+BEGIN_SRC emacs-lisp
-   (global-auto-revert-mode)
+   (use-package autorevert
+     :delight auto-revert-mode
+     :config
+     (global-auto-revert-mode))
    #+END_SRC
 
 ** UI tweaks
@@ -100,6 +103,7 @@
    #+BEGIN_SRC emacs-lisp
    (use-package pcre2el
      :ensure t
+     :delight pcre-mode
      :config
      (pcre-mode 1))
    #+END_SRC
@@ -144,6 +148,7 @@
    #+BEGIN_SRC emacs-lisp
    (use-package which-key
      :ensure t
+     :delight
      :config (which-key-mode))
    #+END_SRC
 
@@ -323,7 +328,10 @@ Dired
 
   Move cursor by subword.
   #+BEGIN_SRC emacs-lisp
-  (global-subword-mode)
+  (use-package subword
+    :delight 
+    :config
+    (global-subword-mode))
   #+END_SRC
 
   Show trailing whitespace.
@@ -371,6 +379,7 @@ Dired
    #+BEGIN_SRC emacs-lisp
    (use-package company
      :ensure t
+     :delight 
      :hook
      ((cider-repl-mode . company-mode)
       (cider-mode . company-mode))
@@ -390,6 +399,7 @@ Dired
    #+BEGIN_SRC emacs-lisp
    (use-package hungry-delete
      :ensure t
+     :delight
      :config
      (global-hungry-delete-mode))
    #+END_SRC
@@ -402,7 +412,10 @@ Dired
 ** Fold
 
    #+BEGIN_SRC emacs-lisp
-   (add-hook 'prog-mode-hook #'hs-minor-mode)
+   (use-package hideshow
+     :delight hs-minor-mode
+     :config
+     (add-hook 'prog-mode-hook #'hs-minor-mode))
    #+END_SRC
 
 ** Indent
@@ -516,6 +529,7 @@ Dired
    (use-package yasnippet
      :after (hydra)
      :ensure t
+     :delight yas-minor-mode
      :custom
      (yas-snippet-dirs '("~/.emacs.d/mysnippets"))
      (yas-prompt-functions '(yas-ido-prompt) "Use ido in yasnippet prompt")
@@ -632,6 +646,7 @@ Dired
    (use-package git-gutter
      :after (hydra)
      :ensure t
+     :delight 
      :config
      (global-git-gutter-mode t)
      (git-gutter:linum-setup)
@@ -658,31 +673,32 @@ Dired
    - enable for all buffers.
    - disable jshint checker for javascript.
    #+BEGIN_SRC emacs-lisp
-      (use-package flycheck
-        :after (hydra)
-        :ensure t
-        :hook
-        (after-init . global-flycheck-mode)
-        :config
-        (setq-default flycheck-disabled-checkers
-                      (append flycheck-disabled-checkers
-                              '(javascript-jshint)))
-        (flycheck-add-mode 'javascript-eslint 'web-mode)
-        (flycheck-add-mode 'javascript-eslint 'js-mode)
-        (flycheck-add-mode 'javascript-eslint 'js2-mode)
-        (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
-        (defhydra hydra-flycheck (:color pink :columns 2)
-          "
+   (use-package flycheck
+     :after (hydra)
+     :ensure t
+     :delight " ℱ"
+     :hook
+     (after-init . global-flycheck-mode)
+     :config
+     (setq-default flycheck-disabled-checkers
+                   (append flycheck-disabled-checkers
+                           '(javascript-jshint)))
+     (flycheck-add-mode 'javascript-eslint 'web-mode)
+     (flycheck-add-mode 'javascript-eslint 'js-mode)
+     (flycheck-add-mode 'javascript-eslint 'js2-mode)
+     (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
+     (defhydra hydra-flycheck (:color pink :columns 2)
+       "
 
    Errors
    ===========
    "
-          ("f" flycheck-first-error "first")
-          ("l" flycheck-list-errors "list" :color blue)
-          ("n" flycheck-next-error "next")
-          ("p" flycheck-previous-error "previous")
-          ("v" flycheck-verify-setup "verify setup" :color blue)
-          ("q" nil "quit")))
+       ("f" flycheck-first-error "first")
+       ("l" flycheck-list-errors "list" :color blue)
+       ("n" flycheck-next-error "next")
+       ("p" flycheck-previous-error "previous")
+       ("v" flycheck-verify-setup "verify setup" :color blue)
+       ("q" nil "quit")))
    #+END_SRC
 
 ** Clojure
@@ -697,9 +713,13 @@ Dired
     (use-package clojure-mode
       :after (hydra)
       :ensure t
+      :delight
+      (clojure-mode "ℭ")
+      (clojurescript-mode "ℭs")
+      (eldoc-mode)
       :mode ("\\.clj\\'" . clojure-mode)
       :hook
-      (clojure-mode . clojure-mode-init)
+      (clojure-mode . eauc/clojure-mode-init)
       :bind (:map clojure-mode-map
                   ("<f6>" . hydra-clj/body))
       :init
@@ -723,6 +743,7 @@ Dired
     (use-package clojurescript-mode
       :ensure t
       :pin marmalade
+      :delight (clojurescript-mode "ℭs")
       :mode ("\\.cljs\\'" . clojurescript-mode))
     #+END_SRC
 
@@ -745,6 +766,7 @@ Dired
       :after (hydra)
       :ensure t
       :defer t
+      :delight " ℭr"
       :hook
       (clojure-mode . eauc/clojure-refactor-init)
       :custom
@@ -760,6 +782,8 @@ Dired
       :pin melpa-stable
       :ensure t
       :defer t
+      :delight
+      '(:eval (format " ℭi[%s]" (cider--modeline-info)))
       :hook
       ((clojure-mode . cider-mode)
        (cider-mode . eldoc-mode))
@@ -784,10 +808,10 @@ Dired
       (cider-repl-use-pretty-printing t "nice pretty printing")
       (cider-repl-use-clojure-font-lock t "nicer font lock in REPL")
       (cider-repl-result-prefix " ;; => " "result prefix for the REPL")
-        (cider-repl-wrap-history t "never ending REPL history")
-        (cider-repl-history-size 3000 "looong history")
-        (cider-show-error-buffer t "error buffer not popping up")
-        (cider-auto-select-error-buffer nil "error buffer not popping up"))
+      (cider-repl-wrap-history t "never ending REPL history")
+      (cider-repl-history-size 3000 "looong history")
+      (cider-show-error-buffer t "error buffer not popping up")
+      (cider-auto-select-error-buffer nil "error buffer not popping up"))
     #+END_SRC
 
 ** Cucumber
@@ -813,6 +837,14 @@ Dired
      :ensure t)
    #+END_SRC
 
+** Emacs-lisp
+
+   #+BEGIN_SRC emacs-lisp
+   (add-hook 'emacs-lisp-mode-hook 
+     (lambda()
+       (setq mode-name "ℰ"))) 
+   #+END_SRC
+
 ** Haskell
 
    #+BEGIN_SRC emacs-lisp
@@ -831,6 +863,9 @@ Dired
     (use-package js2-mode
       :after (hydra)
       :ensure t
+      :delight
+      (js2-jsx-mode "ℑ")
+      (js2-mode "ℑ")
       :interpreter (("node" . js2-jsx-mode))
       :mode (("\\.js\\'" . js2-jsx-mode)
              ("\\.es6\\'" . js2-jsx-mode))
@@ -876,6 +911,7 @@ Dired
     (use-package rjsx-mode
       :pin melpa
       :ensure t
+      :delight "ℑx"
       :interpreter (("node" . rjsx-mode))
       :mode (("\\.jsx\\'" . rjsx-mode)))
     #+END_SRC
@@ -885,6 +921,7 @@ Dired
     #+BEGIN_SRC emacs-lisp
     (use-package indium
       :ensure t
+      :delight (indium-interaction-mode " ℐn")
       :hook
       ((js-mode . indium-interaction-mode)
        (js2-mode . indium-interaction-mode)
@@ -999,6 +1036,7 @@ Dired
 
    (use-package lispy
      :ensure t
+     :delight " ℓ"
      :bind (:map lispy-mode-map
                  ("M-[" . lispy-backward)
                  ("M-]" . lispy-forward)
@@ -1067,8 +1105,9 @@ Dired
     :after (hydra)
     :pin org
     :ensure org-plus-contrib
+    :delight "Ø"
     :bind (:map org-mode-map
-                 ("<f6>" . hydra-org/body))
+                ("<f6>" . hydra-org/body))
     :hook
     (after-save . eauc/tangle-current-org-file)
     :custom
@@ -1103,7 +1142,7 @@ Dired
   Org - Header
   ============
   "
-    
+
       ("f" org-cycle "cycle" :column "Fold")
       ("F" org-shifttab "cycle all")
       ("n" org-next-visible-heading "next (any lvl)" :column "Move")
@@ -1120,7 +1159,7 @@ Dired
   Org - List
   ==========
   "
-    
+
       ("c" org-shiftleft "cycle bullet type" :column "Edit")
       ("w" org-metaup "move ↓")
       ("s" org-metadown "move ↓")
@@ -1137,7 +1176,7 @@ Dired
   Org - Table
   ===========
   "
-    
+
       ("S-<left>" org-metaleft "move left" :column "Columns")
       ("S-<right>" org-metaright "move right")
       ("M-<right>" org-shiftmetaright "insert left")
@@ -1293,6 +1332,7 @@ Dired
   (use-package projectile
     :after (hydra)
     :ensure t
+    :delight '(:eval (concat " [" (projectile-project-name) "]"))
     :config
     (projectile-global-mode)
     ;; (projectile-register-project-type 'npm '("package.json")
@@ -1352,7 +1392,6 @@ Dired
   #+END_SRC
 
 * Miscellaneous Tools
-
 ** Cheatsheet
 
    Emacs cheat sheet.
@@ -1384,6 +1423,7 @@ Dired
    (use-package google-this
      :after (hydra)
      :ensure t
+     :delight
      :init
      (defhydra hydra-google (:color blue)
        "
