@@ -235,9 +235,16 @@ gs = "!git g --cached"
 
 # Remote
 
-#    Basic fetch:
-#    - remote tags.
-#    - remove remote-tracking branches that do not exists on remote.
+#    Clone:
+#    - always checkout submodules.
+
+clone = clone --recursive
+
+
+
+# Basic fetch:
+# - remote tags.
+# - remove remote-tracking branches that do not exists on remote.
 
 f = fetch --prune --tags
 

@@ -219,6 +219,12 @@
 
 ** Remote
 
+   Clone:
+   - always checkout submodules.
+   #+BEGIN_SRC gitconfig
+           clone = clone --recursive
+   #+END_SRC
+
    Basic fetch:
    - remote tags.
    - remove remote-tracking branches that do not exists on remote.
