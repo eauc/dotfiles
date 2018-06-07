@@ -1,95 +1,37 @@
 #+STARTUP: overview
 
-
-* Clojure
-
-  #+BEGIN_SRC emacs-lisp
-    (defun eauc/cheat-clojure ()
-      "Cheatsheet - clojure."
-      (cheatsheet-add-group 'Clojure
-                            '(:key "C-c RET" :description "Refactor")
-                            '(:key "C-c c"   :description "Complete suggestions")
-                            '(:key "C-c M-J" :description "Cider Jack-in CLJS")
-                            '(:key "C-c C-k" :description "Cider load & compile file")
-                            '(:key "C-c C-c" :description "Cider execute top sexp")
-                            '(:key "C-x C-e" :description "Cider execute last sexp")))
-  #+END_SRC
-
 * Commons
 
   #+BEGIN_SRC emacs-lisp
   (defun eauc/cheat-commons ()
     "Cheasheet - commons."
     (cheatsheet-add-group 'Commons
-			  '(:key "<chords> jt"     :description "Auto yasnippet expand")
-			  '(:key "<chords> jy"     :description "Auto yasnippet create")
-			  '(:key "Spe-i"  :description "Edit config file")
-			  '(:key "C-F10"  :description "Kill emacs")
-			  '(:key "F10"    :description "Kill buffer")
-			  '(:key "F8"     :description "Cheatsheet")
-			  '(:key "Spe-F7" :description "Git message popup")
-			  '(:key "S-F7"   :description "MaGit blame")
-			  '(:key "C-F7"   :description "Git complete")
-			  '(:key "F7"     :description "MaGit status")
-			  '(:key "C-F6"   :description "Pop mark global")
-			  '(:key "F6"     :description "Pop mark")
-			  '(:key "C-S-F5" :description "Jump to named bookmark")
-			  '(:key "S-F5"   :description "Set named bookmark")
-			  '(:key "C-F5"   :description "Jump to bookmark")
-			  '(:key "F5"     :description "Set bookmark")
-			  '(:key "C-F4"   :description "Indent Buffer")
-			  '(:key "F4"     :description "Comment")
-			  '(:key "S-F3"   :description "Ido switch buffer")
-			  '(:key "C-F3"   :description "Buffer menu other window")
-			  '(:key "F3"     :description "Other window")
-			  '(:key "C-F2"   :description "Write file")
-			  '(:key "F2"     :description "Save buffer")
-			  '(:key "F1"     :description "Find file")))
-  #+END_SRC
-
-* Completion
-
-  #+BEGIN_SRC emacs-lisp
-    (defun eauc/cheat-completion ()
-      "Cheatsheet - completion."
-      (cheatsheet-add-group 'Completion
-                            '(:key "C-c x"   :description "Completion (hippie)")
-                            '(:key "C-c c"   :description "Completion (company)")))
-  #+END_SRC
-
-* Cursors
-
-  #+BEGIN_SRC emacs-lisp
-    (defun eauc/cheat-cursors ()
-      "Cheatsheet - cursors."
-      (cheatsheet-add-group 'Cursors
-                            '(:key "C-c . u" :description "Remove current cursor")
-                            '(:key "C-c . [" :description "Edit beginning of lines")
-                            '(:key "C-c . ]" :description "Edit end of lines")
-                            '(:key "C-c . right" :description "Cycle backward")
-                            '(:key "C-c . left" :description "Cycle forward")
-                            '(:key "C-c . f" :description "Mark all like this in defun")
-                            '(:key "C-c . a" :description "Mark all like this")
-                            '(:key "C-c . <" :description "Mark previous like this")
-                            '(:key "C-c . >" :description "Mark next like this")))
+                          '(:key "Spe-i"  :description "Edit config file")
+                          '(:key "C-F10"  :description "Kill emacs")
+                          '(:key "F10"    :description "Kill buffer")
+                          '(:key "F8"     :description "Cheatsheet")
+                          '(:key "F6"     :description "Mode-Hydra")
+                          '(:key "F5"     :description "Hydra")
+                          '(:key "C-F4"   :description "Indent Buffer")
+                          '(:key "F4"     :description "Comment")
+                          '(:key "S-F3"   :description "Ido switch buffer")
+                          '(:key "C-F3"   :description "Buffer menu other window")
+                          '(:key "F3"     :description "Other window")
+                          '(:key "C-F2"   :description "Write file")
+                          '(:key "F2"     :description "Save buffer")
+                          '(:key "C-F1"   :description "Switch project")
+                          '(:key "F1"     :description "Find file")))
   #+END_SRC
 
 * Edition
 
   #+BEGIN_SRC emacs-lisp
-    (defun eauc/cheat-edition ()
-      "Cheatsheet - edition."
-      (cheatsheet-add-group 'Edition
-			    '(:key "C-m"     :description "Call macro")
-			    '(:key "C-="     :description "Expand region")
-			    '(:key "C-'"     :description "Cycle quotes")
-			    '(:key "S-RET"   :description "Open line below")
-			    '(:key "Spe-RET" :description "Open line above")
-			    '(:key "S-SPC"   :description "Just one space")
-			    '(:key "Spe-k"   :description "Kill whole line")
-			    '(:key "Spe-<"   :description "Move beginning of line")
-			    '(:key "C-x n n" :description "Narrow to region")
-			    '(:key "C-x n w" :description "Widen")))
+  (defun eauc/cheat-edition ()
+    "Cheatsheet - edition."
+    (cheatsheet-add-group 'Edition
+                          '(:key "C-m"     :description "Call macro")
+                          '(:key "C-="     :description "Expand region")
+                          '(:key "C-'"     :description "Cycle quotes")))
   #+END_SRC
 
 * Git Timemachine
@@ -102,49 +44,6 @@
                             '(:key "w" :description "Copy short hash of current version")
                             '(:key "p" :description "Previous revision")
                             '(:key "n" :description "Next revision")))
-  #+END_SRC
-
-* Javascript
-
-  #+BEGIN_SRC emacs-lisp
-  (defun eauc/cheat-javascript ()
-    "Cheatsheet - javascript."
-    (cheatsheet-add-group 'Javascript
-                          '(:key "C-c m p" :description "Mocha test project")
-                          '(:key "C-c m f" :description "Mocha test file")
-                          '(:key "C-c m i" :description "Mocha test at point")
-                          '(:key "C-c n v" :description "NPM visit project file")
-                          '(:key "C-c n r" :description "NPM run")
-                          '(:key "C-c n l" :description "NPM list")
-                          '(:key "C-c n d" :description "NPM install save-dev")
-                          '(:key "C-c n s" :description "NPM install save")
-                          '(:key "C-c n n" :description "NPM init")
-                          '(:key "C-c RET" :description "Refactor")
-                          '(:key "C-c C-f" :description "toggle hide functions")
-                          '(:key "C-c C-o" :description "toggle hide element")))
-  #+END_SRC
-
-* Jump
-
-  #+BEGIN_SRC emacs-lisp
-    (defun eauc/cheat-jump ()
-      "Cheatsheet - jump."
-      (cheatsheet-add-group 'Jump
-                            '(:key "C-c j b" :description "Jump back")
-                            '(:key "C-c j o" :description "Jump (other window)")
-                            '(:key "C-c j g" :description "Jump to definition")
-                            '(:key "C-c a"   :description "Jump to word")))
-  #+END_SRC
-
-* Google
-
-  #+BEGIN_SRC emacs-lisp
-    (defun eauc/cheat-google ()
-      "Cheatsheet - google."
-      (cheatsheet-add-group 'Google
-                            '(:key "C-c / SPC" :description "Google this")
-                            '(:key "C-c / g"   :description "Google this lucky")
-                            '(:key "C-c / e"   :description "Google this error")))
   #+END_SRC
 
 * Lisp
@@ -204,87 +103,3 @@
                             '(:key "k" :description "Up")))
   #+END_SRC
 
-* Org
-
-  #+BEGIN_SRC emacs-lisp
-    (defun eauc/cheat-org ()
-      "Cheatsheet - org."
-      (cheatsheet-add-group 'Org
-
-			    '(:key "M-left/right" :description "Decrease/Increase header level")
-			    '(:key "C-c C-u" :description "Back to top level header")
-			    '(:key "C-c C-n" :description "Next header (any level)")
-			    '(:key "C-c C-p" :description "Previous header (any level)")
-			    '(:key "C-c C-f" :description "Next header (same level)")
-			    '(:key "C-c C-b" :description "Previous header (same level)")
-
-			    '(:key "C-c ^" :description "Table: sort rows by current col")
-			    '(:key "M-S-<right>" :description "Table: insert column to the left")
-			    '(:key "M-S-<left>" :description "Table: kill column")
-			    '(:key "M-<left/right>" :description "Table: move column left/right")
-			    '(:key "C-c -" :description "Table: insert horizontal line below")
-			    '(:key "M-S-<down>" :description "Table: insert row below")
-			    '(:key "M-S-<up>" :description "Table: kill row")
-			    '(:key "M-<up/down>" :description "Table: move row up/down")
-
-			    '(:key "M-<RET>" :description "List: insert new item at same level")
-			    '(:key "S-<up>" :description "List: previous item")
-			    '(:key "S-<down>" :description "List: next item")
-			    '(:key "S-<left/right>" :description "List: cycle bullet type")
-			    '(:key "M-<up>" :description "List: move item up")
-			    '(:key "M-<down>" :description "List: move item down")
-			    '(:key "M-<left>" :description "List: decrease item indentation")
-			    '(:key "M-<right>" :description "List: increase item indentation")
-			    '(:key "M-S-<left>" :description "List: decrease item+children indentation")
-			    '(:key "M-S-<right>" :description "List: increase item+children indentation")
-
-			    '(:key "<s-tab" :description "Insert source code block")
-			    '(:key "C-c '" :description "Edit code block")
-			    '(:key "C-c C-c" :description "Evaluate code block")
-			    '(:key "C-c C-e" :description "Export file")
-			    '(:key "C-c C-v t" :description "Tangle file")
-
-			    '(:key "C-c C-x C-v" :description "Toggle inline images")
-			    '(:key "C-c C-x C-M-v" :description "Refresh inline images")
-
-			    '(:key "C-c C-o" :description "Follow link")
-			    '(:key "C-c C-l" :description "Create/edit link")
-
-			    '(:key "C-c C-t" :description "Next TODO state")))
-  #+END_SRC
-
-* Projects
-
-  #+BEGIN_SRC emacs-lisp
-  (defun eauc/cheat-projects ()
-    "Cheatsheet - projectile."
-    (cheatsheet-add-group '
-                          '(:key "C-c C-t" :description "Add TODO to project")
-                          '(:key "C-c p k" :description "Kill all project files")
-                          '(:key "C-c p o" :description "Find regex in project files")
-                          '(:key "C-c p f" :description "Find project file")
-                          '(:key "C-c p p" :description "Open project")))
-  #+END_SRC
-
-* RestClient
-
-  #+BEGIN_SRC emacs-lisp
-    (defun eauc/cheat-rest-client ()
-      "Cheatsheet - rest client."
-      (cheatsheet-add-group 'Restclient
-                            '(:key "C-c C-c" :description "Run query under point & switch focus")
-                            '(:key "C-c C-v" :description "Run query under point")
-                            '(:key "C-c C-p" :description "Previous query")
-                            '(:key "C-c C-n" :description "Next query")
-                            '(:key "C-c C-." :description "Mark query under point")
-                            '(:key "C-c C-u" :description "Copy query under point as CURL")))
-  #+END_SRC
-
-* Snippets
-
-  #+BEGIN_SRC emacs-lisp
-    (defun eauc/cheat-snippets ()
-      "Cheatsheet - snippets."
-      (cheatsheet-add-group 'Snippet
-                            '(:key "C-c y" :description "Insert yasnippet")))
-  #+END_SRC
