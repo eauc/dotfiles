@@ -1114,6 +1114,7 @@ Dired
     (org-confirm-babel-evaluate nil "no confirmation before running code in blocks")
     (org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar" "Ditaa jar path")
     (org-edit-src-content-indentation 0 "number of spaces added to indentation at begining of source block")
+    (org-html-htmlize-output-type 'css "Export emacs theme to css classes")
     (org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar" "Plantuml jar path")
     (org-src-fontify-natively t "code block syntax highlighting")
     (org-src-tab-acts-natively t "use language indent rules in code blocks")
