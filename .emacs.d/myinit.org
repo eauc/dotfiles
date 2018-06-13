@@ -1192,6 +1192,7 @@ Dired
     :config
     (add-to-list 'org-src-lang-modes '("jsx" . rjsx))
     (add-to-list 'org-src-lang-modes '("js" . js))
+    (add-to-list 'org-src-lang-modes '("javascript" . js))
     (org-babel-do-load-languages
      'org-babel-load-languages
      '((shell . t)
