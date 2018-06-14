@@ -1134,7 +1134,7 @@ Dired
       ("lo" org-open-at-point "open")
       ("to" org-todo "add/next" :column "TODO")
       ("h" hydra-org-header/body "headers" :column "---" :color blue)
-      ("l" hydra-org-list/body "lists" :color blue)
+      ("ls" hydra-org-list/body "lists" :color blue)
       ("t" hydra-org-table/body "tables" :color blue)
       ("q" nil "quit"))
     (defhydra hydra-org-header (:color pink)
@@ -1191,7 +1191,7 @@ Dired
       ("-" org-ctrl-c-minus "insert line below"))
     :config
     (add-to-list 'org-src-lang-modes '("jsx" . rjsx))
-    (add-to-list 'org-src-lang-modes '("js" . js))
+    (add-to-list 'org-src-lang-modes '("js" . js2))
     (add-to-list 'org-src-lang-modes '("javascript" . js))
     (org-babel-do-load-languages
      'org-babel-load-languages
