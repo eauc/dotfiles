@@ -12,7 +12,6 @@
    Automatically reload buffers pointing to modified files.
    #+BEGIN_SRC emacs-lisp
    (use-package autorevert
-     :delight auto-revert-mode
      :config
      (global-auto-revert-mode))
    #+END_SRC
@@ -103,7 +102,6 @@
    #+BEGIN_SRC emacs-lisp
    (use-package pcre2el
      :ensure t
-     :delight pcre-mode
      :config
      (pcre-mode 1))
    #+END_SRC
@@ -148,7 +146,6 @@
    #+BEGIN_SRC emacs-lisp
    (use-package which-key
      :ensure t
-     :delight
      :config (which-key-mode))
    #+END_SRC
 
@@ -333,7 +330,6 @@ Dired
   Move cursor by subword.
   #+BEGIN_SRC emacs-lisp
   (use-package subword
-    :delight 
     :config
     (global-subword-mode))
   #+END_SRC
@@ -383,7 +379,6 @@ Dired
    #+BEGIN_SRC emacs-lisp
    (use-package company
      :ensure t
-     :delight 
      :hook
      ((cider-repl-mode . company-mode)
       (cider-mode . company-mode))
@@ -403,7 +398,6 @@ Dired
    #+BEGIN_SRC emacs-lisp
    (use-package hungry-delete
      :ensure t
-     :delight
      :config
      (global-hungry-delete-mode))
    #+END_SRC
@@ -417,7 +411,6 @@ Dired
 
    #+BEGIN_SRC emacs-lisp
    (use-package hideshow
-     :delight hs-minor-mode
      :config
      (add-hook 'prog-mode-hook #'hs-minor-mode))
    #+END_SRC
@@ -533,7 +526,6 @@ Dired
    (use-package yasnippet
      :after (hydra)
      :ensure t
-     :delight yas-minor-mode
      :custom
      (yas-snippet-dirs '("~/.emacs.d/mysnippets"))
      (yas-prompt-functions '(yas-ido-prompt) "Use ido in yasnippet prompt")
@@ -655,7 +647,6 @@ Dired
    (use-package git-gutter
      :after (hydra)
      :ensure t
-     :delight 
      :config
      (git-gutter:linum-setup))
    #+END_SRC
@@ -682,7 +673,6 @@ Dired
    (use-package flycheck
      :after (hydra)
      :ensure t
-     :delight " ℱ"
      :hook
      (after-init . global-flycheck-mode)
      :config
@@ -719,10 +709,6 @@ Dired
     (use-package clojure-mode
       :after (hydra)
       :ensure t
-      :delight
-      (clojure-mode "ℭ")
-      (clojurescript-mode "ℭs")
-      (eldoc-mode)
       :mode ("\\.clj\\'" . clojure-mode)
       :hook
       (clojure-mode . eauc/clojure-mode-init)
@@ -749,7 +735,6 @@ Dired
     (use-package clojurescript-mode
       :ensure t
       :pin marmalade
-      :delight (clojurescript-mode "ℭs")
       :mode ("\\.cljs\\'" . clojurescript-mode))
     #+END_SRC
 
@@ -772,7 +757,6 @@ Dired
       :after (hydra)
       :ensure t
       :defer t
-      :delight " ℭr"
       :hook
       (clojure-mode . eauc/clojure-refactor-init)
       :custom
@@ -788,8 +772,6 @@ Dired
       :pin melpa-stable
       :ensure t
       :defer t
-      :delight
-      '(:eval (format " ℭi[%s]" (cider--modeline-info)))
       :hook
       ((clojure-mode . cider-mode)
        (cider-mode . eldoc-mode))
@@ -869,9 +851,6 @@ Dired
     (use-package js2-mode
       :after (hydra)
       :ensure t
-      :delight
-      (js2-jsx-mode "ℑ")
-      (js2-mode "ℑ")
       :interpreter (("node" . js2-jsx-mode))
       :mode (("\\.js\\'" . js2-jsx-mode)
              ("\\.es6\\'" . js2-jsx-mode))
@@ -917,7 +896,6 @@ Dired
     (use-package rjsx-mode
       :pin melpa
       :ensure t
-      :delight "ℑx"
       :interpreter (("node" . rjsx-mode))
       :mode (("\\.jsx\\'" . rjsx-mode)))
     #+END_SRC
@@ -927,7 +905,6 @@ Dired
     #+BEGIN_SRC emacs-lisp
     (use-package indium
       :ensure t
-      :delight (indium-interaction-mode " ℐn")
       :hook
       ((js-mode . indium-interaction-mode)
        (js2-mode . indium-interaction-mode)
@@ -1042,7 +1019,6 @@ Dired
 
    (use-package lispy
      :ensure t
-     :delight " ℓ"
      :bind (:map lispy-mode-map
                  ("M-[" . lispy-backward)
                  ("M-]" . lispy-forward)
@@ -1111,7 +1087,6 @@ Dired
     :after (hydra)
     :pin org
     :ensure org-plus-contrib
-    :delight "Ø"
     :bind (:map org-mode-map
                 ("<f6>" . hydra-org/body))
     :hook
@@ -1340,7 +1315,6 @@ Dired
   (use-package projectile
     :after (hydra)
     :ensure t
-    :delight '(:eval (concat " [" (projectile-project-name) "]"))
     :config
     (projectile-global-mode)
     ;; (projectile-register-project-type 'npm '("package.json")
@@ -1431,7 +1405,6 @@ Dired
    (use-package google-this
      :after (hydra)
      :ensure t
-     :delight
      :init
      (defhydra hydra-google (:color blue)
        "
@@ -1645,6 +1618,16 @@ Dired
        ("-" text-scale-decrease "out")
        ("0" (text-scale-adjust 0) "reset")
        ("q" nil "quit")))
+   #+END_SRC
+
+** Minions
+
+   Minor-modes menu.
+   #+BEGIN_SRC emacs-lisp
+   (use-package minions
+     :ensure t
+     :config
+     (minions-mode t))
    #+END_SRC
 
 ** Rest Client
