@@ -607,7 +607,8 @@ Dired
        ("c" git-messenger:popup-message "commit msg" :color blue)
        ("s" magit-status "status" :color blue)
        ("t" git-timemachine "time-machine" :color blue)
-       ("n" git-gutter:next-hunk "next" :column "Hunks")
+       ("g" git-gutter-mode "gutter on/off" :column "Hunks")
+       ("n" git-gutter:next-hunk "next")
        ("p" git-gutter:previous-hunk "previous")
        ("f" (progn (goto-char (point-min))
                    (git-gutter:next-hunk 1)) "first")
@@ -646,16 +647,17 @@ Dired
 
 ** Gutter
 
+   Git gutter displays git hunks in Emacs' fringe.
+   - enable with hydra-git/gutter
+   - require compatibility with line numbers display
+
    #+BEGIN_SRC emacs-lisp
    (use-package git-gutter
      :after (hydra)
      :ensure t
      :delight 
      :config
-     (global-git-gutter-mode t)
-     (git-gutter:linum-setup)
-     :custom
-     (git-gutter:update-interval 2))
+     (git-gutter:linum-setup))
    #+END_SRC
 
 * Languages
