@@ -291,7 +291,7 @@
     :bind (:map dired-mode-map
                 ("<f6>" . 'hydra-dired/body))
     :init
-    (defhydra hydra-dired (:color pink :columns 3)
+    (defhydra hydra-dired (:color blue :columns 3)
       "
 
 Dired
@@ -346,7 +346,7 @@ Dired
      :after (hydra)
      :load-path  "~/.emacs.d/breadcrumb/"
      :config
-     (defhydra hydra-breadcrumb (:color pink)
+     (defhydra hydra-breadcrumb (:color blue)
        "
 
    Breadcrumb
@@ -499,7 +499,7 @@ Dired
         :ensure t
         :bind ()
         :config
-        (defhydra hydra-multicursors (:color pink)
+        (defhydra hydra-multicursors (:color blue)
           "
 
    Jump
@@ -589,16 +589,16 @@ Dired
      :after (hydra)
      :ensure t
      :config
-     (defhydra hydra-git (:color pink)
+     (defhydra hydra-git (:color blue)
        "
 
    Git
    ==========
    "
-       ("b" magit-blame "blame" :column "Info" :color blue)
-       ("c" git-messenger:popup-message "commit msg" :color blue)
-       ("s" magit-status "status" :color blue)
-       ("t" git-timemachine "time-machine" :color blue)
+       ("b" magit-blame "blame" :column "Info")
+       ("c" git-messenger:popup-message "commit msg")
+       ("s" magit-status "status")
+       ("t" git-timemachine "time-machine")
        ("g" git-gutter-mode "gutter on/off" :column "Hunks")
        ("n" git-gutter:next-hunk "next")
        ("p" git-gutter:previous-hunk "previous")
@@ -683,17 +683,17 @@ Dired
      (flycheck-add-mode 'javascript-eslint 'js-mode)
      (flycheck-add-mode 'javascript-eslint 'js2-mode)
      (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
-     (defhydra hydra-flycheck (:color pink :columns 2)
+     (defhydra hydra-flycheck (:color blue :columns 2)
        "
 
    Errors
    ===========
    "
        ("f" flycheck-first-error "first")
-       ("l" flycheck-list-errors "list" :color blue)
+       ("l" flycheck-list-errors "list")
        ("n" flycheck-next-error "next")
        ("p" flycheck-previous-error "previous")
-       ("v" flycheck-verify-setup "verify setup" :color blue)
+       ("v" flycheck-verify-setup "verify setup")
        ("q" nil "quit")))
    #+END_SRC
 
@@ -1101,24 +1101,24 @@ Dired
     (org-src-tab-acts-natively t "use language indent rules in code blocks")
     (org-startup-truncated nil "truncate lines at window edge")
     :init
-    (defhydra hydra-org (:color pink)
+    (defhydra hydra-org (:color blue)
       "
 
   Org
   ========
   "
-      ("fe" org-export-dispatch "export" :column "File" :color blue)
+      ("fe" org-export-dispatch "export" :column "File")
       ("ft" org-babel-tangle "tangle")
       ("ii" org-toggle-inline-images "toggle inline" :column "Images")
       ("ir" org-redisplay-inline-images "refresh")
       ("li" org-insert-link "add/edit" :column "Links")
       ("lo" org-open-at-point "open")
       ("to" org-todo "add/next" :column "TODO")
-      ("h" hydra-org-header/body "headers" :column "---" :color blue)
-      ("ls" hydra-org-list/body "lists" :color blue)
-      ("t" hydra-org-table/body "tables" :color blue)
+      ("h" hydra-org-header/body "headers" :column "---")
+      ("ls" hydra-org-list/body "lists")
+      ("ta" hydra-org-table/body "tables")
       ("q" nil "quit"))
-    (defhydra hydra-org-header (:color pink)
+    (defhydra hydra-org-header (:color blue)
       "
 
   Org - Header
@@ -1135,7 +1135,7 @@ Dired
       ("S-<left>" org-metaleft "decrease" :column "Indentation")
       ("S-<right>" org-metaright "increase")
       ("q" nil "quit"))
-    (defhydra hydra-org-list (:color pink)
+    (defhydra hydra-org-list (:color blue)
       "
 
   Org - List
@@ -1152,7 +1152,7 @@ Dired
       ("M-<right>" org-shiftmetaright "inrease +children")
       ("<up>" org-shiftup "cursor ↑" :column "Move")
       ("<down>" org-shiftdown "cursor ↓"))
-    (defhydra hydra-org-table (:color pink)
+    (defhydra hydra-org-table (:color blue)
       "
 
   Org - Table
@@ -1322,7 +1322,7 @@ Dired
     ;;                                :test "npm test"
     ;;                                :run "npm start"
     ;;                                :test-suffix ".spec")
-    (defhydra hydra-projectile (:color teal :hint nil)
+    (defhydra hydra-projectile (:color blue :hint nil)
       "
 
   Projectile
@@ -1341,8 +1341,8 @@ Dired
       ("p"   projectile-switch-project "switch" :column "Project")
       ("t"   org-todo "add TODO")
       ("w"   hydra-projectile-other-window/body "other window")
-      ("q"   nil "cancel" :color blue))
-    (defhydra hydra-projectile-other-window (:color teal)
+      ("q"   nil "cancel"))
+    (defhydra hydra-projectile-other-window (:color blue)
       "
 
   Projectile - Other window
@@ -1469,7 +1469,7 @@ Dired
        ("q" nil "quit" :column nil))
 
 
-     (defhydra hydra-edit (:color pink)
+     (defhydra hydra-edit (:color blue)
        "
 
    Edition
@@ -1488,7 +1488,7 @@ Dired
        ("q" nil "quit" :color blue))
 
 
-     (defhydra hydra-fold (:color pink)
+     (defhydra hydra-fold (:color blue)
        "
 
    Fold
@@ -1498,10 +1498,10 @@ Dired
        ("s" hs-show-block "show block")
        ("M-h" hs-hide-all "hide all")
        ("M-s" hs-show-all "show all")
-       ("q" nil "quit" :column "---" :color blue))
+       ("q" nil "quit" :column "---"))
 
 
-     (defhydra hydra-jump (:color pink)
+     (defhydra hydra-jump (:color blue)
        "
 
    Jump
@@ -1519,7 +1519,7 @@ Dired
        ("q" nil "quit" :column nil))
 
 
-     (defhydra hydra-macro (:hint nil :color pink :pre
+     (defhydra hydra-macro (:hint nil :color blue :pre
                                   (when defining-kbd-macro
                                     (kmacro-end-macro 1)))
        "
@@ -1527,8 +1527,8 @@ Dired
    Macros
    ========
    "
-       ("q" nil "quit" :color blue)
-       ("st" kmacro-start-macro "start" :color blue :column "Def/Exec")
+       ("q" nil "quit")
+       ("st" kmacro-start-macro "start" :column "Def/Exec")
        ("es" kmacro-step-edit-macro "step-edit")
        ("en" kmacro-end-or-call-macro-repeat "end")
        ("x" kmacro-end-or-call-macro-repeat "execute")
@@ -1551,7 +1551,7 @@ Dired
 
 
      (defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
-                                          :color pink
+                                          :color blue
                                           :columns 3
                                           :post (deactivate-mark))
        "
@@ -1572,8 +1572,7 @@ Dired
        ("q" nil "quit"))
 
 
-     (defhydra hydra-window (:color red
-                                    :hint nil)
+     (defhydra hydra-window (:color blue :hint nil)
        "
 
    Window
@@ -1608,7 +1607,7 @@ Dired
        ("a" ace-window :column "Misc" :exit t))
 
 
-     (defhydra hydra-zoom (:color red)
+     (defhydra hydra-zoom (:color blue)
        "
 
    Zoom
@@ -1642,7 +1641,7 @@ Dired
      :bind (:map restclient-mode-map
                  ("<f6>" . hydra-restclient/body))
      :init
-     (defhydra hydra-restclient (:color pink)
+     (defhydra hydra-restclient (:color blue)
        "
 
    Restclient
