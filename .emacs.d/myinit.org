@@ -1551,7 +1551,7 @@ Dired
 
 
      (defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
-                                          :color blue
+                                          :color pink
                                           :columns 3
                                           :post (deactivate-mark))
        "
@@ -1560,7 +1560,7 @@ Dired
    ==========
    "
        ("e" exchange-point-and-mark "point↔mark")
-       ("n" copy-rectangle-as-kill "copy")
+       ("c" copy-rectangle-as-kill "copy")
        ("d" delete-rectangle "delete")
        ("r" (if (region-active-p)
                 (deactivate-mark)
@@ -1568,7 +1568,7 @@ Dired
        ("y" yank-rectangle "yank")
        ("u" undo "undo")
        ("s" string-rectangle "replace w/ string")
-       ("p" kill-rectangle "kill")
+       ("k" kill-rectangle "kill")
        ("q" nil "quit"))
 
 
