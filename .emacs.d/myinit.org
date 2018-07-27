@@ -708,7 +708,8 @@ Dired
     (use-package clojure-mode
       :after (hydra)
       :ensure t
-      :mode ("\\.clj\\'" . clojure-mode)
+      :mode (("\\.clj\\'" . clojure-mode)
+             ("\\.edn\\'" . clojure-mode))
       :hook
       (clojure-mode . eauc/clojure-mode-init)
       :bind (:map clojure-mode-map
@@ -741,6 +742,7 @@ Dired
 
     #+BEGIN_SRC emacs-lisp
     (use-package flycheck-clojure
+      :after (cider)
       :ensure t)
     #+END_SRC
 
@@ -753,7 +755,7 @@ Dired
       (cljr-add-keybindings-with-prefix "C-c RET"))
 
     (use-package clj-refactor
-      :after (hydra)
+      :after (hydra cider)
       :ensure t
       :defer t
       :hook
