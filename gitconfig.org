@@ -284,6 +284,11 @@
            smsw = submodule summary --files
    #+END_SRC
 
+   Execute a command in each submodule, continue on fail.
+   #+BEGIN_SRC gitconfig
+           smf = "!foreach() { git submodule foreach \"$1 || true\"; }; foreach"
+   #+END_SRC
+
    Update submodules to commits registered in HEAD of super project:
    #+BEGIN_SRC gitconfig
            smu = submodule update

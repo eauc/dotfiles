@@ -310,6 +310,12 @@ smsw = submodule summary --files
 
 
 
+# Execute a command in each submodule, continue on fail.
+
+smf = "!foreach() { git submodule foreach \"$1 || true\"; }; foreach"
+
+
+
 # Update submodules to commits registered in HEAD of super project:
 
 smu = submodule update
