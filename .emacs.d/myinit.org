@@ -877,7 +877,7 @@ Dired
         ("nv" npm-mode-visit-project-file "visit package.json" :column "Npm")
         ("r" hydra-js-refactor/body "refactor" :column "---"))
       :custom
-      (js2-bounce-indent-p t)
+      (js2-bounce-indent-p nil)
       (js2-mode-indent-ignore-first-tab t)
       (js2-include-node-externs t)
       (js-indent-level 2)
