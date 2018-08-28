@@ -335,7 +335,7 @@ Dired
 
   Show trailing whitespace.
   #+BEGIN_SRC emacs-lisp
-  (setq show-trailing-whitespace t)
+  (setq-default show-trailing-whitespace t)
   #+END_SRC
 
 ** Bookmarks
