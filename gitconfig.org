@@ -332,6 +332,12 @@
    #+BEGIN_SRC gitconfig
            ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
    #+END_SRC
+
+   Get/Set the project's git-hooks directory:
+   #+BEGIN_SRC gitconfig
+	hooks = config core.hooksPath
+   #+END_SRC
+
 * User Info
 
   #+BEGIN_SRC gitconfig

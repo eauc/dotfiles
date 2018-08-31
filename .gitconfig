@@ -364,6 +364,12 @@ bourrin = "!retry() { until $(git $1); do sleep 2; echo "Retrying"; date; done; 
 
 ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
 
+
+
+# Get/Set the project's git-hooks directory:
+
+hooks = config core.hooksPath
+
 # User Info
 
 
