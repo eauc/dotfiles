@@ -91,6 +91,10 @@ alias hgc='hg-cheat'
 
 alias npmx='PATH=$(npm bin):$PATH'
 
+alias kc='kubectl'
+alias kp='kubegetpod(){ kubectl get pods --selector="$1" | sed -n 2p | cut -d" " -f1; }; kubegetpod'
+alias kl='kubegetlogs(){ kubectl logs -f $(kubectl get pods --selector="$1" | sed -n 2p | cut -d" " -f1); }; kubegetlogs'
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
