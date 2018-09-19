@@ -1233,10 +1233,50 @@ Dired
 
 ** Typescript
 
+   Major mode for TS buffers.
    #+BEGIN_SRC emacs-lisp
    (use-package typescript-mode
      :ensure t
      :mode ("\\.ts\\'" . typescript-mode))
+   #+END_SRC
+
+   TS IDE.
+   #+BEGIN_SRC emacs-lisp
+   (defun setup-tide-mode ()
+       (interactive)
+       (tide-setup)
+       (flycheck-mode +1)
+       (setq flycheck-check-syntax-automatically '(save mode-enabled))
+       (eldoc-mode +1)
+       (tide-hl-identifier-mode +1)
+       (company-mode +1))
+
+   (use-package tide
+     :after (company flycheck typescript-mode)
+     :ensure t
+     :hook
+     ((typescript-mode . setup-tide-mode)
+      (typescript-mode . tide-hl-identifier-mode))
+     :bind (:map typescript-mode-map
+                 ("<S-f1>" . 'hydra-tide/body))
+     :init
+     (defhydra hydra-tide (:color blue)
+         "
+
+   Tide
+   =========
+   "
+         ("." tide-jump-to-definition "to definition" :column "Jump")
+         ("," tide-jump-back "back")
+         ("dd" tide-documentation-at-point "doc" :column "Doc")
+         ("dj" tide-documentation-at-point "jsdoc")
+         ("es" tide-project-errors "show" :column "Error")
+         ("ef" tide-fix "fix error")
+         ("ed" tide-add-tslint-disable-next-line "tslint disable")
+         ("rr" tide-refactor "refactor" :column "Refactor")
+         ("rs" tide-rename-symbol "rename symbol")
+         ("rf" tide-rename-file "rename file")
+         ("ri" tide-organize-imports "sort imports")))
    #+END_SRC
 
 ** YAML
