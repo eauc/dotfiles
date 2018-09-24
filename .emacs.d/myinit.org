@@ -381,7 +381,8 @@ Dired
      :ensure t
      :hook
      ((cider-repl-mode . company-mode)
-      (cider-mode . company-mode))
+      (cider-mode . company-mode)
+      (typescript-mode . company-mode))
      :custom
      (company-idle-delay nil "Only complete if requested"))
    #+END_SRC
@@ -1244,15 +1245,15 @@ Dired
    #+BEGIN_SRC emacs-lisp
    (defun setup-tide-mode ()
        (interactive)
+       (message "setup-tide-mode")
        (tide-setup)
        (flycheck-mode +1)
        (setq flycheck-check-syntax-automatically '(save mode-enabled))
        (eldoc-mode +1)
-       (tide-hl-identifier-mode +1)
-       (company-mode +1))
+       (tide-hl-identifier-mode +1))
 
    (use-package tide
-     :after (company flycheck typescript-mode)
+     :after (flycheck typescript-mode hydra)
      :ensure t
      :hook
      ((typescript-mode . setup-tide-mode)
