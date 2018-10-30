@@ -291,17 +291,19 @@
     :bind (:map dired-mode-map
                 ("<S-f1>" . 'hydra-dired/body))
     :init
-    (defhydra hydra-dired (:color blue :columns 3)
+    (defhydra hydra-dired (:color red)
       "
 
-Dired
-=========
-"
-      ("i" dired-subtree-insert "insert subtree")
+  Dired
+  =========
+  "
+      ("i" dired-subtree-insert "insert subtree" :column "Fold")
       ("k" dired-subtree-remove "remove subtree")
+      ("f" dired-subtree-end "filter")
+      ("<up>" dired-previous-line "move up" :column "Move")
+      ("<down>" dired-next-line "move down")
       ("b" dired-subtree-beginning "subtree beginning")
       ("e" dired-subtree-end "subtree end")
-      ("f" dired-subtree-end "filter")
       ("q" nil "quit"))
     :custom
     (dired-auto-revert-buffer t "revert dired buffer on revisit"))
