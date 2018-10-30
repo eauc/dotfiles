@@ -394,10 +394,16 @@ hooks = config core.hooksPath
 
 
 
-# Show submodules commit logs in super projet diffs:
+# - show submodules commit logs in super projet diffs.
+# - use =icdiff= as a diff tool for side-by-side comparison.
 
 [diff]
         submodule = log
+        tool = icdiff
+[difftool]
+        prompt = false
+[difftool "icdiff"]
+        cmd = icdiff --line-numbers $LOCAL $REMOTE
 
 # Colors
 

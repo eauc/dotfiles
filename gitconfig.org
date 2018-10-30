@@ -362,10 +362,16 @@
           diffFilter = "less --tabs=2 -RFX"
   #+END_SRC
 
-  Show submodules commit logs in super projet diffs:
+  - show submodules commit logs in super projet diffs.
+  - use =icdiff= as a diff tool for side-by-side comparison.
   #+BEGIN_SRC gitconfig
   [diff]
           submodule = log
+          tool = icdiff
+  [difftool]
+          prompt = false
+  [difftool "icdiff"]
+          cmd = icdiff --line-numbers $LOCAL $REMOTE
   #+END_SRC
 
 * Colors
