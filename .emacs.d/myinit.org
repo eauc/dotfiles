@@ -1425,7 +1425,8 @@
    (use-package ob-javascript
      :load-path "~/.emacs.d/ob-javascript/"
      :custom
-     (ob-javascript:browser-binary "/opt/google/chrome/chrome"))
+     (ob-javascript:browser-binary "/opt/google/chrome/chrome")
+     (org-babel-clojure-backend 'cider "Use CIDER to evaluate clojure source blocks"))
    #+END_SRC
 
 ** Exports
