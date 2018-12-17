@@ -39,6 +39,12 @@
            dsmhw = "!git dhw; git submodule foreach 'git dhw'"
    #+END_SRC
 
+   See one commit's diff.
+   #+BEGIN_SRC gitconfig
+           dc = "!diffCommit() { git d "$1~" "$1"; }; diffCommit"
+           dch = "!git dc HEAD"
+   #+END_SRC
+
 ** Logs
 
    Basic format:
@@ -87,7 +93,7 @@
 
    Stash staging + working:
    #+BEGIN_SRC gitconfig
-           stsw = stash save --inluce-untracked
+           stsw = stash save --include-untracked
    #+END_SRC
 
    Stash working:

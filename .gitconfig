@@ -39,6 +39,13 @@ dsmsw = "!git dsw; git submodule foreach 'git dsw'"
 dsmhs = "!git dhs; git submodule foreach 'git dhs'"
 dsmhw = "!git dhw; git submodule foreach 'git dhw'"
 
+
+
+# See one commit's diff.
+
+dc = "!diffCommit() { git d "$1~" "$1"; }; diffCommit"
+dch = "!git dc HEAD"
+
 # Logs
 
 #    Basic format:
@@ -92,7 +99,7 @@ lad = "!git ld --all"
 
 #    Stash staging + working:
 
-stsw = stash save --inluce-untracked
+stsw = stash save --include-untracked
 
 
 
