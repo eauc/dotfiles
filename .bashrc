@@ -87,9 +87,7 @@ alias lldir='tree -phugDF'
 alias cd='pushd'
 alias pd='popd'
 
-alias hgc='hg-cheat'
-
-alias npmx='PATH=$(npm bin):$PATH'
+alias fuck='sudo $(history -p !!)'
 
 alias kc='kubectl'
 alias kp='kubegetpod(){ kubectl get pods --selector="$1" | sed -n 2p | cut -d" " -f1; }; kubegetpod'
