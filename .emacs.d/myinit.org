@@ -122,7 +122,7 @@
      (rainbow-delimiters-depth-7-face ((t (:foreground "magenta" :weight bold))))
      (rainbow-delimiters-depth-8-face ((t (:foreground "green" :weight bold))))
      (rainbow-delimiters-depth-9-face ((t (:foreground "dodger blue" :weight bold))))
-     (rainbow-delimiters-unmatched-face ((t (:foreground "red" :weight bold)))))
+     (rainbow-delimiters-unmatched-face ((t (:inverse-video t :weight bold)))))
    #+END_SRC
 
    Remember/suggest commands between sessions.
