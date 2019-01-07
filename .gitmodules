@@ -11,3 +11,6 @@
 [submodule ".emacs.d/breadcrumb"]
 	path = .emacs.d/breadcrumb
 	url = https://github.com/pheaver/breadcrumb.git
+[submodule ".emacs.d/add-node-modules-path"]
+	path = .emacs.d/add-node-modules-path
+	url = https://github.com/codesuki/add-node-modules-path.git

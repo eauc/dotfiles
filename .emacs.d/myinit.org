@@ -1063,6 +1063,18 @@
        (rjsx-mode . npm-mode)))
     #+END_SRC
 
+    Adds project's =node_modules/.bin= to buffer's PATH.
+    This allows to call local packages command from the buffer.
+    Used eg by flycheck to run a local eslint !
+    #+BEGIN_SRC emacs-lisp
+    (use-package add-node-modules-path
+      :load-path  "~/.emacs.d/add-node-modules-path/"
+      :hook
+      ((js-mode . add-node-modules-path)
+       (js2-mode . add-node-modules-path)
+       (rjsx-mode . add-node-modules-path)))
+    #+END_SRC
+
 *** Refactor
 
     #+BEGIN_SRC emacs-lisp
