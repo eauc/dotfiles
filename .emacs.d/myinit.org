@@ -202,8 +202,7 @@
 
    <Fn> keys.
    #+BEGIN_SRC emacs-lisp
-   (global-set-key (kbd "<f1>")    'find-file)
-   (global-set-key (kbd "<C-f1>")  'hydra-main/body)
+   (global-set-key (kbd "C-a")  'hydra-main/body)
    (global-set-key (kbd "<f2>")    'save-buffer)
    (global-set-key (kbd "<C-f2>")  'write-file)
    (global-set-key (kbd "<f3>")    'other-window)
@@ -289,7 +288,7 @@
     :after (hydra)
     :hook (dired-mode . eauc/dired-init)
     :bind (:map dired-mode-map
-                ("<S-f1>" . 'hydra-dired/body))
+                ("s-z" . 'hydra-dired/body))
     :init
     (defhydra hydra-dired (:color red)
       "
@@ -717,7 +716,7 @@
       :hook
       (clojure-mode . eauc/clojure-mode-init)
       :bind (:map clojure-mode-map
-                  ("<S-f1>" . hydra-clj/body))
+                  ("s-z" . hydra-clj/body))
       :init
       (defhydra hydra-clj (:color blue)
         "
@@ -986,7 +985,7 @@
              ("\\.es6\\'" . js2-jsx-mode))
       :bind (:map js2-mode-map
                   ("M-." . nil)
-                  ("<S-f1>" . 'hydra-js/body))
+                  ("s-z" . 'hydra-js/body))
       :init
       (defhydra hydra-js (:color blue)
         "
@@ -1203,7 +1202,7 @@
             ("\\.mdx\\'" . markdown-mode)
             ("\\.markdown\\'" . markdown-mode))
      :bind (:map markdown-mode-map
-                 ("<S-f1>" . 'dh-hydra-markdown-mode/body))
+                 ("s-z" . 'dh-hydra-markdown-mode/body))
      :init
      (setq markdown-command "multimarkdown")
      (defhydra dh-hydra-markdown-mode (:hint nil)
@@ -1294,7 +1293,7 @@
      ((typescript-mode . setup-tide-mode)
       (typescript-mode . tide-hl-identifier-mode))
      :bind (:map typescript-mode-map
-                 ("<S-f1>" . 'hydra-tide/body))
+                 ("s-z" . 'hydra-tide/body))
      :init
      (defhydra hydra-tide (:color blue)
          "
@@ -1332,7 +1331,7 @@
     :pin org
     :ensure org-plus-contrib
     :bind (:map org-mode-map
-                ("<S-f1>" . hydra-org/body))
+                ("s-z" . hydra-org/body))
     :hook
     (after-save . eauc/tangle-current-org-file)
     :custom
@@ -1691,19 +1690,25 @@
    Topics
    ======
    "
-       ("b" hydra-breadcrumb/body "breadcrumb")
+       ("." xref-find-definitions "jump to definition" :column "0")
+       ("," xref-pop-marker-stack "jump back")
+       ("?" xref-find-references "find references")
+       ("b" hydra-breadcrumb/body "breadcrumb" :column "1")
        ("c" hydra-completion/body "completion")
        ("ed" hydra-edit/body "edit")
        ("er" hydra-flycheck/body "error")
-       ("f" hydra-fold/body "fold")
-       ("j" hydra-jump/body "jump")
+       ("ff" find-file "file find" :column "2")
+       ("fs" save-buffer "file save")
+       ("fw" write-file "file write")
+       ("fo" hydra-fold/body "fold")
+       ("j" hydra-jump/body "jump" :column "3")
        ("gi" hydra-git/body "git")
        ("go" hydra-google/body "google")
-       ("ma" hydra-macro/body "macros")
+       ("ma" hydra-macro/body "macros" :column "4")
        ("mc" hydra-multicursors/body "multi-cursors")
        ("p" hydra-projectile/body "project")
        ("r" hydra-rectangle/body "rectangles")
-       ("w" hydra-window/body "window")
+       ("w" hydra-window/body "window" :column "5")
        ("y" hydra-yasnippet/body "yasnippet")
        ("z" hydra-zoom/body "zoom")
        ("<f8>" eauc/cheatsheet "cheatsheet"))
@@ -1892,7 +1897,7 @@
      :pin melpa
      :mode ("\\.http\\'" . restclient-mode)
      :bind (:map restclient-mode-map
-                 ("<S-f1>" . hydra-restclient/body))
+                 ("s-z" . hydra-restclient/body))
      :init
      (defhydra hydra-restclient (:color blue)
        "
