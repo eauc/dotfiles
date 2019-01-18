@@ -955,6 +955,14 @@
        (setq mode-name "ℰ"))) 
    #+END_SRC
 
+** Env
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package dotenv-mode
+     :ensure t
+     :mode ("\\.env\\'" . dotenv-mode))
+   #+END_SRC
+
 ** Haskell
 
    #+BEGIN_SRC emacs-lisp
