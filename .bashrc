@@ -110,6 +110,10 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 PATH=$HOME/bin:$HOME/.local/bin:$PATH
+# add home and code as default basedir for 'cd'
+CDPATH=.:~:~/code
+# correct 'cd' dirname typos
+shopt -s cdspell
 
 # PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
