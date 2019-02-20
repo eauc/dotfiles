@@ -1143,8 +1143,10 @@
     (use-package xref-js2
       :ensure t
       :hook
-      (js2-mode . (lambda ()
-                    (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t))))
+      ((js2-mode . (lambda ()
+                     (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
+       (vue-mode . (lambda ()
+                     (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))))
     #+END_SRC
 
 ** JSON
@@ -1312,6 +1314,14 @@
          ("rs" tide-rename-symbol "rename symbol")
          ("rf" tide-rename-file "rename file")
          ("ri" tide-organize-imports "sort imports")))
+   #+END_SRC
+
+** Vue
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package vue-mode
+     :ensure t
+     :mode ("\\.vue\\'" . vue-mode))
    #+END_SRC
 
 ** YAML
