@@ -288,7 +288,7 @@
     :after (hydra)
     :hook (dired-mode . eauc/dired-init)
     :bind (:map dired-mode-map
-                ("s-z" . 'hydra-dired/body))
+                ("C-f" . 'hydra-dired/body))
     :init
     (defhydra hydra-dired (:color red)
       "
@@ -716,7 +716,7 @@
       :hook
       (clojure-mode . eauc/clojure-mode-init)
       :bind (:map clojure-mode-map
-                  ("s-z" . hydra-clj/body))
+                  ("C-f" . hydra-clj/body))
       :init
       (defhydra hydra-clj (:color blue)
         "
@@ -985,7 +985,7 @@
              ("\\.es6\\'" . js2-jsx-mode))
       :bind (:map js2-mode-map
                   ("M-." . nil)
-                  ("s-z" . 'hydra-js/body))
+                  ("C-f" . 'hydra-js/body))
       :init
       (defhydra hydra-js (:color blue)
         "
@@ -1174,6 +1174,7 @@
    (use-package lispy
      :ensure t
      :bind (:map lispy-mode-map
+                 ("C-a" . hydra-main/body)
                  ("M-[" . lispy-backward)
                  ("M-]" . lispy-forward)
                  ;; ("(" . self-insert-command)
@@ -1204,7 +1205,7 @@
             ("\\.mdx\\'" . markdown-mode)
             ("\\.markdown\\'" . markdown-mode))
      :bind (:map markdown-mode-map
-                 ("s-z" . 'dh-hydra-markdown-mode/body))
+                 ("C-f" . 'dh-hydra-markdown-mode/body))
      :init
      (setq markdown-command "multimarkdown")
      (defhydra dh-hydra-markdown-mode (:hint nil)
@@ -1295,7 +1296,7 @@
      ((typescript-mode . setup-tide-mode)
       (typescript-mode . tide-hl-identifier-mode))
      :bind (:map typescript-mode-map
-                 ("s-z" . 'hydra-tide/body))
+                 ("C-f" . 'hydra-tide/body))
      :init
      (defhydra hydra-tide (:color blue)
          "
@@ -1341,7 +1342,7 @@
     :pin org
     :ensure org-plus-contrib
     :bind (:map org-mode-map
-                ("s-z" . hydra-org/body))
+                ("C-f" . hydra-org/body))
     :hook
     (after-save . eauc/tangle-current-org-file)
     :custom
@@ -1907,7 +1908,7 @@
      :pin melpa
      :mode ("\\.http\\'" . restclient-mode)
      :bind (:map restclient-mode-map
-                 ("s-z" . hydra-restclient/body))
+                 ("C-f" . hydra-restclient/body))
      :init
      (defhydra hydra-restclient (:color blue)
        "
