@@ -192,7 +192,7 @@ discard = checkout --
 # Clean untracked:
 # - remove untracked directories (-d).
 
-clean = clean -d --force
+cl = clean -d -f
 
 
 
@@ -200,7 +200,7 @@ clean = clean -d --force
 # - remove untracked directories (-d).
 # - remove ignored files (-x).
 
-purge = clean -x -u --force
+purge = clean -x -d -f
 
 # Branches
 
