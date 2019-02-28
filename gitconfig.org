@@ -91,14 +91,17 @@
 
 ** Stash
 
-   Stash staging + working:
+   Stash only working:
+   - --patch :: chunked stash, implies =--keep-index=
    #+BEGIN_SRC gitconfig
-           stsw = stash save --include-untracked
+           st = stash save --patch
+           stw = "!git st"
    #+END_SRC
 
-   Stash working:
+   Stash staging + working:
+    -we need to reset =--keep-index= flag implied by =--patch= option
    #+BEGIN_SRC gitconfig
-           stw = "!git stsw --keep-index"
+           stsw = "!git st --no-keep-index"
    #+END_SRC
 
    Apply & pop, restoring index:
@@ -120,20 +123,28 @@
 ** Commit
 
    Shortcuts for lazy people:
+   - -v :: add diff to message draft for inspection
+   - --amend :: add modifications to previous commit
+   - --no-edit :: use previous commit message without change
    #+BEGIN_SRC gitconfig
-           c = commit
-           ca = commit --amend
+           c = commit -v
+           ca = "!git c --amend"
+           oops = "!git ca --no-edit"
    #+END_SRC
 
    Unstage changes:
+   - --patch :: chunked unstage
    #+BEGIN_SRC gitconfig
-           unstage = reset HEAD
+           us = reset HEAD
+           usi = reset --patch HEAD
    #+END_SRC
 
    Add file deletions:
    #+BEGIN_SRC gitconfig
            addrm = "!git rm $(git ls-files --deleted)"
    #+END_SRC
+
+** Merges
 
    Prefer no-fast-forward merges:
    #+BEGIN_SRC gitconfig
@@ -148,6 +159,12 @@
    Fix another commit:
    #+BEGIN_SRC gitconfig
            fix = "!fixcommit() { git commit --fixup=$1; }; fixcommit"
+   #+END_SRC
+
+   Squash : perform a merge but do not create a merge commit.
+   Allows to get the modifications from another branch, like a merge, but without actually performing the merge.
+   #+BEGIN_SRC gitconfig
+           ms = merge --squash
    #+END_SRC
 
 ** Reset
@@ -170,8 +187,10 @@
 ** Cleanup
 
    Discard changes in working / Keep untracked:
+   - --patch :: chunked discard
    #+BEGIN_SRC gitconfig
            discard = checkout --
+           disi = checkout --patch --
    #+END_SRC
 
    Clean untracked:
@@ -190,18 +209,37 @@
 ** Branches
 
    Shortcuts for lazy people:
+   - -v :: show branches commit
+   - -vv :: show the differences between local/remote branches
    #+BEGIN_SRC gitconfig
            b = branch
+           bv = "!git b -vv"
    #+END_SRC
 
    Display all branches, including remotes:
+   - --all : show all local/remote branches
    #+BEGIN_SRC gitconfig
            ba = branch --all
+           bav = "! git ba -vv"
    #+END_SRC
 
    Create branch on <commit>:
    #+BEGIN_SRC gitconfig
            bc = checkout -b
+   #+END_SRC
+
+** Rebase
+
+   Rebase:
+   - --interactive :: interactive by default
+   #+BEGIN_SRC gitconfig
+           rb = rebase --interactive
+   #+END_SRC
+
+   Rebase exec:
+   - --exec <cmd> :: run a command after each rebased commit
+   #+BEGIN_SRC gitconfig
+           rbx = "!git rb --exec"
    #+END_SRC
 
 ** Files
@@ -409,19 +447,53 @@
 
 * Miscellaneous
 
+  Grep:
+  - display lines numbers in results
   #+BEGIN_SRC gitconfig
   [grep]
           lineNumber = true
+  #+END_SRC
+
+  Push:
+  - push to origin/upstream, or <other>/<current>
+  #+BEGIN_SRC gitconfig
   [push]
           default = simple
+  #+END_SRC
+
+  Blame:
+  - display relative dates
+  #+BEGIN_SRC gitconfig
   [blame]
           date = relative
+  #+END_SRC
+
+  Help:
+  - auto correct git command with one wrong character
+  #+BEGIN_SRC gitconfig
   [help]
           autocorrect = 1
+  #+END_SRC
+
+  Rebase:
+  - auto stash local modifs before/after rebase
+  - auto fix/squash commit with message starting with =!fixup= or =!squash=
+  #+BEGIN_SRC gitconfig
   [rebase]
+          autostash = true
           autosquash = true
+  #+END_SRC
+
+  Credentials
+  - remember credentials in local store
+  #+BEGIN_SRC gitconfig
   [credential]
           helper = store
+  #+END_SRC
+
+  Merge:
+  - use =kdiff3= as mergetool
+  #+BEGIN_SRC gitconfig
   [merge]
           tool = kdiff3
           conflictstyle = diff3

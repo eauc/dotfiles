@@ -97,15 +97,18 @@ lad = "!git ld --all"
 
 # Stash
 
-#    Stash staging + working:
+#    Stash only working:
+#    - --patch :: chunked stash, implies =--keep-index=
 
-stsw = stash save --include-untracked
+st = stash save --patch
+stw = "!git st"
 
 
 
-# Stash working:
+# Stash staging + working:
+#  -we need to reset =--keep-index= flag implied by =--patch= option
 
-stw = "!git stsw --keep-index"
+stsw = "!git st --no-keep-index"
 
 
 
@@ -129,15 +132,21 @@ stdiff = stash show --patch
 # Commit
 
 #    Shortcuts for lazy people:
+#    - -v :: add diff to message draft for inspection
+#    - --amend :: add modifications to previous commit
+#    - --no-edit :: use previous commit message without change
 
-c = commit
-ca = commit --amend
+c = commit -v
+ca = "!git c --amend"
+oops = "!git ca --no-edit"
 
 
 
 # Unstage changes:
+# - --patch :: chunked unstage
 
-unstage = reset HEAD
+us = reset HEAD
+usi = reset --patch HEAD
 
 
 
@@ -145,9 +154,9 @@ unstage = reset HEAD
 
 addrm = "!git rm $(git ls-files --deleted)"
 
+# Merges
 
-
-# Prefer no-fast-forward merges:
+#    Prefer no-fast-forward merges:
 
 m = merge --no-ff
 
@@ -162,6 +171,13 @@ ff = merge --no-commit
 # Fix another commit:
 
 fix = "!fixcommit() { git commit --fixup=$1; }; fixcommit"
+
+
+
+# Squash : perform a merge but do not create a merge commit.
+# Allows to get the modifications from another branch, like a merge, but without actually performing the merge.
+
+ms = merge --squash
 
 # Reset
 
@@ -184,8 +200,10 @@ ra = reset --hard
 # Cleanup
 
 #    Discard changes in working / Keep untracked:
+#    - --patch :: chunked discard
 
 discard = checkout --
+disi = checkout --patch --
 
 
 
@@ -205,20 +223,39 @@ purge = clean -x -d -f
 # Branches
 
 #    Shortcuts for lazy people:
+#    - -v :: show branches commit
+#    - -vv :: show the differences between local/remote branches
 
 b = branch
+bv = "!git b -vv"
 
 
 
 # Display all branches, including remotes:
+# - --all : show all local/remote branches
 
 ba = branch --all
+bav = "! git ba -vv"
 
 
 
 # Create branch on <commit>:
 
 bc = checkout -b
+
+# Rebase
+
+#    Rebase:
+#    - --interactive :: interactive by default
+
+rb = rebase --interactive
+
+
+
+# Rebase exec:
+# - --exec <cmd> :: run a command after each rebased commit
+
+rbx = "!git rb --exec"
 
 # Files
 
@@ -440,19 +477,59 @@ hooks = config core.hooksPath
 
 # Miscellaneous
 
+#   Grep:
+#   - display lines numbers in results
 
 [grep]
         lineNumber = true
+
+
+
+# Push:
+# - push to origin/upstream, or <other>/<current>
+
 [push]
         default = simple
+
+
+
+# Blame:
+# - display relative dates
+
 [blame]
         date = relative
+
+
+
+# Help:
+# - auto correct git command with one wrong character
+
 [help]
         autocorrect = 1
+
+
+
+# Rebase:
+# - auto stash local modifs before/after rebase
+# - auto fix/squash commit with message starting with =!fixup= or =!squash=
+
 [rebase]
+        autostash = true
         autosquash = true
+
+
+
+# Credentials
+# - remember credentials in local store
+
 [credential]
         helper = store
+
+
+
+# Merge:
+# - use =kdiff3= as mergetool
+
 [merge]
         tool = kdiff3
         conflictstyle = diff3
