@@ -443,6 +443,7 @@
           added = green
           changed = red
           untracked = cyan
+          unmerged = magenta
   #+END_SRC
 
 * Miscellaneous
@@ -469,10 +470,17 @@
   #+END_SRC
 
   Help:
-  - auto correct git command with one wrong character
+  - auto correct git command and execute after 1x 0.1s
   #+BEGIN_SRC gitconfig
   [help]
           autocorrect = 1
+  #+END_SRC
+
+  Interactive:
+  - don't need to type enter after single-key shortcuts in interactive commands.
+  #+BEGIN_SRC gitconfig
+  [interactive]
+          singleKey = true
   #+END_SRC
 
   Rebase:
@@ -482,6 +490,7 @@
   [rebase]
           autostash = true
           autosquash = true
+          missingCommitsCheck = warn
   #+END_SRC
 
   Credentials
@@ -493,8 +502,11 @@
 
   Merge:
   - use =kdiff3= as mergetool
+  - do not keep =.orig= backup files after successful merge
   #+BEGIN_SRC gitconfig
   [merge]
           tool = kdiff3
           conflictstyle = diff3
+  [mergetool]
+          keepBackup = false
   #+END_SRC

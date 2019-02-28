@@ -474,6 +474,7 @@ hooks = config core.hooksPath
         added = green
         changed = red
         untracked = cyan
+        unmerged = magenta
 
 # Miscellaneous
 
@@ -502,10 +503,18 @@ hooks = config core.hooksPath
 
 
 # Help:
-# - auto correct git command with one wrong character
+# - auto correct git command and execute after 1x 0.1s
 
 [help]
         autocorrect = 1
+
+
+
+# Interactive:
+# - don't need to type enter after single-key shortcuts in interactive commands.
+
+[interactive]
+        singleKey = true
 
 
 
@@ -516,6 +525,7 @@ hooks = config core.hooksPath
 [rebase]
         autostash = true
         autosquash = true
+        missingCommitsCheck = warn
 
 
 
@@ -529,7 +539,10 @@ hooks = config core.hooksPath
 
 # Merge:
 # - use =kdiff3= as mergetool
+# - do not keep =.orig= backup files after successful merge
 
 [merge]
         tool = kdiff3
         conflictstyle = diff3
+[mergetool]
+        keepBackup = false
