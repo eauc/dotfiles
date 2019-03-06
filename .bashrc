@@ -87,8 +87,6 @@ alias lldir='tree -phugDF'
 alias cd='pushd'
 alias pd='popd'
 
-alias fuck='sudo $(history -p !!)'
-
 alias kc='kubectl'
 alias kp='kubegetpod(){ kubectl get pods --selector="$1" | sed -n 2p | cut -d" " -f1; }; kubegetpod'
 alias kl='kubegetlogs(){ kubectl logs -f $(kubectl get pods --selector="$1" | sed -n 2p | cut -d" " -f1); }; kubegetlogs'
@@ -125,3 +123,5 @@ shopt -s cdspell
 # eval "$(pyenv init -)"
 # eval "$(pyenv virtualenv-init -)"
 # export PYENV_VERSION=3.7.2
+
+eval $(thefuck --alias fk)
