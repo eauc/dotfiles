@@ -385,6 +385,12 @@ lal = "!git config -l | grep alias | cut -c 7-"
 
 
 
+# Search an alias:
+
+al = "!search_alias() { git lal | grep -i --color \"$1\"; }; search_alias"
+
+
+
 # Display last tag name in <commit> history:
 
 lasttag = describe --tags --abbrev=0
