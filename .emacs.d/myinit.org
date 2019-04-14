@@ -32,8 +32,12 @@
 
    Display line numbers.
    #+BEGIN_SRC emacs-lisp
-   (global-linum-mode 1)
-   (set-face-foreground 'linum "hot pink")
+     (use-package nlinum
+       :pin gnu
+       :ensure t
+       :config
+       (global-nlinum-mode 1)
+       (set-face-foreground 'linum "hot pink"))
    #+END_SRC
 
    Highlight current line.
