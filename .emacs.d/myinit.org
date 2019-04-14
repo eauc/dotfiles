@@ -711,7 +711,7 @@
     (use-package clojure-mode
       :after (hydra)
       :ensure t
-      :mode (("\\.clj\\'" . clojure-mode)
+      :mode (("\\.cljs?\\'" . clojure-mode)
              ("\\.edn\\'" . clojure-mode))
       :hook
       (clojure-mode . eauc/clojure-mode-init)
@@ -733,12 +733,68 @@
       :ensure t)
     #+END_SRC
 
-    Clojurescript.
+*** Cider
+
     #+BEGIN_SRC emacs-lisp
-    (use-package clojurescript-mode
+    (defun eauc/cider-pprint-eval-last-sexp ()
+      (interactive)
+      (cider-pprint-eval-last-sexp t))
+
+    (defun eauc/cider-pprint-eval-defun-at-point ()
+      (interactive)
+      (cider-pprint-eval-last-sexp t))
+
+    (use-package cider
+      :after (hydra)
+      :pin melpa-stable
       :ensure t
-      :pin marmalade
-      :mode ("\\.cljs\\'" . clojurescript-mode))
+      :hook
+      ((clojure-mode . cider-mode)
+       (cider-mode . eldoc-mode))
+      :init
+      (defhydra hydra-clj-cider (:color blue)
+        "
+
+    CLJ - Cider
+    ===========
+    "
+        ("c" cider-connect "connect" :column "Connect")
+        ("jc" cider-jack-in "jack-in clj")
+        ("js" cider-jack-in-clojurescript "jack-in cljs")
+        ("d" cider-doc "Doc")
+        ("r" cider-switch-to-repl-buffer "switch to REPL")
+        ("q" nil "quit")
+        ("fv" cider-find-var "var" :column "Find")
+        ("fn" cider-find-ns "ns")
+        ("fb" cider-pop-back "back")
+        ("m1" cider-macroexpand-1 "macro-expand-1" :column "Macros")
+        ("ma" cider-macroexpand-all "macro-expand-all")
+        ("l" cider-load-buffer "load file" :column "Eval")
+        ("n" cider-eval-ns-form "eval ns form")
+        ("u" cider-undef "undef symbol")
+        ("pl" eauc/cider-pprint-eval-last-sexp "execute & print last sexp" :column "Print")
+        ("pt" eauc/cider-pprint-eval-defun-at-point "execute & print top sexp")
+        ("xl" cider-eval-last-sexp "execute last sexp" :column "Execute")
+        ("xp" cider-eval-sexp-at-point "execute sexp at point")
+        ("xr" cider-eval-last-sexp-to-repl "execute last sexp to REPL")
+        ("tr" cider-test-run-test "at point" :column "Tests")
+        ("tn" cider-test-run-ns-tests "ns")
+        ("tp" cider-test-run-project-tests "project")
+        ("tf" cider-test-rerun-failed-tests "re-run failed")
+        ("tt" cider-test-rerun-test "re-run last")
+        ("ts" cider-test-show-report "show report"))
+      :config
+      (flycheck-clojure-setup)
+      :custom
+      (cider-repl-pop-to-buffer-on-connect t)
+      (cider-repl-history-file "~/.emacs.d/cider-history" "REPL history file")
+      (cider-repl-use-pretty-printing t "nice pretty printing")
+      (cider-repl-use-clojure-font-lock t "nicer font lock in REPL")
+      (cider-repl-result-prefix " ;; => " "result prefix for the REPL")
+      (cider-repl-wrap-history t "never ending REPL history")
+      (cider-repl-history-size 3000 "looong history")
+      (cider-show-error-buffer t "error buffer not popping up")
+      (cider-auto-select-error-buffer nil "error buffer not popping up"))
     #+END_SRC
 
 *** Flycheck
@@ -857,72 +913,6 @@
       (cljr-auto-sort-ns nil)
       (cljr-favor-prefix-notation nil))
     #+END_SRC
-
-*** Cider
-
-    #+BEGIN_SRC emacs-lisp
-    (defun eauc/cider-pprint-eval-last-sexp ()
-      (interactive)
-      (cider-pprint-eval-last-sexp t))
-
-    (defun eauc/cider-pprint-eval-defun-at-point ()
-      (interactive)
-      (cider-pprint-eval-last-sexp t))
-
-    (use-package cider
-      :after (hydra)
-      :pin melpa-stable
-      :ensure t
-      :defer t
-      :hook
-      ((clojure-mode . cider-mode)
-       (cider-mode . eldoc-mode))
-      :init
-      (defhydra hydra-clj-cider (:color blue)
-        "
-
-    CLJ - Cider
-    ===========
-    "
-        ("c" cider-connect "connect" :column "Connect")
-        ("jc" cider-jack-in "jack-in clj")
-        ("js" cider-jack-in-clojurescript "jack-in cljs")
-        ("d" cider-doc "Doc")
-        ("r" cider-switch-to-repl-buffer "switch to REPL")
-        ("q" nil "quit")
-        ("fv" cider-find-var "var" :column "Find")
-        ("fn" cider-find-ns "ns")
-        ("fb" cider-pop-back "back")
-        ("m1" cider-macroexpand-1 "macro-expand-1" :column "Macros")
-        ("ma" cider-macroexpand-all "macro-expand-all")
-        ("l" cider-load-buffer "load file" :column "Eval")
-        ("n" cider-eval-ns-form "eval ns form")
-        ("u" cider-undef "undef symbol")
-        ("pl" eauc/cider-pprint-eval-last-sexp "execute & print last sexp" :column "Print")
-        ("pt" eauc/cider-pprint-eval-defun-at-point "execute & print top sexp")
-        ("xl" cider-eval-last-sexp "execute last sexp" :column "Execute")
-        ("xp" cider-eval-sexp-at-point "execute sexp at point")
-        ("xr" cider-eval-last-sexp-to-repl "execute last sexp to REPL")
-        ("tr" cider-test-run-test "at point" :column "Tests")
-        ("tn" cider-test-run-ns-tests "ns")
-        ("tp" cider-test-run-project-tests "project")
-        ("tf" cider-test-rerun-failed-tests "re-run failed")
-        ("tt" cider-test-rerun-test "re-run last")
-        ("ts" cider-test-show-report "show report"))
-      :config
-      (flycheck-clojure-setup)
-      :custom
-      (cider-repl-pop-to-buffer-on-connect t)
-      (cider-repl-history-file "~/.emacs.d/cider-history" "REPL history file")
-      (cider-repl-use-pretty-printing t "nice pretty printing")
-      (cider-repl-use-clojure-font-lock t "nicer font lock in REPL")
-      (cider-repl-result-prefix " ;; => " "result prefix for the REPL")
-      (cider-repl-wrap-history t "never ending REPL history")
-      (cider-repl-history-size 3000 "looong history")
-      (cider-show-error-buffer t "error buffer not popping up")
-      (cider-auto-select-error-buffer nil "error buffer not popping up"))
-    #+END_SRC
-
 ** Cucumber
 
    #+BEGIN_SRC emacs-lisp
