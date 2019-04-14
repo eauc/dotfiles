@@ -206,7 +206,7 @@
 
    <Fn> keys.
    #+BEGIN_SRC emacs-lisp
-   (global-set-key (kbd "C-a")  'hydra-main/body)
+   (global-set-key (kbd "C-v")  'hydra-main/body)
    (global-set-key (kbd "<f2>")    'save-buffer)
    (global-set-key (kbd "<C-f2>")  'write-file)
    (global-set-key (kbd "<f3>")    'other-window)
@@ -1168,7 +1168,7 @@
    (use-package lispy
      :ensure t
      :bind (:map lispy-mode-map
-                 ("C-a" . hydra-main/body)
+                 ("C-v" . hydra-main/body)
                  ("M-[" . lispy-backward)
                  ("M-]" . lispy-forward)
                  ;; ("(" . self-insert-command)
