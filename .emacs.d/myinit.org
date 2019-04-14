@@ -494,6 +494,20 @@
      ;;   (back-button-mode 1))
    #+END_SRC
 
+** Moves
+
+   Moves text around.
+   #+BEGIN_SRC emacs-lisp
+   (use-package cool-moves
+     :load-path "~/.emacs.d/cool-moves"
+     :bind (("<C-S-down>" . 'cool-moves/paragraph-forward)
+            ("<C-S-up>" . 'cool-moves/paragraph-backward)
+            ("C-S-z" . 'cool-moves/line-forward)
+            ("C-S-w" . 'cool-moves/line-backward)
+            ("C-S-s" . 'cool-moves/word-forward)
+            ("C-S-a" . 'cool-moves/word-backwards)))
+   #+END_SRC
+
 ** Multicursors
 
    #+BEGIN_SRC emacs-lisp

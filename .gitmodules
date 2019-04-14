@@ -14,3 +14,6 @@
 [submodule ".emacs.d/add-node-modules-path"]
 	path = .emacs.d/add-node-modules-path
 	url = https://github.com/codesuki/add-node-modules-path.git
+[submodule ".emacs.d/cool-moves"]
+	path = .emacs.d/cool-moves
+	url = https://github.com/mrbig033/cool-moves.git
