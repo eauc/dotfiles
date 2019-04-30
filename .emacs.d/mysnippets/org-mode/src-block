@@ -1,9 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: src-block
-# key: sb
-# binding: C-c y s
-# --
-#+NAME: ${1:name}
-#+BEGIN_SRC ${2:language}
-$0
-#+END_SRC

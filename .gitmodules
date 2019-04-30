@@ -17,3 +17,6 @@
 [submodule ".emacs.d/cool-moves"]
 	path = .emacs.d/cool-moves
 	url = https://github.com/mrbig033/cool-moves.git
+[submodule ".emacs.d/mysnippets/org-mode"]
+	path = .emacs.d/mysnippets/org-mode
+	url = https://github.com/yyr/yasnippets-orgmode.git
