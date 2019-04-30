@@ -1049,6 +1049,14 @@
        (rjsx-mode . indium-interaction-mode)))
     #+END_SRC
 
+*** Jest
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package jest
+      :pin melpa
+      :ensure t)
+    #+END_SRC
+
 *** REPL
 
     #+BEGIN_SRC emacs-lisp
