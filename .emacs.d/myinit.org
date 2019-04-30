@@ -1160,8 +1160,6 @@
       :ensure t
       :hook
       ((js2-mode . (lambda ()
-                     (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
-       (vue-mode . (lambda ()
                      (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))))
     #+END_SRC
 
@@ -1336,9 +1334,43 @@
 ** Vue
 
    #+BEGIN_SRC emacs-lisp
-   (use-package vue-mode
+   (defun eauc/poly-vue-mode ()
+     "Define custom poly-vue-mode"
+     (progn
+       (define-hostmode poly-vue-hostmode
+         :mode 'text-mode)
+       (define-innermode poly-vue-template-innermode
+         :mode 'web-mode
+         :head-matcher "^<template>\n"
+         :tail-matcher "^</template>\n"
+         :head-mode 'html-mode
+         :tail-mode 'html-mode
+         :indent-offset 2)
+       (define-innermode poly-vue-script-innermode
+         :mode 'js2-jsx-mode
+         :head-matcher "^<script>\n"
+         :tail-matcher "^</script>\n"
+         :head-mode 'html-mode
+         :tail-mode 'html-mode
+         :indent-offset 2)
+       (define-innermode poly-vue-style-innermode
+         :mode 'scss-mode
+         :head-matcher "^<style"
+         :tail-matcher "^</style>\n"
+         :head-mode 'html-mode
+         :tail-mode 'html-mode
+         :indent-offset 2)
+       (define-polymode poly-vue-mode
+         :hostmode 'poly-vue-hostmode
+         :innermodes '(poly-vue-template-innermode
+                       poly-vue-script-innermode
+                       poly-vue-style-innermode))
+       (add-to-list 'auto-mode-alist '("\\.vue" . poly-vue-mode))))
+
+   (use-package poly-markdown
      :ensure t
-     :mode ("\\.vue\\'" . vue-mode))
+     :pin melpa-stable
+     :config (eauc/poly-vue-mode))
    #+END_SRC
 
 ** YAML
