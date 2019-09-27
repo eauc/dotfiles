@@ -78,15 +78,26 @@
            llh = "!git lh --stat"
    #+END_SRC
 
+   Order by author date:
+   #+BEGIN_SRC gitconfig
+           ld = "!git l --author-date-order"
+           lad = "!git ld --all"
+   #+END_SRC
+
    Log one file's history:
    #+BEGIN_SRC gitconfig
            lf = "!git la --follow"
    #+END_SRC
 
-   Order by author date:
+   Find commit introducing/removing string (regexp):
+   - pickaxe-regex :: consider argument is a regex;
    #+BEGIN_SRC gitconfig
-           ld = "!git l --author-date-order"
-           lad = "!git ld --all"
+           li = "!logintro() { git log-format -S$1 --pickaxe-regex; }; logintro"
+   #+END_SRC
+
+   Find commit with diff containing a string (regexp):
+   #+BEGIN_SRC gitconfig
+           lm = "!logmod() { git log-format -G$1; }; logmod"
    #+END_SRC
 
 ** Stash
@@ -135,7 +146,8 @@
    Unstage changes:
    - --patch :: chunked unstage
    #+BEGIN_SRC gitconfig
-           us = reset HEAD
+           unstage = reset HEAD
+           us = "!git unstage"
            usi = reset --patch HEAD
    #+END_SRC
 
@@ -190,6 +202,7 @@
    - --patch :: chunked discard
    #+BEGIN_SRC gitconfig
            discard = checkout --
+           dis = "!git discard"
            disi = checkout --patch --
    #+END_SRC
 
@@ -234,6 +247,22 @@
    - --interactive :: interactive by default
    #+BEGIN_SRC gitconfig
            rb = rebase --interactive
+   #+END_SRC
+
+   Rebase continue:
+   #+BEGIN_SRC gitconfig
+           rbc = "!git rebase --continue"
+   #+END_SRC
+
+   Rebase on updated origin/master:
+   #+BEGIN_SRC gitconfig
+           rbm = "!git fetch && git rb origin/master"
+   #+END_SRC
+
+   Rebase exec:
+   - --exec <cmd> :: run a command after each rebased commit
+   #+BEGIN_SRC gitconfig
+           rbx = "!git rb --exec"
    #+END_SRC
 
    Rebase exec:
@@ -384,7 +413,7 @@
 
    Get/Set the project's git-hooks directory:
    #+BEGIN_SRC gitconfig
-	hooks = config core.hooksPath
+           hooks = config core.hooksPath
    #+END_SRC
 
 * User Info

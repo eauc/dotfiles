@@ -84,16 +84,29 @@ llh = "!git lh --stat"
 
 
 
+# Order by author date:
+
+ld = "!git l --author-date-order"
+lad = "!git ld --all"
+
+
+
 # Log one file's history:
 
 lf = "!git la --follow"
 
 
 
-# Order by author date:
+# Find commit introducing/removing string (regexp):
+# - pickaxe-regex :: consider argument is a regex;
 
-ld = "!git l --author-date-order"
-lad = "!git ld --all"
+li = "!logintro() { git log-format -S$1 --pickaxe-regex; }; logintro"
+
+
+
+# Find commit with diff containing a string (regexp):
+
+lm = "!logmod() { git log-format -G$1; }; logmod"
 
 # Stash
 
@@ -145,7 +158,8 @@ oops = "!git ca --no-edit"
 # Unstage changes:
 # - --patch :: chunked unstage
 
-us = reset HEAD
+unstage = reset HEAD
+us = "!git unstage"
 usi = reset --patch HEAD
 
 
@@ -203,6 +217,7 @@ ra = reset --hard
 #    - --patch :: chunked discard
 
 discard = checkout --
+dis = "!git discard"
 disi = checkout --patch --
 
 
@@ -249,6 +264,25 @@ bc = checkout -b
 #    - --interactive :: interactive by default
 
 rb = rebase --interactive
+
+
+
+# Rebase continue:
+
+rbc = "!git rebase --continue"
+
+
+
+# Rebase on updated origin/master:
+
+rbm = "!git fetch && git rb origin/master"
+
+
+
+# Rebase exec:
+# - --exec <cmd> :: run a command after each rebased commit
+
+rbx = "!git rb --exec"
 
 
 
