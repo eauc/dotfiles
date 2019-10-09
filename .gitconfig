@@ -237,20 +237,25 @@ purge = clean -x -d -f
 
 # Branches
 
-#    Shortcuts for lazy people:
-#    - -v :: show branches commit
-#    - -vv :: show the differences between local/remote branches
+#    Show the current branch name:
+#    - --short :: show shorten branch name (=refs/heads/master -> master=)
 
-b = branch
-bv = "!git b -vv"
+b = symbolic-ref --short HEAD
 
 
 
-# Display all branches, including remotes:
+# List all local branches:
+# - -v :: show branches commit
+# - -vv :: show the differences between local/remote branches
+
+bl = branch -vv
+
+
+
+# List all branches, including remotes:
 # - --all : show all local/remote branches
 
-ba = branch --all
-bav = "! git ba -vv"
+ba = "!git bl --all"
 
 
 
@@ -349,6 +354,7 @@ pf = push --force-with-lease
 # Set remote-tracking branch:
 
 pup = push --set-upstream
+pupo = "!git pup origin `git b`"
 
 
 
