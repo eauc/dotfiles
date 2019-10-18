@@ -221,10 +221,16 @@
 
 ** Branches
 
+   Shortcuts for lazy people:
+   #+BEGIN_SRC gitconfig
+           b = branch
+           bd = branch -d
+   #+END_SRC
+
    Show the current branch name:
    - --short :: show shorten branch name (=refs/heads/master -> master=)
    #+BEGIN_SRC gitconfig
-           b = symbolic-ref --short HEAD
+           bh = symbolic-ref --short HEAD
    #+END_SRC
 
    List all local branches:
@@ -327,7 +333,7 @@
    Set remote-tracking branch:
    #+BEGIN_SRC gitconfig
            pup = push --set-upstream
-           pupo = "!git pup origin `git b`"
+           pupo = "!git pup origin `git bh`"
    #+END_SRC
 
    Check that new commits in submodules have been pushed to their remote:

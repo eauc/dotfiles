@@ -237,10 +237,17 @@ purge = clean -x -d -f
 
 # Branches
 
-#    Show the current branch name:
-#    - --short :: show shorten branch name (=refs/heads/master -> master=)
+#    Shortcuts for lazy people:
 
-b = symbolic-ref --short HEAD
+b = branch
+bd = branch -d
+
+
+
+# Show the current branch name:
+# - --short :: show shorten branch name (=refs/heads/master -> master=)
+
+bh = symbolic-ref --short HEAD
 
 
 
@@ -354,7 +361,7 @@ pf = push --force-with-lease
 # Set remote-tracking branch:
 
 pup = push --set-upstream
-pupo = "!git pup origin `git b`"
+pupo = "!git pup origin `git bh`"
 
 
 
