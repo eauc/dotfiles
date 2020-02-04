@@ -672,6 +672,40 @@
    #+END_SRC
 
 * Languages
+** Multi-mode
+
+   Enable multiple mode in buffer regions.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package mmm-mode
+     :after (scss-mode)
+     :ensure t
+     :custom
+     (mmm-global-mode 'maybe "Load mode when file match a rule")
+     (mmm-parse-when-idle t "Refresh MMM regions when file is modified")
+     (mmm-submode-decoration-level 0 "Hides background color in MMM regions")
+     :config
+     (mmm-add-classes
+      '((vue-template
+         :submode html-mode
+         :face mmm-declaration-submode-face
+         :front "<template[^>]*>"
+         :back "</template>")
+        (vue-script
+         :submode js-mode
+         :face mmm-declaration-submode-face
+         :front "<script[^>]*>"
+         :back "</script>")
+        (vue-style
+         :submode scss-mode
+         :face mmm-declaration-submode-face
+         :front "<style[^>]*>"
+         :back "</style>")))
+     (mmm-add-mode-ext-class nil "\\.vue\\'" 'vue-template)
+     (mmm-add-mode-ext-class nil "\\.vue\\'" 'vue-script)
+     (mmm-add-mode-ext-class nil "\\.vue\\'" 'vue-style))
+   #+END_SRC
+
 ** Flycheck
 
    Some needed support package...
@@ -968,6 +1002,25 @@
    (use-package dotenv-mode
      :ensure t
      :mode ("\\.env\\'" . dotenv-mode))
+   #+END_SRC
+
+** GraphQL
+
+   Major mode.
+   #+BEGIN_SRC emacs-lisp
+   (use-package graphql-mode
+     :after (mmm-mode)
+     :pin melpa
+     :ensure t
+     :config
+     (mmm-add-classes
+      '((js-graphql
+         :submode graphql-mode
+         :face mmm-declaration-submode-face
+         :front "[^a-zA-Z]gql`"
+         :back "`")))
+     (mmm-add-mode-ext-class nil "\\.js\\'" 'js-graphql)
+     (mmm-add-mode-ext-class nil "\\.vue\\'" 'js-graphql))
    #+END_SRC
 
 ** Haskell
@@ -1331,14 +1384,6 @@
          ("rs" tide-rename-symbol "rename symbol")
          ("rf" tide-rename-file "rename file")
          ("ri" tide-organize-imports "sort imports")))
-   #+END_SRC
-
-** Vue
-
-   #+BEGIN_SRC emacs-lisp
-   (use-package vue-mode
-     :ensure t
-     :mode ("\\.vue\\'" . vue-mode))
    #+END_SRC
 
 ** YAML
