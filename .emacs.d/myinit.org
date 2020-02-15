@@ -45,11 +45,6 @@
    (global-hl-line-mode 1)
    #+END_SRC
 
-   Hide fringe.
-   #+BEGIN_SRC emacs-lisp
-   (fringe-mode -1)
-   #+END_SRC
-
    Display column number in mode line.
    #+BEGIN_SRC emacs-lisp
    (setq column-number-mode t)
@@ -78,15 +73,7 @@
 
    Set default font size.
    #+BEGIN_SRC emacs-lisp
-   ;; (set-face-attribute 'default nil :height 100)
-   #+END_SRC
-
-   Discover Emacs functions.
-   #+BEGIN_SRC emacs-lisp
-   (use-package discover
-     :ensure t
-     :config
-     (global-discover-mode 1))
+   ;; (set-face-attribute 'default nil :height 90)
    #+END_SRC
 
    Menu suggestions.
@@ -218,25 +205,6 @@
    (global-set-key (kbd "<C-f10>") 'save-buffers-kill-terminal)
    #+END_SRC
 
-   Example of custom keymap.
-   #+BEGIN_SRC emacs-lisp
-     ;; (progn
-     ;;   ;; define a prefix keymap
-     ;;   (define-prefix-command 'my-modes-key-map)
-     ;;   (define-key my-modes-key-map (kbd "a") 'eauc/align-array))
-     ;; (global-set-key (kbd "C-e")      my-modes-key-map)
-   #+END_SRC
-
-   Enable chords globally.
-   #+BEGIN_SRC emacs-lisp
-   ;; (use-package use-package-chords
-   ;;   :ensure t
-   ;;   :config 
-   ;;   (key-chord-mode 1)
-   ;;   (key-chord-define-global "jy" 'aya-create)
-   ;;   (key-chord-define-global "jt" 'aya-expand))
-   #+END_SRC
-
 * Custom functions
 
 ** Indent-buffer
@@ -344,29 +312,6 @@
   (setq-default show-trailing-whitespace t)
   #+END_SRC
 
-** Bookmarks
-
-   #+BEGIN_SRC emacs-lisp
-   (use-package breadcrumb
-     :after (hydra)
-     :load-path  "~/.emacs.d/breadcrumb/"
-     :config
-     (defhydra hydra-breadcrumb (:color blue)
-       "
-
-   Breadcrumb
-   ==========
-   "
-       ("<down>" bc-next "next" :column "Move")
-       ("<up>" bc-previous "prev")
-       ("S-<down>" bc-local-next "next (local)")
-       ("S-<up>" bc-local-previous "prev (local)")
-       ("l" bc-list "list" :column "---")
-       ("s" bc-set "set")
-       ("c" bc-clear "clear")
-       ("q" nil "quit")))
-   #+END_SRC
-
 ** Completion
 
    Hippie auto-complete.
@@ -406,11 +351,6 @@
      :ensure t
      :config
      (global-hungry-delete-mode))
-   #+END_SRC
-
-   Reduce multiple spaces to one space.
-   #+BEGIN_SRC emacs-lisp
-   (global-set-key (kbd "<S-SPC>")   'just-one-space)
    #+END_SRC
 
 ** Fold
@@ -474,69 +414,49 @@
      (browse-kill-ring-default-keybindings))
    #+END_SRC
 
-** Mark
-
-   Visible mark.
-   #+BEGIN_SRC emacs-lisp
-   (use-package visible-mark
-     :ensure t
-     :custom
-     (visible-mark-max 5 "Maximum highlighted marks backwards")
-     :config
-     (global-visible-mark-mode 1))
-   #+END_SRC
-
-   Back button.
-   #+BEGIN_SRC emacs-lisp
-     ;; (use-package back-button
-     ;;   :ensure t
-     ;;   :config
-     ;;   (back-button-mode 1))
-   #+END_SRC
-
 ** Moves
 
    Moves text around.
    #+BEGIN_SRC emacs-lisp
    (use-package cool-moves
      :load-path "~/.emacs.d/cool-moves"
-     :bind (("<C-S-down>" . 'cool-moves/paragraph-forward)
-            ("<C-S-up>" . 'cool-moves/paragraph-backward)
-            ("C-S-z" . 'cool-moves/line-forward)
-            ("C-S-w" . 'cool-moves/line-backward)
-            ("C-S-s" . 'cool-moves/word-forward)
-            ("C-S-a" . 'cool-moves/word-backwards)))
+     :bind (("C-M-d" . 'cool-moves/paragraph-forward)
+            ("C-M-u" . 'cool-moves/paragraph-backward)
+            ("C-M-z" . 'cool-moves/line-forward)
+            ("C-M-w" . 'cool-moves/line-backward)
+            ("C-M-s" . 'cool-moves/word-forward)
+            ("C-M-a" . 'cool-moves/word-backwards)))
    #+END_SRC
 
 ** Multicursors
 
    #+BEGIN_SRC emacs-lisp
-      (use-package mc-extras
-        :ensure t)
+   (use-package mc-extras
+     :ensure t)
 
-      (use-package multiple-cursors
-        :after (hydra)
-        :ensure t
-        :bind ()
-        :config
-        (defhydra hydra-multicursors (:color blue)
-          "
+   (use-package multiple-cursors
+     :after (hydra)
+     :ensure t
+     :bind ()
+     :config
+     (defhydra hydra-multicursors (:color blue)
+       "
 
    Jump
    ========
    "
-          (">" mc/mark-next-like-this "next like this" :column "Mark")
-          ("<" mc/mark-previous-like-this "prev like this")
-          ("a" mc/mark-all-like-this "all like this")
-          ("f" mc/mark-all-like-this-in-defun "all like this (defun)")
-          ("d" mc/mark-all-like-this-dwim "all like this (dwim)")
-          ("[" mc/edit-beginnings-of-lines "beg of lines")
-          ("]" mc/edit-ends-of-lines "end of lines")
-          ("b" mc/cycle-backward "cycle backward" :column "Move")
-          ("f" mc/cycle-forward "cycle forward")
-          ("i" mc/insert-numbers "insert numbers" :column "Edit")
-          ("u" mc/remove-current-cursor "remove current")
-          ("q" nil "quit")))
+       (">" mc/mark-next-like-this "next like this" :column "Mark")
+       ("<" mc/mark-previous-like-this "prev like this")
+       ("a" mc/mark-all-like-this "all like this")
+       ("f" mc/mark-all-like-this-in-defun "all like this (defun)")
+       ("d" mc/mark-all-like-this-dwim "all like this (dwim)")
+       ("[" mc/edit-beginnings-of-lines "beg of lines")
+       ("]" mc/edit-ends-of-lines "end of lines")
+       ("b" mc/cycle-backward "cycle backward" :column "Move")
+       ("f" mc/cycle-forward "cycle forward")
+       ("i" mc/insert-numbers "insert numbers" :column "Edit")
+       ("u" mc/remove-current-cursor "remove current")
+       ("q" nil "quit")))
    #+END_SRC
 
 ** Snippets
@@ -998,9 +918,9 @@
 ** Emacs-lisp
 
    #+BEGIN_SRC emacs-lisp
-   (add-hook 'emacs-lisp-mode-hook 
+   (add-hook 'emacs-lisp-mode-hook
      (lambda()
-       (setq mode-name "ℰ"))) 
+       (setq mode-name "ℰ")))
    #+END_SRC
 
 ** Env
@@ -1037,7 +957,7 @@
      :ensure t
      :mode ("\\.hs\\'" . haskell-mode))
    #+END_SRC
-   
+
 ** Javascript
 
 *** Mode
@@ -1355,7 +1275,7 @@
 
    TS IDE.
    #+BEGIN_SRC emacs-lisp
-   (defun setup-tide-mode ()
+   (defun eauc/setup-tide-mode ()
        (interactive)
        (message "setup-tide-mode")
        (tide-setup)
@@ -1368,7 +1288,7 @@
      :after (flycheck typescript-mode hydra)
      :ensure t
      :hook
-     ((typescript-mode . setup-tide-mode)
+     ((typescript-mode . eauc/setup-tide-mode)
       (typescript-mode . tide-hl-identifier-mode))
      :bind (:map typescript-mode-map
                  ("C-f" . 'hydra-tide/body))
@@ -1539,18 +1459,6 @@
 
 ** Exports
 
-   Confluence wiki.
-   #+BEGIN_SRC emacs-lisp
-   ;; (use-package ox-confluence
-   ;;   :load-path "~/.emacs.d/org-ox-confluence/")
-   #+END_SRC
-
-   BB code.
-   #+BEGIN_SRC emacs-lisp
-   ;; (use-package ox-bbcode
-   ;;      :load-path "~/.emacs.d/org-ox-bbcode/")
-   #+END_SRC
-
    Latex beamer presentations.
    #+BEGIN_SRC emacs-lisp
    (require 'ox-latex)
@@ -1620,16 +1528,6 @@
      :ensure t)
    #+END_SRC
 
-** Table of contents.
-
-   Generate TOC at top of org files.
-   #+BEGIN_SRC emacs-lisp
-   ;; (use-package toc-org
-   ;;   :ensure t
-   ;;   :hook
-   ;;   (org-mode . toc-org-enable))
-   #+END_SRC
-
 * Projects
 
   Manage Git projects.
@@ -1639,11 +1537,6 @@
     :ensure t
     :config
     (projectile-global-mode)
-    ;; (projectile-register-project-type 'npm '("package.json")
-    ;;                                :compile "npm install"
-    ;;                                :test "npm test"
-    ;;                                :run "npm start"
-    ;;                                :test-suffix ".spec")
     (defhydra hydra-projectile (:color blue :hint nil)
       "
 
@@ -1696,33 +1589,10 @@
   #+END_SRC
 
 * Miscellaneous Tools
-** Cheatsheet
-
-   Emacs cheat sheet.
-   #+BEGIN_SRC emacs-lisp
-   (org-babel-load-file
-    (expand-file-name "~/.emacs.d/cheatsheet.org"))
-
-   (defun eauc/cheatsheet ()
-     "Display cheatsheet."
-     (interactive)
-     (cheatsheet-show)
-     (goto-char (point-min)))
-
-   (use-package cheatsheet
-     :pin melpa
-     :ensure t
-     :bind (("<f8>" . eauc/cheatsheet))
-     :config
-     (eauc/cheat-commons)
-     (eauc/cheat-edition)
-     (eauc/cheat-lisp)
-     (eauc/cheat-git-timemachine))
-   #+END_SRC
 
 ** Github
 
-   Clone github repose
+   Clone github repos
    #+BEGIN_SRC emacs-lisp
    (use-package github-clone
      :ensure t)
