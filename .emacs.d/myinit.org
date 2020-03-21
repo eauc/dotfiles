@@ -737,7 +737,6 @@
      (flycheck-add-mode 'javascript-eslint 'web-mode)
      (flycheck-add-mode 'javascript-eslint 'js-mode)
      (flycheck-add-mode 'javascript-eslint 'js2-mode)
-     (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
      (defhydra hydra-flycheck (:color blue :columns 2)
        "
 
@@ -1042,9 +1041,8 @@
     (use-package js2-mode
       :after (hydra)
       :ensure t
-      :interpreter (("node" . js2-jsx-mode))
-      :mode (("\\.js\\'" . js2-jsx-mode)
-             ("\\.es6\\'" . js2-jsx-mode))
+      :interpreter (("node" . js2-mode))
+      :mode (("\\.js\\'" . js2-mode))
       :bind (:map js2-mode-map
                   ("M-." . nil)
                   ("C-f" . 'hydra-js/body))
@@ -1215,8 +1213,8 @@
       :hook
       ((js2-mode . (lambda ()
                      (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
-       (vue-mode . (lambda ()
-                     (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))))
+       (js-mode . (lambda ()
+                    (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))))
     #+END_SRC
 
 ** JSON
