@@ -751,24 +751,25 @@
        ("q" nil "quit")))
    #+END_SRC
 
+   Flycheck pos-tip: displays flycheck errors as tooltips
+   (prevents conflict with mode bar messages)
+   #+BEGIN_SRC emacs-lisp
+   (use-package flycheck-pos-tip
+     :ensure t
+     :after flycheck)
+   #+END_SRC
+
 ** Clojure
 *** Mode
 
     Clojure.
     #+BEGIN_SRC emacs-lisp
-    (defun eauc/clojure-mode-init ()
-      "Initialize Clojure mode."
-      (setq inferior-lisp-program "lein repl"))
-
     (use-package clojure-mode
       :after (hydra)
       :ensure t
       :mode (("\\.cljs\\'" . clojurescript-mode)
              ("\\.clj\\'" . clojure-mode)
              ("\\.edn\\'" . clojure-mode))
-      :hook
-      ((clojure-mode . eauc/clojure-mode-init)
-       (clojurescript-mode . eauc/clojure-mode-init))
       :bind (:map clojure-mode-map
                   ("C-f" . hydra-clj/body))
       :init
@@ -781,7 +782,11 @@
         ("c" hydra-clj-cider/body "cider")
         ("r" hydra-cljr-help-menu/body "refactor"))
       :custom
-      (clojure-indent-style :align-arguments))
+      (clojure-indent-style :align-arguments)
+      :config
+      (require 'flycheck-clj-kondo)
+      (dolist (checker '(clj-kondo-clj clj-kondo-cljs clj-kondo-cljc clj-kondo-edn))
+        (setq flycheck-checkers (cons checker (delq checker flycheck-checkers)))))
 
     (use-package clojure-mode-extra-font-locking
       :ensure t)
@@ -837,8 +842,6 @@
         ("tf" cider-test-rerun-failed-tests "re-run failed")
         ("tt" cider-test-rerun-test "re-run last")
         ("ts" cider-test-show-report "show report"))
-      :config
-      (flycheck-clojure-setup)
       :custom
       (cider-repl-pop-to-buffer-on-connect t)
       (cider-repl-history-file "~/.emacs.d/cider-history" "REPL history file")
@@ -854,9 +857,11 @@
 *** Flycheck
 
     #+BEGIN_SRC emacs-lisp
-    (use-package flycheck-clojure
-      :after (cider)
-      :ensure t)
+    (use-package flycheck-clj-kondo
+      :ensure t
+      :config
+      (eval-after-load 'flycheck
+        '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
     #+END_SRC
 
 *** Refactor
