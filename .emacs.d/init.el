@@ -16,7 +16,7 @@
   (package-install 'use-package))
 
 (require 'use-package)
-(setq use-package-always-pin "melpa-stable")
+(setq use-package-always-pin "melpa")
 (setq use-package-verbose t)
 
 (org-babel-load-file
