@@ -148,8 +148,7 @@
    Unstage changes:
    - --patch :: chunked unstage
    #+BEGIN_SRC gitconfig
-           unstage = reset HEAD
-           us = "!git unstage"
+           us = reset HEAD
            usi = reset --patch HEAD
    #+END_SRC
 
@@ -335,7 +334,7 @@
    Set remote-tracking branch:
    #+BEGIN_SRC gitconfig
            pup = push --set-upstream
-           pupo = "!git pup origin `git bh`"
+           pub = "!git pup origin `git bh`"
    #+END_SRC
 
    Check that new commits in submodules have been pushed to their remote:

@@ -160,8 +160,7 @@ oops = "!git ca --no-edit"
 # Unstage changes:
 # - --patch :: chunked unstage
 
-unstage = reset HEAD
-us = "!git unstage"
+us = reset HEAD
 usi = reset --patch HEAD
 
 
@@ -363,7 +362,7 @@ pf = push --force-with-lease
 # Set remote-tracking branch:
 
 pup = push --set-upstream
-pupo = "!git pup origin `git bh`"
+pub = "!git pup origin `git bh`"
 
 
 
