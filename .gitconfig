@@ -145,10 +145,12 @@ stdiff = stash show --patch
 # Commit
 
 #    Shortcuts for lazy people:
+#    - --patch :: chunked add
 #    - -v :: add diff to message draft for inspection
 #    - --amend :: add modifications to previous commit
 #    - --no-edit :: use previous commit message without change
 
+ap = add --patch
 c = commit -v
 ca = "!git c --amend"
 oops = "!git ca --no-edit"
