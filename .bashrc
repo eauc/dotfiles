@@ -7,14 +7,21 @@
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # don't overwrite GNU Midnight Commander's setting of `ignorespace'.
-HISTCONTROL=$HISTCONTROL${HISTCONTROL+:}ignoredups
+# HISTCONTROL=$HISTCONTROL${HISTCONTROL+:}ignoredups
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
 shopt -s histappend
+# append and reload the history after each command
+PROMPT_COMMAND="history -a; history -n"
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=100000
+HISTFILESIZE=10000000
+
+# ignore certain commands from the history
+HISTIGNORE="ls:ll:cd:pwd:bg:fg:history"
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -29,9 +36,9 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color) color_prompt=yes;;
-esac
+# case "$TERM" in
+#     xterm-color) color_prompt=yes;;
+# esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
@@ -57,13 +64,13 @@ fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
+# case "$TERM" in
+# xterm*|rxvt*)
+#     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+#     ;;
+# *)
+#     ;;
+# esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -75,14 +82,15 @@ if [ -x /usr/bin/dircolors ]; then
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
+    alias less='less -r'
 fi
 
-# some more ls aliases
+# some more aliases
 alias ll='ls -lh'
 alias la='ls -lha'
 alias l='ls -CF'
 alias lsdir='tree -F'
-alias lldir='tree -phugDF' 
+alias lldir='tree -phugDF'
 
 alias cd='pushd'
 alias pd='popd'
@@ -98,9 +106,9 @@ alias lzd='lazydocker'
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+# if [ -f ~/.bash_aliases ]; then
+#     . ~/.bash_aliases
+# fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -109,21 +117,13 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-PATH=$HOME/bin:$HOME/.local/bin:$PATH
 # add home and code as default basedir for 'cd'
 CDPATH=.:~:~/code
 # correct 'cd' dirname typos
 shopt -s cdspell
 
-# PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export UID
 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# export PATH="/home/auclair/.pyenv/bin:$PATH"
-# eval "$(pyenv init -)"
-# eval "$(pyenv virtualenv-init -)"
-# export PYENV_VERSION=3.7.2
-
-eval $(thefuck --alias fk)
+if [ -f ~/.bash_profile ]; then
+    . ~/.bash_profile
+fi
