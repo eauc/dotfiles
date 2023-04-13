@@ -11,6 +11,11 @@
 #    - detect file rename with 75% similarity threshold.
 
 d = diff --ignore-all-space --color-words --find-renames=75
+dt = difftool
+dc = show --ignore-all-space --color-words --find-renames=75
+dtc = "!diffCommit() { git dt "$1~" "$1"; }; diffCommit"
+dch = "!git dc HEAD"
+dth = "!git dtc HEAD"
 
 
 
@@ -38,13 +43,6 @@ dsm = "!git d; git submodule foreach 'git d'"
 dsmsw = "!git dsw; git submodule foreach 'git dsw'"
 dsmhs = "!git dhs; git submodule foreach 'git dhs'"
 dsmhw = "!git dhw; git submodule foreach 'git dhw'"
-
-
-
-# See one commit's diff.
-
-dc = "!diffCommit() { git d "$1~" "$1"; }; diffCommit"
-dch = "!git dc HEAD"
 
 # Logs
 
@@ -74,6 +72,15 @@ la = "!git l --all"
 # With diffstat:
 
 ll = "!git la --stat"
+
+
+
+# Log my commits:
+# - author :: author name pattern filter
+
+
+lam = "!git la --author=Auclair"
+llm = "!git ll --author=Auclair"
 
 
 
@@ -171,7 +178,13 @@ addrm = "!git rm $(git ls-files --deleted)"
 
 # Merges
 
-#    Prefer no-fast-forward merges:
+#    Shorcuts for lazy people:
+
+mt = mergetool
+
+
+
+# Prefer no-fast-forward merges:
 
 m = merge --no-ff
 
@@ -256,7 +269,7 @@ bh = symbolic-ref --short HEAD
 # - -v :: show branches commit
 # - -vv :: show the differences between local/remote branches
 
-bl = branch -vv
+bl = "!git f && git branch -vv"
 
 
 
@@ -273,29 +286,24 @@ bc = checkout -b
 
 # Rebase
 
-#    Rebase:
-#    - --interactive :: interactive by default
-
-rb = rebase --interactive
-
-
-
-# Rebase continue:
+#    Shortcuts for leazy people:
 
 rbc = "!git rebase --continue"
+rba = "!git rebase --abort"
+
+
+
+# Rebase:
+# - --interactive :: interactive by default
+
+rb = rebase --interactive
 
 
 
 # Rebase on updated origin/master:
 
 rbm = "!git fetch && git rb origin/master"
-
-
-
-# Rebase exec:
-# - --exec <cmd> :: run a command after each rebased commit
-
-rbx = "!git rb --exec"
+rbfm = "!git fetch && git rb origin/refonte-master"
 
 
 
@@ -326,8 +334,15 @@ gs = "!git g --cached"
 
 # Remote
 
-#    Clone:
-#    - always checkout submodules.
+#    Shortcuts for lazy people:
+
+p = push
+oopf = "!git oops && git pf"
+
+
+
+# Clone:
+# - always checkout submodules.
 
 clone = clone --recursive
 
@@ -344,12 +359,6 @@ f = fetch --prune --tags
 # Synchronize tags with remote:
 
 ft = fetch -p origin +refs/tags/*:refs/tags/*
-
-
-
-# Shortcuts for lazy people:
-
-p = push
 
 
 
@@ -435,7 +444,7 @@ lal = "!git config -l | grep alias | cut -c 7-"
 
 # Search an alias:
 
-al = "!search_alias() { git lal | grep -i --color \"$1\"; }; search_alias"
+sal = "!search_alias() { git lal | grep -i --color \"$1\"; }; search_alias"
 
 
 
@@ -486,6 +495,7 @@ hooks = config core.hooksPath
 
 [pager]
         diff = diff-so-fancy | less --tabs=2 -RFX
+        difftool = true
         show = diff-so-fancy | less --tabs=2 -RFX
 [interactive]
         diffFilter = "less --tabs=2 -RFX"
@@ -497,9 +507,11 @@ hooks = config core.hooksPath
 
 [diff]
         submodule = log
-        tool = icdiff
+        tool = difftastic
 [difftool]
         prompt = false
+[difftool "difftastic"]
+        cmd = difft "$MERGED" "$LOCAL" "$REMOTE"
 [difftool "icdiff"]
         cmd = icdiff --line-numbers $LOCAL $REMOTE
 
@@ -546,7 +558,8 @@ hooks = config core.hooksPath
 [push]
         default = simple
 
-
+[pull]
+	rebase = interactive
 
 # Blame:
 # - display relative dates
@@ -579,7 +592,7 @@ hooks = config core.hooksPath
 [rebase]
         autostash = true
         autosquash = true
-        missingCommitsCheck = warn
+        missingCommitsCheck = ignore
 
 
 
@@ -600,3 +613,10 @@ hooks = config core.hooksPath
         conflictstyle = diff3
 [mergetool]
         keepBackup = false
+
+
+
+# Remember conflicts resolutions
+
+[rerere]
+        enabled = true
