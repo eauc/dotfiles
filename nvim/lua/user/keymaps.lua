@@ -1,20 +1,20 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.keymap.set('', '<Up>', '<Nop>')
-vim.keymap.set('', '<Down>', '<Nop>')
+vim.keymap.set('', '<Up>', '5<C-u>')
+vim.keymap.set('', '<Down>', '5<C-d>')
 vim.keymap.set('', '<Left>', '<Nop>')
 vim.keymap.set('', '<Right>', '<Nop>')
 
-vim.keymap.set('n', '<leader>k', ':nohlsearch<CR>')
-vim.keymap.set('n', '<leader>Q', ':bufdo bdelete<CR>')
+vim.keymap.set('n', '<leader>k', ':nohlsearch<CR>', { desc = 'un-highlight search' })
+vim.keymap.set('n', '<leader>q', ':bdelete<CR>', { desc = 'close buffer' })
 
 -- Allow gf to open non-existent files
-vim.keymap.set('', 'gf', ':edit <cfile><CR>')
+vim.keymap.set('', 'gf', ':edit <cfile><CR>', { desc = 'goto file' })
 
 -- Reselect visual selection after indenting
-vim.keymap.set('v', '<', '<gv')
-vim.keymap.set('v', '>', '>gv')
+vim.keymap.set('v', '<', '<gv', { desc = 'indent left' })
+vim.keymap.set('v', '>', '>gv', { desc = 'indent right' })
 
 -- Maintain the cursor position when yanking a visual selection
 -- http://ddrscott.github.io/blog/2016/yank-without-jank/
@@ -33,7 +33,7 @@ vim.keymap.set('v', 'p', '"_dP')
 -- vim.keymap.set('i', ',,', '<Esc>A,<Esc>')
 
 -- Open the current file in the default program (on Mac this should just be just `open`)
-vim.keymap.set('n', '<leader>x', ':!xdg-open %<cr><cr>')
+vim.keymap.set('n', '<leader>x', ':!xdg-open %<cr><cr>', { desc = 'open file with default app' })
 
 -- Disable annoying command line thing
 vim.keymap.set('n', 'q:', ':q<CR>')

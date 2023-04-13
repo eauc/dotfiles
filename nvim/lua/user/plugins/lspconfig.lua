@@ -2,10 +2,19 @@ require('mason').setup()
 require('mason-lspconfig').setup({ automatic_installation = true })
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local on_attach_keymap = function()
+  vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { desc = 'goto definition' })
+  vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', { desc = 'goto implementation' })
+  vim.keymap.set('n', 'gr', ':Telescope lsp_references<CR>', { desc = 'goto references' })
+  vim.keymap.set('n', '<leader>ra', '<cmd>lua vim.lsp.buf.code_action()<CR>', { desc = 'code action' })
+  vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { desc = 'refacto rename' })
+end
 
-require('lspconfig').volar.setup({
+require('lspconfig').eslint.setup({
   capabilities = capabilities,
-  filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
+  on_attach = function(client, bufnr)
+    vim.keymap.set('n', '<leader>rf', '<cmd>EslintFixAll<CR>', { desc = 'eslint fix all' })
+  end,
 })
 
 require('lspconfig').jsonls.setup({
@@ -15,6 +24,41 @@ require('lspconfig').jsonls.setup({
       schemas = require('schemastore').json.schemas(),
     },
   },
+})
+
+require('lspconfig').lua_ls.setup({
+  on_attach = on_attach_keymap,
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { 'vim' },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+})
+
+require('lspconfig').tsserver.setup({
+  capabilities = capabilities,
+  on_attach = on_attach_keymap,
+  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+})
+
+require('lspconfig').volar.setup({
+  capabilities = capabilities,
+  on_attach = on_attach_keymap,
 })
 
 vim.diagnostic.config({
@@ -29,41 +73,18 @@ require('null-ls').setup({
     return nil
   end,
   sources = {
-    require('null-ls').builtins.code_actions.eslint_d.with({
-      condition = function(utils)
-        return utils.root_has_file({ '.eslintrc.js' })
-      end,
-    }),
-    require('null-ls').builtins.diagnostics.eslint_d.with({
-      condition = function(utils)
-        return utils.root_has_file({ '.eslintrc.js' })
-      end,
-    }),
-    require('null-ls').builtins.formatting.eslint_d.with({
-      condition = function(utils)
-        return utils.root_has_file({ '.eslintrc.js' })
-      end,
-    }),
     require('null-ls').builtins.formatting.prettierd,
   },
 })
 
 require("mason-null-ls").setup({ automatic_installation = true })
 
-vim.keymap.set('n', '<leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>')
-vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
-vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
-vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
-vim.keymap.set('n', 'gr', ':Telescope lsp_references<CR>')
-vim.keymap.set('n', '<leader>p', function()
-  vim.lsp.buf.format { async = true }
-end, opts)
-
--- vim.api.nvim_create_user_command('Format', vim.lsp.buf.formatting, {})
--- vim.api.nvim_create_user_command('Format', vim.lsp.buf.formatting_seq_sync, {})
+vim.keymap.set('n', '<leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'open diagnostics' })
+vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = 'previous diagnostic' })
+vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = 'next diagnostic' })
+vim.keymap.set('n', '<leader>=', function()
+  vim.lsp.buf.format({ async = true })
+end, { desc = 'format file' })
 
 vim.fn.sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSignError' })
 vim.fn.sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticSignWarn' })

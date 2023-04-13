@@ -109,10 +109,10 @@ use({
   end
 })
 
-use({
-  'whatyouhide/vim-textobj-xmlattr',
-  requires = 'kana/vim-textobj-user',
-})
+-- use({
+--   'whatyouhide/vim-textobj-xmlattr',
+--   requires = 'kana/vim-textobj-user',
+-- })
 
 use({
   'airblade/vim-rooter',
@@ -169,28 +169,37 @@ use({
   end,
 })
 
-use({
-  'tpope/vim-fugitive',
-  requires = 'tpope/vim-rhubarb',
-  cmd = 'G',
-})
+-- use({
+--   'tpope/vim-fugitive',
+--   requires = 'tpope/vim-rhubarb',
+--   cmd = 'G',
+-- })
 
 use({
   'lewis6991/gitsigns.nvim',
   requires = 'nvim-lua/plenary.nvim',
   config = function()
     require('gitsigns').setup()
-    vim.keymap.set('n', ']h', '<cmd>Gitsigns next_hunk<CR>')
-    vim.keymap.set('n', '[h', '<cmd>Gitsigns prev_hunk<CR>')
-    vim.keymap.set('n', 'gb', '<cmd>Gitsigns blame_line<CR>')
+    vim.keymap.set('n', ']h', '<cmd>Gitsigns next_hunk<CR>', { desc = 'next git diff' })
+    vim.keymap.set('n', '[h', '<cmd>Gitsigns prev_hunk<CR>', { desc = 'previous git diff' })
+    -- vim.keymap.set('n', '<leader>gb', '<cmd>Gitsigns blame_line<CR>')
   end,
 })
 
 use({
     'emmanueltouzery/agitator.nvim',
     config = function()
-      vim.keymap.set('n', 'gt', '<cmd>lua require("agitator").git_time_machine()<CR>')
+      vim.keymap.set('n', '<leader>gb', '<cmd>lua require("agitator").git_blame_toggle()<CR>', { desc = 'git blame file' })
+      vim.keymap.set('n', '<leader>gt', '<cmd>lua require("agitator").git_time_machine()<CR>', { desc = 'git time machine' })
     end
+})
+
+use({
+  'f-person/git-blame.nvim',
+  config = function()
+    vim.keymap.set('n', '<leader>gB', '<cmd>GitBlameToggle<CR>', { desc = 'toggle git blame line' })
+    vim.keymap.set('n', '<leader>gc', '<cmd>GitBlameCopySHA<CR>', { desc = 'copy current line commit sha' })
+  end
 })
 
 use({
