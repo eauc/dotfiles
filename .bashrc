@@ -95,11 +95,10 @@ alias lldir='tree -phugDF'
 alias cd='pushd'
 alias pd='popd'
 
-alias kc='kubectl'
-alias kp='kubegetpod(){ kubectl get pods --selector="$1" | sed -n 2p | cut -d" " -f1; }; kubegetpod'
-alias kl='kubegetlogs(){ kubectl logs -f $(kubectl get pods --selector="$1" | sed -n 2p | cut -d" " -f1); }; kubegetlogs'
-
 alias lzd='lazydocker'
+
+alias ghpc='gh pr create --assignee eauc --label core --reviewer GeorgesTech/team-core'
+alias ghpca='gh pr create --assignee eauc --label core --label accounting-refacto --reviewer GeorgesTech/team-core'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -117,13 +116,20 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# add home and code as default basedir for 'cd'
-CDPATH=.:~:~/code
 # correct 'cd' dirname typos
 shopt -s cdspell
 
 export UID
 
-if [ -f ~/.bash_profile ]; then
-    . ~/.bash_profile
-fi
+export PATH=~/bin:~/.local/bin:$PATH
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH="/home/auclair/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+export PYENV_VERSION=3.7.2
