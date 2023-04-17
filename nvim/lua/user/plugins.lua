@@ -1,8 +1,8 @@
 local ensure_packer = function()
   local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
   if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
     vim.cmd [[packadd packer.nvim]]
     return true
   end
@@ -13,9 +13,9 @@ local packer_bootstrap = ensure_packer()
 
 require('packer').reset()
 require('packer').init({
-  ensure_dependencies   = true,
-  compile_path = vim.fn.stdpath('data')..'/site/plugin/packer_compiled.lua',
-  display = {
+  ensure_dependencies = true,
+  compile_path        = vim.fn.stdpath('data') .. '/site/plugin/packer_compiled.lua',
+  display             = {
     open_fn = function()
       return require('packer.util').float({ border = 'solid' })
     end,
@@ -71,20 +71,20 @@ use('tpope/vim-commentary')
 use('tpope/vim-eunuch')
 use('tpope/vim-surround')
 use('tpope/vim-unimpaired')
-use('tpope/vim-sleuth')
+use('tpope/vim-sleuth') -- setup indentation config
 use('tpope/vim-repeat')
 use('sheerun/vim-polyglot')
 use('farmergreg/vim-lastplace')
-use('nelstrom/vim-visual-star-search')
+use('nelstrom/vim-visual-star-search') -- search for selected text with *or #
 use('jessarcher/vim-heritage')
-use('sickill/vim-pasta')
+use('sickill/vim-pasta')               -- auto indent paster text
 
 use({
   'folke/which-key.nvim',
   config = function()
     vim.o.timeout = true
     vim.o.timeoutlen = 300
-    require("which-key").setup() 
+    require("which-key").setup()
   end
 })
 
@@ -178,23 +178,24 @@ use({
     require('gitsigns').setup()
     vim.keymap.set('n', ']h', '<cmd>Gitsigns next_hunk<CR>', { desc = 'next git diff' })
     vim.keymap.set('n', '[h', '<cmd>Gitsigns prev_hunk<CR>', { desc = 'previous git diff' })
-    -- vim.keymap.set('n', '<leader>gb', '<cmd>Gitsigns blame_line<CR>')
   end,
 })
 
 use({
-    'emmanueltouzery/agitator.nvim',
-    config = function()
-      vim.keymap.set('n', '<leader>gb', '<cmd>lua require("agitator").git_blame_toggle()<CR>', { desc = 'git blame file' })
-      vim.keymap.set('n', '<leader>gt', '<cmd>lua require("agitator").git_time_machine()<CR>', { desc = 'git time machine' })
-    end
+  'emmanueltouzery/agitator.nvim',
+  config = function()
+    vim.keymap.set('n', '<leader>Gb', '<cmd>lua require("agitator").git_blame_toggle()<CR>', { desc = 'git blame file' })
+    vim.keymap.set('n', '<leader>Gt', '<cmd>lua require("agitator").git_time_machine()<CR>',
+      { desc = 'git time machine' })
+  end
 })
 
 use({
   'f-person/git-blame.nvim',
   config = function()
-    vim.keymap.set('n', '<leader>gB', '<cmd>GitBlameToggle<CR>', { desc = 'toggle git blame line' })
-    vim.keymap.set('n', '<leader>gc', '<cmd>GitBlameCopySHA<CR>', { desc = 'copy current line commit sha' })
+    vim.g.gitblame_enabled = 0
+    vim.keymap.set('n', '<leader>GB', '<cmd>GitBlameToggle<CR>', { desc = 'toggle git blame line' })
+    vim.keymap.set('n', '<leader>Gc', '<cmd>GitBlameCopySHA<CR>', { desc = 'copy current line commit sha' })
   end
 })
 

@@ -7,7 +7,7 @@ vim.keymap.set('', '<Left>', '<Nop>')
 vim.keymap.set('', '<Right>', '<Nop>')
 
 vim.keymap.set('n', '<leader>k', ':nohlsearch<CR>', { desc = 'un-highlight search' })
-vim.keymap.set('n', '<leader>q', ':bdelete<CR>', { desc = 'close buffer' })
+vim.keymap.set('n', '<leader>bq', ':bdelete<CR>', { desc = 'close buffer' })
 
 -- Allow gf to open non-existent files
 vim.keymap.set('', 'gf', ':edit <cfile><CR>', { desc = 'goto file' })
@@ -28,12 +28,8 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 -- Paste replace visual selection without copying it
 vim.keymap.set('v', 'p', '"_dP')
 
--- Easy insertion of a trailing ; or , from insert mode
--- vim.keymap.set('i', ';;', '<Esc>A;<Esc>')
--- vim.keymap.set('i', ',,', '<Esc>A,<Esc>')
-
 -- Open the current file in the default program (on Mac this should just be just `open`)
-vim.keymap.set('n', '<leader>x', ':!xdg-open %<cr><cr>', { desc = 'open file with default app' })
+vim.keymap.set('n', '<leader>fx', ':!xdg-open %<cr><cr>', { desc = 'open file with default app' })
 
 -- Disable annoying command line thing
 vim.keymap.set('n', 'q:', ':q<CR>')

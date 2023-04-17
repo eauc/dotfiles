@@ -1,5 +1,6 @@
 require('mason').setup()
 require('mason-lspconfig').setup({ automatic_installation = true })
+require("mason-null-ls").setup({ automatic_installation = true })
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local on_attach_keymap = function()
@@ -76,8 +77,6 @@ require('null-ls').setup({
     require('null-ls').builtins.formatting.prettierd,
   },
 })
-
-require("mason-null-ls").setup({ automatic_installation = true })
 
 vim.keymap.set('n', '<leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'open diagnostics' })
 vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = 'previous diagnostic' })
