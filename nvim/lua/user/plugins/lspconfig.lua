@@ -55,6 +55,11 @@ require('lspconfig').tsserver.setup({
   capabilities = capabilities,
   on_attach = on_attach_keymap,
   filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+  init_options = {
+    preferences = {
+      disableSuggestions = true,
+    },
+  },
 })
 
 require('lspconfig').volar.setup({

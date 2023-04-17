@@ -96,6 +96,14 @@ use({
 })
 
 use({
+  "cshuaimin/ssr.nvim",
+  config = function()
+    require("ssr").setup()
+    vim.keymap.set("n", "<leader>rs", '<cmd>lua require("ssr").open()<CR>', { desc = 'structured search' })
+  end
+})
+
+use({
   'phaazon/hop.nvim',
   branch = 'v2',
   config = function()
@@ -105,10 +113,18 @@ use({
   end
 })
 
--- use({
---   'whatyouhide/vim-textobj-xmlattr',
---   requires = 'kana/vim-textobj-user',
--- })
+use({
+  'mfussenegger/nvim-treehopper',
+  requires = {
+    'phaazon/hop.nvim',
+    'nvim-treesitter/nvim-treesitter',
+  },
+  config = function()
+    vim.keymap.set('n', 'gt', ':lua require("tsht").move()<CR>', { desc = 'jump to syntax node' })
+    vim.keymap.set('n', 'vN', ':<C-U>lua require("tsht").nodes()<CR>', { desc = 'select current node' })
+    vim.keymap.set('x', '_', ':lua require("tsht").nodes()<CR>', { desc = 'extend to syntax node' })
+  end
+})
 
 use({
   'airblade/vim-rooter',
@@ -120,28 +136,12 @@ use({
   end,
 })
 
--- use({
---   'windwp/nvim-autopairs',
---   config = function()
---     require('nvim-autopairs').setup()
---   end,
--- })
-
 use({
   'karb94/neoscroll.nvim',
   config = function()
     require('neoscroll').setup()
   end,
 })
-
--- use({
---   'AndrewRadev/splitjoin.vim',
---   config = function()
---     vim.g.splitjoin_html_attributes_bracket_on_new_line = 1
---     vim.g.splitjoin_trailing_comma = 1
---     vim.g.splitjoin_php_method_chain_full = 1
---   end,
--- })
 
 use({ 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' })
 
@@ -158,18 +158,20 @@ use({
 })
 
 use({
+  "folke/trouble.nvim",
+  requires = "nvim-tree/nvim-web-devicons",
+  config = function()
+    require('user.plugins.trouble')
+  end
+})
+
+use({
   'kyazdani42/nvim-tree.lua',
   requires = 'kyazdani42/nvim-web-devicons',
   config = function()
     require('user.plugins.nvim-tree')
   end,
 })
-
--- use({
---   'tpope/vim-fugitive',
---   requires = 'tpope/vim-rhubarb',
---   cmd = 'G',
--- })
 
 use({
   'lewis6991/gitsigns.nvim',
@@ -206,13 +208,22 @@ use({
   end,
   requires = {
     'nvim-treesitter/playground',
-    'nvim-treesitter/nvim-treesitter-textobjects',
     'JoosepAlviste/nvim-ts-context-commentstring',
-    'ziontee113/syntax-tree-surfer',
   },
   config = function()
     require('user.plugins.treesitter')
   end,
+})
+
+use({
+  'kevinhwang91/nvim-ufo',
+  requires = {
+    'kevinhwang91/promise-async',
+    'nvim-treesitter/nvim-treesitter',
+  },
+  config = function()
+    require('user.plugins.nvim-ufo')
+  end
 })
 
 use({
@@ -253,6 +264,38 @@ use({
     vim.filetype.add({ extension = { http = 'http' } })
     require("rest-nvim").setup()
   end
+})
+
+use({
+  "folke/zen-mode.nvim",
+  config = function()
+    require("zen-mode").setup({
+      window = {
+        options = {
+          signcolumn = "no", -- disable signcolumn
+          number = false, -- disable number column
+          relativenumber = false, -- disable relative numbers
+          cursorline = false, -- disable cursorline
+          cursorcolumn = false, -- disable cursor column
+          foldcolumn = "0", -- disable fold column
+          list = false, -- disable whitespace characters
+        },
+      },
+    })
+  end
+})
+
+use({
+  "nvim-neorg/neorg",
+  requires = {
+    -- sudo apt install uuid-runtime
+    "nvim-lua/plenary.nvim",
+    "folke/zen-mode.nvim"
+  },
+  run = ":Neorg sync-parsers",
+  config = function()
+    require('user.plugins.neorg')
+  end,
 })
 
 if packer_bootstrap then
