@@ -1,4 +1,4 @@
-local separator = { '"▏"', color = 'StatusLineNonText' }
+local separator = { '"▏"' }
 
 require('lualine').setup({
   options = {

@@ -12,16 +12,8 @@ require('nvim-tree').setup({
     },
     indent_markers = {
       enable = true,
-      -- inline_arrows = false,
     },
   },
 })
-
-vim.cmd([[
-  highlight NvimTreeIndentMarker guifg=#30323E
-  augroup NvimTreeHighlights
-    autocmd ColorScheme * highlight NvimTreeIndentMarker guifg=#30323E
-  augroup end
-]])
 
 vim.keymap.set('n', '<leader>n', ':NvimTreeFindFileToggle<CR>', { desc = 'files tree' })
