@@ -100,6 +100,8 @@ alias lzd='lazydocker'
 alias ghpc='gh pr create --assignee eauc --label core --reviewer GeorgesTech/team-core'
 alias ghpca='gh pr create --assignee eauc --label core --label accounting-refacto --reviewer GeorgesTech/team-core'
 
+alias t='source ~/dotfiles/scripts/t'
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
