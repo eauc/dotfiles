@@ -8,6 +8,8 @@ vim.keymap.set('', '<Right>', '<Nop>')
 
 vim.keymap.set('n', '<leader>k', ':nohlsearch<CR>', { desc = 'un-highlight search' })
 vim.keymap.set('n', '<leader>bq', ':bdelete<CR>', { desc = 'close buffer' })
+vim.keymap.set({ 'n', 'x' }, '<C-[>', ':bprevious<CR>', { desc = 'previous buffer' })
+vim.keymap.set({ 'n', 'x' }, '<C-]>', ':bnext<CR>', { desc = 'next buffer' })
 
 -- Allow gf to open non-existent files
 vim.keymap.set('', 'gf', ':edit <cfile><CR>', { desc = 'goto file' })

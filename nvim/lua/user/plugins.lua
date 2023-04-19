@@ -67,6 +67,20 @@ use({
   end,
 })
 
+use({
+  'karb94/neoscroll.nvim',
+  config = function()
+    require('neoscroll').setup()
+  end,
+})
+
+use({
+  'luochen1990/rainbow',
+  config = function()
+    vim.g.rainbow_active = 1
+  end
+})
+
 use('tpope/vim-commentary')
 use('tpope/vim-eunuch')
 use('tpope/vim-surround')
@@ -133,13 +147,6 @@ use({
   end,
   config = function()
     vim.cmd('Rooter')
-  end,
-})
-
-use({
-  'karb94/neoscroll.nvim',
-  config = function()
-    require('neoscroll').setup()
   end,
 })
 
@@ -272,13 +279,13 @@ use({
     require("zen-mode").setup({
       window = {
         options = {
-          signcolumn = "no", -- disable signcolumn
-          number = false, -- disable number column
+          signcolumn = "no",      -- disable signcolumn
+          number = false,         -- disable number column
           relativenumber = false, -- disable relative numbers
-          cursorline = false, -- disable cursorline
-          cursorcolumn = false, -- disable cursor column
-          foldcolumn = "0", -- disable fold column
-          list = false, -- disable whitespace characters
+          cursorline = false,     -- disable cursorline
+          cursorcolumn = false,   -- disable cursor column
+          foldcolumn = "0",       -- disable fold column
+          list = false,           -- disable whitespace characters
         },
       },
     })
