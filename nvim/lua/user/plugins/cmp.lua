@@ -51,5 +51,6 @@ cmp.setup({
     { name = 'path' },
     { name = 'buffer' },
     { name = "neorg" },
+    { name = "conjure" },
   },
 })

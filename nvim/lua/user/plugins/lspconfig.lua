@@ -27,6 +27,10 @@ require('lspconfig').jsonls.setup({
   },
 })
 
+require('lspconfig').clojure_lsp.setup({
+  on_attach = on_attach_keymap,
+})
+
 require('lspconfig').lua_ls.setup({
   on_attach = on_attach_keymap,
   settings = {

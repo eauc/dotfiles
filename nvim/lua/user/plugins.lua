@@ -243,6 +243,7 @@ use({
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lsp-signature-help',
     'onsails/lspkind-nvim',
+    'PaterJason/cmp-conjure'
   },
   config = function()
     require('user.plugins.cmp')
@@ -303,6 +304,20 @@ use({
   config = function()
     require('user.plugins.neorg')
   end,
+})
+
+use({
+  'guns/vim-sexp',
+  config = function()
+    vim.g.sexp_filetypes = ''
+  end
+})
+
+use({
+  'Olical/conjure',
+  config = function()
+    vim.g['conjure#mapping#prefix'] = ","
+  end
 })
 
 if packer_bootstrap then
