@@ -13,7 +13,7 @@ end
 
 require('lspconfig').eslint.setup({
   capabilities = capabilities,
-  on_attach = function(client, bufnr)
+  on_attach = function()
     vim.keymap.set('n', '<leader>rf', '<cmd>EslintFixAll<CR>', { desc = 'eslint fix all' })
   end,
 })

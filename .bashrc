@@ -101,6 +101,7 @@ alias ghpc='gh pr create --assignee eauc --label core --reviewer GeorgesTech/tea
 alias ghpca='gh pr create --assignee eauc --label core --label accounting-refacto --reviewer GeorgesTech/team-core'
 
 alias t='source ~/dotfiles/scripts/t'
+alias v='nvim'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like

@@ -15,8 +15,8 @@ vim.opt.breakindent = true -- maintain indent when wrapping indented lines
 vim.opt.list = true -- enable the below listchars
 vim.opt.listchars = { tab = '▸ ', trail = '·' }
 vim.opt.fillchars:append({ eob = ' ' }) -- remove the ~ from end of buffer
-vim.opt.scrolloff = 8
-vim.opt.sidescrolloff = 8
+vim.opt.scrolloff = 6
+vim.opt.sidescrolloff = 6
 vim.opt.clipboard = 'unnamedplus' -- Use Linux system clipboard
 vim.opt.confirm = true -- ask for confirmation instead of erroring      
 vim.opt.undofile = true -- persistent undo

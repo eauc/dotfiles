@@ -1,15 +1,15 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.keymap.set('', '<Up>', '5<C-u>')
-vim.keymap.set('', '<Down>', '5<C-d>')
-vim.keymap.set('', '<Left>', '<Nop>')
-vim.keymap.set('', '<Right>', '<Nop>')
+-- vim.keymap.set('', '<Up>', '5<C-u>')
+-- vim.keymap.set('', '<Down>', '5<C-d>')
+-- vim.keymap.set('', '<Left>', '<Nop>')
+-- vim.keymap.set('', '<Right>', '<Nop>')
 
 vim.keymap.set('n', '<leader>k', ':nohlsearch<CR>', { desc = 'un-highlight search' })
-vim.keymap.set('n', '<leader>bq', ':bdelete<CR>', { desc = 'close buffer' })
-vim.keymap.set({ 'n', 'x' }, '<C-[>', ':bprevious<CR>', { desc = 'previous buffer' })
-vim.keymap.set({ 'n', 'x' }, '<C-]>', ':bnext<CR>', { desc = 'next buffer' })
+vim.keymap.set('n', '<leader>bd', ':bdelete<CR>', { desc = 'close buffer' })
+vim.keymap.set('', '<C-,>', ':bprevious<CR>', { desc = 'previous buffer' })
+vim.keymap.set('', '<C-.>', ':bnext<CR>', { desc = 'next buffer' })
 
 -- Allow gf to open non-existent files
 vim.keymap.set('', 'gf', ':edit <cfile><CR>', { desc = 'goto file' })
@@ -35,12 +35,6 @@ vim.keymap.set('n', '<leader>fx', ':!xdg-open %<cr><cr>', { desc = 'open file wi
 
 -- Disable annoying command line thing
 vim.keymap.set('n', 'q:', ':q<CR>')
-
--- Resize with arrows
-vim.keymap.set('n', '<C-Up>', ':resize +2<CR>')
-vim.keymap.set('n', '<C-Down>', ':resize -2<CR>')
-vim.keymap.set('n', '<C-Left>', ':vertical resize -2<CR>')
-vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>')
 
 -- Move text up and down
 vim.keymap.set('i', '<A-j>', '<Esc>:move .+1<CR>==gi')

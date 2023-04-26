@@ -8,7 +8,7 @@ require('nvim-treesitter.configs').setup({
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "vn",
+      init_selection = "<leader>v",
       node_incremental = "=",
       scope_incremental = "+",
       node_decremental = "-",
