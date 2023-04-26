@@ -145,6 +145,8 @@
   autocorrect = 1
 [interactive]
   singleKey = true
+[pull]
+  rebase = true
 [rebase]
   autostash = true
   autosquash = true

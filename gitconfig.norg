@@ -2,7 +2,7 @@
 title: gitconfig
 authors: auclair
 created: 2023-04-17
-updated: 2023-04-18
+updated: 2023-04-26
 version: 1.0.0
 tangle: {
   languages: {
@@ -551,6 +551,13 @@ tangle: {
   @code sh
   [interactive]
     singleKey = true
+  @end
+
+  Pull:
+  - use rebase strategie to merge
+  @code sh
+  [pull]
+    rebase = true
   @end
 
   Rebase:

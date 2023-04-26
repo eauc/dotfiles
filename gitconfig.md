@@ -578,6 +578,13 @@ Interactive:
   singleKey = true
 ```
 
+Pull:
+- use rebase strategie to merge
+```sh
+[pull]
+  rebase = true
+```
+
 Rebase:
 - auto stash local modifs before/after rebase
 - auto fix/squash commit with message starting with =!fixup= or =!squash=
