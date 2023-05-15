@@ -135,8 +135,8 @@ use({
   },
   config = function()
     vim.keymap.set('n', 'gt', ':lua require("tsht").move()<CR>', { desc = 'jump to syntax node' })
-    vim.keymap.set('n', 'vN', ':<C-U>lua require("tsht").nodes()<CR>', { desc = 'select current node' })
-    vim.keymap.set('x', '_', ':lua require("tsht").nodes()<CR>', { desc = 'extend to syntax node' })
+    vim.keymap.set('n', '<leader>v+', ':<C-U>lua require("tsht").nodes()<CR>', { desc = 'select current node' })
+    vim.keymap.set('x', '+', ':lua require("tsht").nodes()<CR>', { desc = 'extend to syntax node' })
   end
 })
 
