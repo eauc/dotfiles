@@ -1,0 +1,13 @@
+require("chatgpt").setup()
+
+vim.keymap.set('n', '<leader>ca', '<CMD>ChatGPTActAs<CR>', { desc = 'act as...' })
+vim.keymap.set('n', '<leader>cc', '<CMD>ChatGPT<CR>', { desc = 'start chat' })
+vim.keymap.set('x', '<leader>ce', '<CMD>ChatGPTRun explain_code<CR>', { desc = 'explain code' })
+vim.keymap.set('x', '<leader>cf', '<CMD>ChatGPTRun fix_bugs<CR>', { desc = 'fix bugs' })
+vim.keymap.set('x', '<leader>cg', '<CMD>ChatGPTRun grammar_correction<CR>', { desc = 'grammar correction' })
+vim.keymap.set('x', '<leader>ci', '<CMD>ChatGPTEditWithInstructions<CR>', { desc = 'edit with instructions' })
+vim.keymap.set('x', '<leader>co', '<CMD>ChatGPTRun optimize_code<CR>', { desc = 'optimize code' })
+vim.keymap.set('x', '<leader>cr', '<CMD>ChatGPTRun code_readability_analysis<CR>', { desc = 'code readability analysis' })
+vim.keymap.set('x', '<leader>cs', '<CMD>ChatGPTRun summarize<CR>', { desc = 'summarize' })
+vim.keymap.set('x', '<leader>ct', '<CMD>ChatGPTRun add_tests<CR>', { desc = 'add tests' })
+vim.keymap.set('x', '<leader>cx', '<CMD>ChatGPTRun translate<CR>', { desc = 'translate' })

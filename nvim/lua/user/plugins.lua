@@ -287,6 +287,18 @@ use({
 })
 
 use({
+  "jackMort/ChatGPT.nvim",
+  requires = {
+    "MunifTanjim/nui.nvim",
+    "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope.nvim"
+  },
+  config = function()
+    require('user.plugins.chatgpt')
+  end,
+})
+
+use({
   "folke/zen-mode.nvim",
   config = function()
     require("zen-mode").setup({
