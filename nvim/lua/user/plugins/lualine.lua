@@ -24,6 +24,7 @@ require('lualine').setup({
       separator,
       '"🖧  " .. tostring(#vim.tbl_keys(vim.lsp.buf_get_clients()))',
       { 'diagnostics', sources = { 'nvim_diagnostic' } },
+      -- '"󱃖 " .. vim.fn["codeium#GetStatusString"]()',
       separator,
     },
     lualine_c = {
