@@ -14,6 +14,12 @@ require('nvim-tree').setup({
       enable = true,
     },
   },
+  view = {
+    width = {
+      min = 30,
+      max = -1,
+    },
+  },
 })
 
-vim.keymap.set('n', '<leader>n', ':NvimTreeFindFileToggle<CR>', { desc = 'files tree' })
+vim.keymap.set('n', '<leader>t', ':NvimTreeFindFileToggle<CR>', { desc = 'files tree' })
