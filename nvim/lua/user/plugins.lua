@@ -113,7 +113,7 @@ use({
   "cshuaimin/ssr.nvim",
   config = function()
     require("ssr").setup()
-    vim.keymap.set("n", "<leader>rs", '<cmd>lua require("ssr").open()<CR>', { desc = 'structured search' })
+    vim.keymap.set("n", "<leader>ss", '<cmd>lua require("ssr").open()<CR>', { desc = 'structured search' })
   end
 })
 
