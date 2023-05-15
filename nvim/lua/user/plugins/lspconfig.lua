@@ -72,13 +72,6 @@ require('lspconfig').volar.setup({
   on_attach = on_attach_keymap,
 })
 
-vim.diagnostic.config({
-  virtual_text = false,
-  float = {
-    source = true,
-  },
-})
-
 require('null-ls').setup({
   root_dir = function()
     return nil
@@ -87,15 +80,3 @@ require('null-ls').setup({
     require('null-ls').builtins.formatting.prettierd,
   },
 })
-
-vim.keymap.set('n', '<leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'open diagnostics' })
-vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = 'previous diagnostic' })
-vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = 'next diagnostic' })
-vim.keymap.set('n', '<leader>=', function()
-  vim.lsp.buf.format({ async = true })
-end, { desc = 'format file' })
-
-vim.fn.sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSignError' })
-vim.fn.sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticSignWarn' })
-vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticSignInfo' })
-vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
