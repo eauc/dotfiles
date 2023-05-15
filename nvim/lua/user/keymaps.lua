@@ -6,10 +6,10 @@ vim.g.maplocalleader = ' '
 -- vim.keymap.set('', '<Left>', '<Nop>')
 -- vim.keymap.set('', '<Right>', '<Nop>')
 
-vim.keymap.set('n', '<leader>k', ':nohlsearch<CR>', { desc = 'un-highlight search' })
+vim.keymap.set('n', '<leader>k', ':nohlsearch<CR>', { desc = 'clear search' })
 vim.keymap.set('n', '<leader>bd', ':bdelete<CR>', { desc = 'close buffer' })
-vim.keymap.set('', '<C-,>', ':bprevious<CR>', { desc = 'previous buffer' })
-vim.keymap.set('', '<C-.>', ':bnext<CR>', { desc = 'next buffer' })
+vim.keymap.set('', '<C-PageUp>', ':bprevious<CR>', { desc = 'previous buffer' })
+vim.keymap.set('', '<C-PageDown>', ':bnext<CR>', { desc = 'next buffer' })
 
 -- Allow gf to open non-existent files
 vim.keymap.set('', 'gf', ':edit <cfile><CR>', { desc = 'goto file' })
