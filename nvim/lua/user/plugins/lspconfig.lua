@@ -9,6 +9,7 @@ local on_attach_keymap = function()
   vim.keymap.set('n', 'gr', ':Telescope lsp_references<CR>', { desc = 'goto references' })
   vim.keymap.set('n', '<leader>ra', '<cmd>lua vim.lsp.buf.code_action()<CR>', { desc = 'code action' })
   vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { desc = 'refacto rename' })
+  vim.keymap.set('n', '<leader>=', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>', { desc = 'format file' })
 end
 
 require('lspconfig').eslint.setup({
