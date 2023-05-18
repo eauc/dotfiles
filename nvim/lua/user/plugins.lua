@@ -102,6 +102,8 @@ use({
   end
 })
 
+use('anuvyklack/hydra.nvim') 
+
 use({
   'lukas-reineke/indent-blankline.nvim',
   config = function()
