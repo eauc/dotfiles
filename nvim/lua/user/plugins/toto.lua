@@ -6,6 +6,74 @@ local Hydra = require('hydra')
 
 local M = {}
 
+local lang_definitions = {
+  clojure = {
+    opening_parenthesis = { type_ = { "(", "{", "[", "<" } },
+    closing_parenthesis = { type_ = { ")", "}", "]", ">" } },
+    expression = { type_ = { "sym_ns", "sym_name", "num_mame", "str_lit", "kwd_ns", "kwd_name", "bool_lit", "nil_lit" } },
+    sexp = {
+      type_ = {
+        "list_lit",
+        "map_lit",
+        "vec_lit",
+        "set_lit",
+      },
+    },
+  },
+  lua = {
+    opening_parenthesis = { type_ = { "(", "{", "[", "<" } },
+    closing_parenthesis = { type_ = { ")", "}", "]", ">" } },
+    expression = { type_ = { "function", "identifier", "string_start", "true", "false", "number" } },
+    sexp = {
+      type_ = {
+        "table_constructor",
+        "arguments",
+        "parameters",
+        "block",
+        "if_statement",
+        "for_statement",
+        "while_statement",
+        "function_declaration",
+      }
+    },
+  },
+  javascript = {
+    opening_parenthesis = { type_ = { "(", "{", "[", "<" } },
+    closing_parenthesis = { type_ = { ")", "}", "]", ">" } },
+    expression = {
+      type_ = {
+        "identifier",
+        "property_identifier",
+        "shorthand_property_identifier",
+        "shorthand_property_identifier_pattern",
+        "string_fragment",
+        "true",
+        "false",
+        "number",
+        "null",
+        "undefined",
+      }
+    },
+    sexp = {
+      type_ = {
+        "array",
+        "array_pattern",
+        "object",
+        "object_pattern",
+        "parenthesized_expression",
+        "statement_block",
+        "if_statement",
+        "while_statement",
+        "for_statement",
+        "for_in_statement",
+        "arguments",
+        "formal_parameters",
+        "function_declaration",
+      },
+    },
+  },
+}
+
 local function table_includes(t, v)
   for _, vv in ipairs(t) do
     if vv == v then
@@ -83,15 +151,15 @@ local function get_node_at_pos(line, col)
   if not root_lang_tree then
     return
   end
-  local root = ts_utils.get_root_for_position(line, col, root_lang_tree)
-  if not root then
+  local root, tree, lang_tree = ts_utils.get_root_for_position(line, col, root_lang_tree)
+  if not root or not lang_tree then
     return
   end
   local node = root:descendant_for_range(line, col, line, col)
   if not node then
     return
   end
-  return node
+  return node, lang_tree:lang()
 end
 
 local function get_first_leaf_after_pos(node, line, col)
@@ -172,12 +240,13 @@ local function get_previous_leaf_matching(node, match_opts)
   end
 end
 
-local function move_to_next_leaf(node, line, col, match_opts)
+local function move_to_next_leaf(node, lang, line, col, match_key)
   local leaf = get_last_leaf_before_pos(node, line, col)
   if not leaf then
     vim.print({ { line, col }, inspect_node(node), 'leaf not found' })
     return
   end
+  local match_opts = lang_definitions[lang][match_key] or {}
   local next_ = get_next_leaf_matching(leaf, match_opts)
   if not next_ then
     vim.print({ { line, col }, inspect_node(node), inspect_node(leaf), 'next not found' })
@@ -187,12 +256,13 @@ local function move_to_next_leaf(node, line, col, match_opts)
   move_to_node_start(next_)
 end
 
-local function move_to_previous_leaf(node, line, col, match_opts)
+local function move_to_previous_leaf(node, lang, line, col, match_key)
   local leaf = get_first_leaf_after_pos(node, line, col)
   if not leaf then
     vim.print({ { line, col }, inspect_node(node), 'leaf not found' })
     return
   end
+  local match_opts = lang_definitions[lang][match_key] or {}
   local previous = get_previous_leaf_matching(leaf, match_opts)
   if not previous then
     vim.print({ { line, col }, inspect_node(node), inspect_node(leaf), 'previous not found' })
@@ -239,24 +309,14 @@ local function get_prev_named_child(node, line, col)
   return prev
 end
 
-local sexp = {
-  "table_constructor",
-  "arguments",
-  "parameters",
-  "block",
-  "if_statement",
-  "for_statement",
-  "while_statement",
-  "function_declaration",
-}
-
 local function reset_sexp()
   M._parent_sexp = nil
   M._element = nil
 end
 
-local function init_sexp(node, line, col, get_element)
-  M._parent_sexp = M._parent_sexp or get_parent_matching(node, line, col, { type_ = sexp })
+local function init_sexp(node, lang, line, col, get_element)
+  local match_opts = lang_definitions[lang].sexp
+  M._parent_sexp = M._parent_sexp or get_parent_matching(node, line, col, match_opts)
   if not M._parent_sexp then
     vim.print({ { line, col }, inspect_node(node), 'init sexp to root' })
     M._parent_sexp = node:tree():root()
@@ -265,8 +325,8 @@ local function init_sexp(node, line, col, get_element)
   vim.print({ { line, col }, inspect_node(node), inspect_node(M._parent_sexp), inspect_node(M._element), 'init sexp' })
 end
 
-local function move_to_previous_sibling(node, line, col)
-  init_sexp(node, line, col, get_next_named_child)
+local function move_to_previous_sibling(node, lang, line, col)
+  init_sexp(node, lang, line, col, get_next_named_child)
   if not M._parent_sexp then
     return
   end
@@ -287,8 +347,8 @@ local function move_to_previous_sibling(node, line, col)
   move_to_node_start(prev)
 end
 
-local function move_to_next_sibling(node, line, col)
-  init_sexp(node, line, col, get_prev_named_child)
+local function move_to_next_sibling(node, lang, line, col)
+  init_sexp(node, lang, line, col, get_prev_named_child)
   if not M._parent_sexp then
     return
   end
@@ -310,8 +370,8 @@ local function move_to_next_sibling(node, line, col)
   move_to_node_start(next_)
 end
 
-local function move_to_parent_sexp(node, line, col)
-  init_sexp(node, line, col, get_prev_named_child)
+local function move_to_parent_sexp(node, lang, line, col)
+  init_sexp(node, lang, line, col, get_prev_named_child)
   if not M._parent_sexp then
     return
   end
@@ -321,7 +381,8 @@ local function move_to_parent_sexp(node, line, col)
     move_to_node_start(M._parent_sexp)
     return
   end
-  local up = get_parent_matching(M._parent_sexp, line, col, { type_ = sexp })
+  local match_opts = lang_definitions[lang].sexp
+  local up = get_parent_matching(M._parent_sexp, line, col, match_opts)
   if not up then
     up = node:tree():root()
   end
@@ -337,8 +398,9 @@ local function move_to_parent_sexp(node, line, col)
   move_to_node_start(up)
 end
 
-local function enter_sexp_at_cursor(node, line, col)
-  local new_sexp = get_parent_matching(node, line, col, { type_ = sexp })
+local function enter_sexp_at_cursor(node, lang, line, col)
+  local match_opts = lang_definitions[lang].sexp
+  local new_sexp = get_parent_matching(node, line, col, match_opts)
   if not new_sexp then
     vim.print({ { line, col }, inspect_node(node), 'parent sexp not found' })
     return
@@ -363,17 +425,14 @@ local function exec(fn)
   local line = cursor[1] - 1
   local col = cursor[2]
 
-  local node = get_node_at_pos(line, col)
+  local node, lang = get_node_at_pos(line, col)
   if not node then
     vim.print({ cursor, 'node not found' })
     return
   end
-  return fn(node, line, col)
+  vim.print({ { line, col }, lang, inspect_node(node), 'exec' })
+  return fn(node, lang, line, col)
 end
-
-local opening_parenthesis = { "(", "{", "[", "<" }
-local closing_parenthesis = { ")", "}", "]", ">" }
-local expression = { "function", "identifier", "string_start", "true", "false", "number" }
 
 Hydra({
   name = "Combobulate",
@@ -385,48 +444,48 @@ Hydra({
   },
   heads = {
     { "h", function()
-      exec(function(node, line, col) move_to_previous_sibling(node, line, col) end)
+      exec(function(node, lang, line, col) move_to_previous_sibling(node, lang, line, col) end)
     end, { desc = "Move to previous sibling" } },
     { "l", function()
-      exec(function(node, line, col) move_to_next_sibling(node, line, col) end)
+      exec(function(node, lang, line, col) move_to_next_sibling(node, lang, line, col) end)
     end, { desc = "Move to next sibling" } },
     { "k", function()
-      exec(function(node, line, col) move_to_parent_sexp(node, line, col) end)
+      exec(function(node, lang, line, col) move_to_parent_sexp(node, lang, line, col) end)
     end, { desc = "Move to parent sexp" } },
     { "j", function()
-      exec(function(node, line, col) enter_sexp_at_cursor(node, line, col) end)
+      exec(function(node, lang, line, col) enter_sexp_at_cursor(node, lang, line, col) end)
     end, { desc = "Enter sexp under cursor" } },
     { ".", function()
       reset_sexp()
-      exec(function(node, line, col) move_to_next_leaf(node, line, col, {}) end)
+      exec(function(node, lang, line, col) move_to_next_leaf(node, lang, line, col) end)
     end, { desc = "Move to next leaf" } },
     { ",", function()
       reset_sexp()
-      exec(function(node, line, col) move_to_previous_leaf(node, line, col, {}) end)
+      exec(function(node, lang, line, col) move_to_previous_leaf(node, lang, line, col) end)
     end, { desc = "Move to previous leaf" } },
     { "[", function()
       reset_sexp()
-      exec(function(node, line, col) move_to_next_leaf(node, line, col, { type_ = opening_parenthesis }) end)
+      exec(function(node, lang, line, col) move_to_next_leaf(node, lang, line, col, 'opening_parenthesis') end)
     end, { desc = "Move to next opening parenthesis" } },
     { "{", function()
       reset_sexp()
-      exec(function(node, line, col) move_to_previous_leaf(node, line, col, { type_ = opening_parenthesis }) end)
+      exec(function(node, lang, line, col) move_to_previous_leaf(node, lang, line, col, 'opening_parenthesis') end)
     end, { desc = "Move to previous opening parenthesis" } },
     { "]", function()
       reset_sexp()
-      exec(function(node, line, col) move_to_next_leaf(node, line, col, { type_ = closing_parenthesis }) end)
+      exec(function(node, lang, line, col) move_to_next_leaf(node, lang, line, col, 'closing_parenthesis') end)
     end, { desc = "Move to next opening parenthesis" } },
     { "}", function()
       reset_sexp()
-      exec(function(node, line, col) move_to_previous_leaf(node, line, col, { type_ = closing_parenthesis }) end)
+      exec(function(node, lang, line, col) move_to_previous_leaf(node, lang, line, col, 'closing_parenthesis') end)
     end, { desc = "Move to previous opening parenthesis" } },
     { "w", function()
       reset_sexp()
-      exec(function(node, line, col) move_to_next_leaf(node, line, col, { type_ = expression }) end)
+      exec(function(node, lang, line, col) move_to_next_leaf(node, lang, line, col, 'expression') end)
     end, { desc = "Move to next expression" } },
     { "b", function()
       reset_sexp()
-      exec(function(node, line, col) move_to_previous_leaf(node, line, col, { type_ = expression }) end)
+      exec(function(node, lang, line, col) move_to_previous_leaf(node, lang, line, col, 'expression') end)
     end, { desc = "Move to previous expression" } },
   },
 })
