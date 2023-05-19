@@ -20,6 +20,11 @@ local function inspect_node(node)
   }
 end
 
+local function node_is_root(args)
+  local node = args.node
+  return not node:parent()
+end
+
 local function node_is_leaf(args)
   local node = args.node
   return node:child_count() == 0
@@ -59,13 +64,18 @@ local lang_match_opts = {
   lua = {
     opening_sexp = {
       { type_ = { "arguments", "parameters", "parenthesized_expression", "table_constructor", "block" } },
+      { root = true },
     },
     closing_sexp = {
       { type_ = { ")", "}", "]" } },
     },
     word = {
       { type_ = { 'string_start' } },
-      { leaf = true, not_type = { "(", "{", "[", ")", "}", "]", ".", ",", ":", ";", "'", '"', "`", "string_content", "string_end", "comment" } },
+      {
+        leaf = true,
+        not_type = { "(", "{", "[", ")", "}", "]", ".", ",", ":", ";", "'", '"', "`",
+          "string_content", "string_end", "comment" }
+      },
     },
   },
   javascript = {
@@ -74,18 +84,24 @@ local lang_match_opts = {
         type_ = { "arguments", "formal_parameters", "parenthesized_expression", "statement_block", "object",
           "object_pattern", "array", "array_pattern" }
       },
+      { root = true },
     },
     closing_sexp = {
       { type_ = { ")", "}", "]" } },
     },
     word = {
       { type_ = { "string" } },
-      { leaf = true, not_type = { "(", "{", "[", ")", "}", "]", ".", ",", ":", ";", "'", '"', "`", "string_fragment", "comment" } },
+      {
+        leaf = true,
+        not_type = { "(", "{", "[", ")", "}", "]", ".", ",", ":", ";", "'", '"', "`",
+          "string_fragment", "comment" }
+      },
     },
   },
   clojure = {
     opening_sexp = {
       { type_ = { "list_lit", "map_lit", "set_lit", "vec_lit" } },
+      { root = true },
     },
     closing_sexp = {
       { type_ = { ")", "}", "]" } }
@@ -100,14 +116,23 @@ local function node_matches(args)
   local node = args.node
   local match_opts = args.match_opts
 
-  local named = match_opts.named
-  local leaf = match_opts.leaf
-  local type_ = match_opts.type_
-  local not_type = match_opts.not_type
-  return (named == nil or named == node:named()) and
-      (leaf == nil or leaf == node_is_leaf({ node = node })) and
-      (type_ == nil or vim.tbl_contains(type_, node:type())) and
-      (not_type == nil or not vim.tbl_contains(not_type, node:type()))
+  return vim.tbl_isempty(match_opts) or not vim.tbl_isempty(
+    vim.tbl_filter(
+      function(opts)
+        local named = opts.named
+        local root = opts.root
+        local leaf = opts.leaf
+        local type_ = opts.type_
+        local not_type = opts.not_type
+        return (named == nil or named == node:named()) and
+            (root == nil or root == node_is_root({ node = node })) and
+            (leaf == nil or leaf == node_is_leaf({ node = node })) and
+            (type_ == nil or vim.tbl_contains(type_, node:type())) and
+            (not_type == nil or not vim.tbl_contains(not_type, node:type()))
+      end,
+      match_opts
+    )
+  )
 end
 
 local function get_last_node_at_pos(args)
@@ -209,9 +234,7 @@ local function walk_to_matching(args)
     next_ = walk_fn({ node = node })
   end
   while next_ do
-    if vim.tbl_isempty(match_opts) or not vim.tbl_isempty(vim.tbl_filter(function(match_opts)
-          return node_matches({ node = next_, match_opts = match_opts })
-        end, match_opts)) then
+    if node_matches({ node = next_, match_opts = match_opts }) then
       return next_
     end
     next_ = walk_fn({ node = next_ })
@@ -300,6 +323,164 @@ local function move_to_matching(args)
   move_to_node_start({ node = matching })
 end
 
+local function get_last_element_at_pos(args)
+  local pos = args.pos
+  local sexp = args.sexp
+
+  if node_is_leaf({ node = sexp }) then
+    return
+  end
+  local child = sexp:named_child(0)
+  if not child or node_starts_after_pos({ pos = pos, node = child }) then
+    return
+  end
+  local element = child
+  child = child:next_sibling()
+  while child do
+    if node_starts_after_pos({ pos = pos, node = child }) then
+      return element
+    end
+    element = child
+    child = child:next_sibling()
+  end
+  return element
+end
+
+local function init_sexp_walk(args)
+  local pos = args.pos
+  local node = args.node
+  local match_opts = args.match_opts
+
+  local sexp
+  if node_matches({ node = node, match_opts = match_opts.opening_sexp }) then
+    sexp = node
+  else
+    sexp = walk_to_matching({ node = node, direction = "up", match_opts = match_opts.opening_sexp })
+  end
+  vim.print('-- init sexp walk', { node = inspect_node(node), sexp = inspect_node(sexp) })
+  if not sexp then
+    return
+  end
+  local element = get_last_element_at_pos({ pos = pos, sexp = sexp })
+  vim.print('-- init sexp walk', { element = inspect_node(element) })
+  return sexp, element
+end
+
+local function walk_to_prev_element(args)
+  local pos = args.pos
+  local sexp = args.sexp
+  local element = args.element
+  local match_opts = args.match_opts
+
+  if node_starts_at_pos({ pos = pos, node = sexp }) then
+    local parent_sexp, parent_element = init_sexp_walk({ pos = pos, node = sexp:parent(), match_opts = match_opts })
+    return walk_to_prev_element({ pos = pos, sexp = parent_sexp, element = parent_element, match_opts = match_opts })
+  end
+  if not element then
+    return sexp:named_child(0)
+  end
+  if not node_starts_at_pos({ pos = pos, node = element }) then
+    return element
+  end
+  return element:prev_named_sibling()
+end
+
+local function walk_to_next_element(args)
+  local pos = args.pos
+  local sexp = args.sexp
+  local element = args.element
+  local match_opts = args.match_opts
+
+  if node_starts_at_pos({ pos = pos, node = sexp }) then
+    local parent_sexp, parent_element = init_sexp_walk({ pos = pos, node = sexp:parent(), match_opts = match_opts })
+    return walk_to_next_element({ pos = pos, sexp = parent_sexp, element = parent_element, match_opts = match_opts })
+  end
+  if not element then
+    return sexp:named_child(0)
+  end
+  return element:next_named_sibling()
+end
+
+local function walk_to_parent_sexp(args)
+  local pos = args.pos
+  local sexp = args.sexp
+  local match_opts = args.match_opts
+
+  if node_starts_at_pos({ pos = pos, node = sexp }) then
+    return walk_to_matching({ node = sexp, direction = "up", match_opts = match_opts.opening_sexp })
+  end
+  return sexp
+end
+
+local function walk_to_sexp_child(args)
+  local pos = args.pos
+  local sexp = args.sexp
+  local element = args.element
+  local match_opts = args.match_opts
+
+  if sexp and not element then
+    return sexp:named_child(0)
+  end
+  while element and node_starts_at_pos({ pos = pos, node = element }) do
+    if node_matches({ node = element, match_opts = match_opts.opening_sexp }) then
+      return element:named_child(0)
+    end
+    element = element:named_child(0)
+  end
+end
+
+local walk_sexp_fns = {
+  left = walk_to_prev_element,
+  right = walk_to_next_element,
+  up = walk_to_parent_sexp,
+  down = walk_to_sexp_child,
+}
+
+local function move_sexp(args)
+  local pos = args.pos
+  local lang = args.lang
+  local node = args.node
+  local direction = args.direction
+  local match_opts = args.match_opts
+
+  local sexp, element = init_sexp_walk(args)
+  if not sexp then
+    vim.print('-- parent sexp not found', { pos = pos, lang = lang, node = inspect_node(node) })
+    return
+  end
+  local target = walk_sexp_fns[direction]({
+    pos = pos,
+    lang = lang,
+    node = node,
+    sexp = sexp,
+    element = element,
+    match_opts = match_opts
+  })
+  if not target then
+    vim.print('-- target element not found',
+      {
+        pos = pos,
+        lang = lang,
+        direction = direction,
+        node = inspect_node(node),
+        sexp = inspect_node(sexp),
+        element = inspect_node(element)
+      })
+    return
+  end
+  vim.print('== move to target element',
+    {
+      pos = pos,
+      lang = lang,
+      direction = direction,
+      node = inspect_node(node),
+      sexp = inspect_node(sexp),
+      element = inspect_node(element),
+      target = inspect_node(target)
+    })
+  move_to_node_start({ node = target })
+end
+
 Hydra({
   name = "Walk",
   mode = 'n',
@@ -381,6 +562,26 @@ Hydra({
           { direction = "back", match_opts = match_opts.word }, args))
       end)
     end, { desc = "Move to first child" } },
+    { "h", function()
+      do_walk(function(args)
+        return move_sexp(vim.tbl_extend("keep", { direction = "left" }, args))
+      end)
+    end, { desc = "Move to previous sexp element" } },
+    { "j", function()
+      do_walk(function(args)
+        return move_sexp(vim.tbl_extend("keep", { direction = "down" }, args))
+      end)
+    end, { desc = "Move to firt element of sexp" } },
+    { "k", function()
+      do_walk(function(args)
+        return move_sexp(vim.tbl_extend("keep", { direction = "up" }, args))
+      end)
+    end, { desc = "Move to parent sexp" } },
+    { "l", function()
+      do_walk(function(args)
+        return move_sexp(vim.tbl_extend("keep", { direction = "right" }, args))
+      end)
+    end, { desc = "Move to previous sexp element" } },
   },
 })
 
