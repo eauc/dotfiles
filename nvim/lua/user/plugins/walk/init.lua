@@ -55,6 +55,61 @@ local function node_starts_after_pos(args)
   return srow > pos.row or (srow == pos.row and scol > pos.col)
 end
 
+local lang_match_opts = {
+  lua = {
+    opening_sexp = {
+      { type_ = { "arguments", "parameters", "parenthesized_expression", "table_constructor", "block" } },
+    },
+    closing_sexp = {
+      { type_ = { ")", "}", "]" } },
+    },
+    word = {
+      { type_ = { 'string_start' } },
+      { leaf = true, not_type = { "(", "{", "[", ")", "}", "]", ".", ",", ":", ";", "'", '"', "`", "string_content", "string_end", "comment" } },
+    },
+  },
+  javascript = {
+    opening_sexp = {
+      {
+        type_ = { "arguments", "formal_parameters", "parenthesized_expression", "statement_block", "object",
+          "object_pattern", "array", "array_pattern" }
+      },
+    },
+    closing_sexp = {
+      { type_ = { ")", "}", "]" } },
+    },
+    word = {
+      { type_ = { "string" } },
+      { leaf = true, not_type = { "(", "{", "[", ")", "}", "]", ".", ",", ":", ";", "'", '"', "`", "string_fragment", "comment" } },
+    },
+  },
+  clojure = {
+    opening_sexp = {
+      { type_ = { "list_lit", "map_lit", "set_lit", "vec_lit" } },
+    },
+    closing_sexp = {
+      { type_ = { ")", "}", "]" } }
+    },
+    word = {
+      { type_ = { "sym_lit", "str_lit", "kwd_lit", "number_lit", "bool_lit", "nil_lit" } },
+    },
+  },
+}
+
+local function node_matches(args)
+  local node = args.node
+  local match_opts = args.match_opts
+
+  local named = match_opts.named
+  local leaf = match_opts.leaf
+  local type_ = match_opts.type_
+  local not_type = match_opts.not_type
+  return (named == nil or named == node:named()) and
+      (leaf == nil or leaf == node_is_leaf({ node = node })) and
+      (type_ == nil or vim.tbl_contains(type_, node:type())) and
+      (not_type == nil or not vim.tbl_contains(not_type, node:type()))
+end
+
 local function get_last_node_at_pos(args)
   local pos = args.pos
   local node = args.node
@@ -90,7 +145,7 @@ end
 local function walk_forward(args)
   local node = args.node
   if not node_is_leaf({ node = node }) then
-    return get_first_leaf({ node = node })
+    return node:child(0)
   end
   local next_sibling = node:next_sibling()
   if next_sibling then
@@ -129,6 +184,38 @@ local function walk_down(args)
     return child
   end
   return node:next_sibling()
+end
+
+local walk_fns = {
+  back = walk_back,
+  forward = walk_forward,
+  left = walk_left,
+  right = walk_right,
+  up = walk_up,
+  down = walk_down,
+}
+
+local function walk_to_matching(args)
+  local node = args.node
+  local pos = args.pos
+  local match_opts = args.match_opts
+  local direction = args.direction
+  local walk_fn = walk_fns[direction]
+
+  local next_
+  if vim.tbl_contains({ 'back', 'left' }, direction) and not node_starts_at_pos({ pos = pos, node = node }) then
+    next_ = node
+  else
+    next_ = walk_fn({ node = node })
+  end
+  while next_ do
+    if vim.tbl_isempty(match_opts) or not vim.tbl_isempty(vim.tbl_filter(function(match_opts)
+          return node_matches({ node = next_, match_opts = match_opts })
+        end, match_opts)) then
+      return next_
+    end
+    next_ = walk_fn({ node = next_ })
+  end
 end
 
 local current_lang
@@ -185,96 +272,32 @@ local function do_walk(fn)
     vim.print('-- node not found', { pos = pos })
     return
   end
-  return fn({ pos = pos, lang = lang, node = node })
+  return fn({ pos = pos, lang = lang, node = node, match_opts = lang_match_opts[lang] })
 end
 
-local function move_back(args)
+local function move_to_matching(args)
   local pos = args.pos
   local lang = args.lang
   local node = args.node
+  local direction = args.direction
+  local match_opts = args.match_opts
 
-  if not node_starts_at_pos({ pos = pos, node = node }) then
-    vim.print('== move to start', { pos = pos, lang = lang, node = inspect_node(node) })
-    move_to_node_start({ node = node })
+  local matching = walk_to_matching({ node = node, pos = pos, direction = direction, match_opts = match_opts })
+  if not matching then
+    vim.print('-- matching not found',
+      { pos = pos, lang = lang, direction = direction, match_opts = match_opts, node = inspect_node(node) })
     return
   end
-  local prev = walk_back({ node = node })
-  if not prev then
-    vim.print('-- prev not found', { pos = pos, lang = lang, node = inspect_node(node) })
-    return
-  end
-  vim.print('== move to prev', { pos = pos, lang = lang, node = inspect_node(node), prev = inspect_node(prev) })
-  move_to_node_start({ node = prev })
-end
-
-local function move_forward(args)
-  local pos = args.pos
-  local lang = args.lang
-  local node = args.node
-
-  local next_ = walk_forward({ node = node })
-  if not next_ then
-    vim.print('-- next not found', { pos = pos, lang = lang, node = inspect_node(node) })
-    return
-  end
-  vim.print('== move to next', { pos = pos, lang = lang, node = inspect_node(node), next_ = inspect_node(next_) })
-  move_to_node_start({ node = next_ })
-end
-
-local function move_left(args)
-  local pos = args.pos
-  local lang = args.lang
-  local node = args.node
-
-  local prev = walk_left({ node = node })
-  if not prev then
-    vim.print('-- prev not found', { pos = pos, lang = lang, node = inspect_node(node) })
-    return
-  end
-  vim.print('== move to prev', { pos = pos, lang = lang, node = inspect_node(node), prev = inspect_node(prev) })
-  move_to_node_start({ node = prev })
-end
-
-local function move_right(args)
-  local pos = args.pos
-  local lang = args.lang
-  local node = args.node
-
-  local next_ = walk_right({ node = node })
-  if not next_ then
-    vim.print('-- next_ not found', { pos = pos, lang = lang, node = inspect_node(node) })
-    return
-  end
-  vim.print('== move to next_', { pos = pos, lang = lang, node = inspect_node(node), next_ = inspect_node(next_) })
-  move_to_node_start({ node = next_ })
-end
-
-local function move_up(args)
-  local pos = args.pos
-  local lang = args.lang
-  local node = args.node
-
-  local parent = walk_up({ node = node })
-  if not parent then
-    vim.print('-- parent not found', { pos = pos, lang = lang, node = inspect_node(node) })
-    return
-  end
-  vim.print('== move to parent', { pos = pos, lang = lang, node = inspect_node(node), parent = inspect_node(parent) })
-  move_to_node_start({ node = parent })
-end
-
-local function move_down(args)
-  local pos = args.pos
-  local lang = args.lang
-  local node = args.node
-
-  local child = walk_down({ node = node })
-  if not child then
-    vim.print('-- child not found', { pos = pos, lang = lang, node = inspect_node(node) })
-    return
-  end
-  vim.print('== move to child', { pos = pos, lang = lang, node = inspect_node(node), child = inspect_node(child) })
-  move_to_node_start({ node = child })
+  vim.print('== move to matching',
+    {
+      pos = pos,
+      lang = lang,
+      direction = direction,
+      match_opts = match_opts,
+      node = inspect_node(node),
+      matching = inspect_node(matching)
+    })
+  move_to_node_start({ node = matching })
 end
 
 Hydra({
@@ -287,22 +310,76 @@ Hydra({
   },
   heads = {
     { ",", function()
-      do_walk(move_back)
+      do_walk(function(args)
+        return move_to_matching(vim.tbl_extend("keep", { direction = "back", match_opts = {} }, args))
+      end)
     end, { desc = "Move to previous node" } },
     { ".", function()
-      do_walk(move_forward)
+      do_walk(function(args)
+        return move_to_matching(vim.tbl_extend("keep", { direction = "forward", match_opts = {} }, args))
+      end)
     end, { desc = "Move to next node" } },
     { "<left>", function()
-      do_walk(move_left)
+      do_walk(function(args)
+        return move_to_matching(vim.tbl_extend("keep", { direction = "left", match_opts = {} }, args))
+      end)
     end, { desc = "Move to previous sibling" } },
     { "<right>", function()
-      do_walk(move_right)
+      do_walk(function(args)
+        return move_to_matching(vim.tbl_extend("keep", { direction = "right", match_opts = {} }, args))
+      end)
     end, { desc = "Move to next sibling" } },
     { "<up>", function()
-      do_walk(move_up)
+      do_walk(function(args)
+        return move_to_matching(vim.tbl_extend("keep", { direction = "up", match_opts = {} }, args))
+      end)
     end, { desc = "Move to parent" } },
     { "<down>", function()
-      do_walk(move_down)
+      do_walk(function(args)
+        return move_to_matching(vim.tbl_extend("keep", { direction = "down", match_opts = {} }, args))
+      end)
+    end, { desc = "Move to first child" } },
+    { "[", function()
+      do_walk(function(args)
+        local match_opts = args.match_opts
+        return move_to_matching(vim.tbl_extend("keep",
+          { direction = "forward", match_opts = match_opts.opening_sexp }, args))
+      end)
+    end, { desc = "Move to next opening sexp" } },
+    { "{", function()
+      do_walk(function(args)
+        local match_opts = args.match_opts
+        return move_to_matching(vim.tbl_extend("keep",
+          { direction = "back", match_opts = match_opts.opening_sexp }, args))
+      end)
+    end, { desc = "Move to next opening sexp" } },
+    { "]", function()
+      do_walk(function(args)
+        local match_opts = args.match_opts
+        return move_to_matching(vim.tbl_extend("keep",
+          { direction = "forward", match_opts = match_opts.closing_sexp }, args))
+      end)
+    end, { desc = "Move to next closing sexp" } },
+    { "}", function()
+      do_walk(function(args)
+        local match_opts = args.match_opts
+        return move_to_matching(vim.tbl_extend("keep",
+          { direction = "back", match_opts = match_opts.closing_sexp }, args))
+      end)
+    end, { desc = "Move to next closing sexp" } },
+    { "w", function()
+      do_walk(function(args)
+        local match_opts = args.match_opts
+        return move_to_matching(vim.tbl_extend("keep",
+          { direction = "forward", match_opts = match_opts.word }, args))
+      end)
+    end, { desc = "Move to first child" } },
+    { "b", function()
+      do_walk(function(args)
+        local match_opts = args.match_opts
+        return move_to_matching(vim.tbl_extend("keep",
+          { direction = "back", match_opts = match_opts.word }, args))
+      end)
     end, { desc = "Move to first child" } },
   },
 })
