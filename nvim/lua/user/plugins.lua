@@ -118,25 +118,10 @@ use({
 })
 
 use({
-  'phaazon/hop.nvim',
-  branch = 'v2',
+  'ggandor/leap.nvim',
+  requires = { 'tpope/vim-repeat' },
   config = function()
-    require('hop').setup()
-    vim.keymap.set('n', 'gw', '<cmd>HopWord<CR>', { desc = 'jump to word' })
-    vim.keymap.set('n', 'g/', '<cmd>HopPattern<CR>', { desc = 'jump to pattern' })
-  end
-})
-
-use({
-  'mfussenegger/nvim-treehopper',
-  requires = {
-    'phaazon/hop.nvim',
-    'nvim-treesitter/nvim-treesitter',
-  },
-  config = function()
-    vim.keymap.set('n', 'gt', ':lua require("tsht").move()<CR>', { desc = 'jump to syntax node' })
-    vim.keymap.set('n', '<leader>v+', ':<C-U>lua require("tsht").nodes()<CR>', { desc = 'select current node' })
-    vim.keymap.set('x', '+', ':lua require("tsht").nodes()<CR>', { desc = 'extend to syntax node' })
+    require('leap').add_default_mappings()
   end
 })
 
