@@ -23,7 +23,7 @@ cmp.setup({
     end,
   },
   mapping = {
-    ['<CR>'] = cmp.mapping(function(fallback)
+    ['<A-CR>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.confirm()
       else
