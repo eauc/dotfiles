@@ -481,6 +481,98 @@ local function move_sexp(args)
   move_to_node_start({ node = target })
 end
 
+local function swap_element(args)
+  local pos = args.pos
+  local lang = args.lang
+  local node = args.node
+  local direction = args.direction
+
+  local sexp, element = init_sexp_walk(args)
+  if not sexp then
+    vim.print('-- parent sexp not found', { pos = pos, lang = lang, node = inspect_node(node) })
+    return
+  end
+  if not element then
+    vim.print('-- element not found', { pos = pos, lang = lang, node = inspect_node(node), sexp = inspect_node(sexp) })
+    return
+  end
+  if direction == "right" then
+    local next_element = element:next_named_sibling()
+    if not next_element then
+      vim.print('-- next element not found',
+        { pos = pos, lang = lang, node = inspect_node(node), sexp = inspect_node(sexp), element = inspect_node(element) })
+      return
+    end
+    local element_rng = { element:range() }
+    local element_txt = vim.split(ts.get_node_text(element, 0), "\n")
+    local next_element_rng = { next_element:range() }
+    local next_element_txt = vim.split(ts.get_node_text(next_element, 0), "\n")
+    vim.print('== swap element right',
+      {
+        pos = pos,
+        lang = lang,
+        node = inspect_node(node),
+        sexp = inspect_node(sexp),
+        element = inspect_node(element),
+        next_element = inspect_node(next_element)
+      })
+    local ns = api.nvim_create_namespace('eauc/walk')
+    local next_element_mark = api.nvim_buf_set_extmark(0, ns, next_element_rng[1], next_element_rng[2], {
+      end_row = next_element_rng[3],
+      end_col = next_element_rng[4],
+    })
+    vim.print('-- swap right delete next', { next_element_rng = next_element_rng })
+    api.nvim_buf_set_text(0, next_element_rng[1], next_element_rng[2], next_element_rng[3], next_element_rng[4], {})
+    vim.print('-- swap right paste next', { element_rng = element_rng, next_element_txt = next_element_txt })
+    api.nvim_buf_set_text(0, element_rng[1], element_rng[2], element_rng[3], element_rng[4], next_element_txt)
+    local updated_next_element_pos = api.nvim_buf_get_extmark_by_id(0, ns, next_element_mark, {})
+    vim.print('-- swap right paste curr',
+      { updated_next_element_pos = updated_next_element_pos, element_txt = element_txt })
+    api.nvim_buf_set_text(0, updated_next_element_pos[1], updated_next_element_pos[2], updated_next_element_pos[1],
+      updated_next_element_pos[2], element_txt)
+    api.nvim_buf_clear_namespace(0, ns, 0, -1)
+    api.nvim_win_set_cursor(0, { updated_next_element_pos[1] + 1, updated_next_element_pos[2] })
+  else
+    local prev_element = element:prev_named_sibling()
+    if not prev_element then
+      vim.print('-- prev element not found',
+        { pos = pos, lang = lang, node = inspect_node(node), sexp = inspect_node(sexp), element = inspect_node(element) })
+      return
+    end
+    local element_rng = { element:range() }
+    local element_txt = vim.split(ts.get_node_text(element, 0), "\n")
+    local prev_element_rng = { prev_element:range() }
+    local prev_element_txt = vim.split(ts.get_node_text(prev_element, 0), "\n")
+    vim.print('== swap element left',
+      {
+        pos = pos,
+        lang = lang,
+        node = inspect_node(node),
+        sexp = inspect_node(sexp),
+        element = inspect_node(element),
+        prev_element = inspect_node(prev_element)
+      })
+    local ns = api.nvim_create_namespace('eauc/walk')
+    local element_mark = api.nvim_buf_set_extmark(0, ns, element_rng[1], element_rng[2], {
+      end_row = element_rng[3],
+      end_col = element_rng[4],
+    })
+    vim.print('-- swap left delete curr', { element_rng = element_rng })
+    api.nvim_buf_set_text(0, element_rng[1], element_rng[2], element_rng[3], element_rng[4], {})
+    vim.print('-- swap left paste curr', { prev_element_rng = element_rng, element_txt = element_txt })
+    api.nvim_buf_set_text(0, prev_element_rng[1], prev_element_rng[2], prev_element_rng[3], prev_element_rng[4],
+    element_txt)
+    local updated_element_pos = api.nvim_buf_get_extmark_by_id(0, ns, element_mark, {})
+    vim.print('-- swap left paste prev',
+      { updated_element_pos = updated_element_pos, prev_element_txt = prev_element_txt })
+    api.nvim_buf_set_text(0, updated_element_pos[1], updated_element_pos[2], updated_element_pos[1],
+      updated_element_pos[2], prev_element_txt)
+    api.nvim_buf_clear_namespace(0, ns, 0, -1)
+    api.nvim_win_set_cursor(0, { prev_element_rng[1] + 1, prev_element_rng[2] })
+  end
+  reset_walk()
+end
+
 Hydra({
   name = "Walk",
   mode = 'n',
@@ -582,6 +674,16 @@ Hydra({
         return move_sexp(vim.tbl_extend("keep", { direction = "right" }, args))
       end)
     end, { desc = "Move to previous sexp element" } },
+    { ">", function()
+      do_walk(function(args)
+        return swap_element(vim.tbl_extend("keep", { direction = "right" }, args))
+      end)
+    end, { desc = "Swap element right" } },
+    { "<", function()
+      do_walk(function(args)
+        return swap_element(vim.tbl_extend("keep", { direction = "left" }, args))
+      end)
+    end, { desc = "Swap element right" } },
   },
 })
 
