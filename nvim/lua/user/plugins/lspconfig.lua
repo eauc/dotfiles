@@ -58,7 +58,10 @@ require('lspconfig').lua_ls.setup({
 
 require('lspconfig').tsserver.setup({
   capabilities = capabilities,
-  on_attach = on_attach_keymap,
+  on_attach = function(client)
+    client.server_capabilities.documentFormattingProvider = false
+    on_attach_keymap()
+  end,
   filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
   init_options = {
     preferences = {
