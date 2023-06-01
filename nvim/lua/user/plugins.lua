@@ -260,16 +260,27 @@ use({
 })
 
 use({
-  'Exafunction/codeium.vim',
+  'github/copilot.vim',
   config = function()
-    -- vim.g.codeium_manual = true
-    vim.g.codeium_disable_bindings = 1
-    vim.keymap.set('i', '<A-=>', function() return vim.fn['codeium#Accept']() end, { expr = true })
-    vim.keymap.set('i', '<A-]>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
-    vim.keymap.set('i', '<A-[>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
-    vim.keymap.set('i', '<A-g>', function() return vim.fn['codeium#Clear']() end, { expr = true })
+    -- vim.g.copilot_no_tab_map = true
+    -- vim.keymap.set('i', '<A-=>', 'copilot#Accept("<CR>")', { expr = true, silent = true })
+    vim.keymap.set('i', '<A-]>', '<Plug>(copilot-next)', { noremap = false })
+    vim.keymap.set('i', '<A-[>', '<Plug>(copilot-previous)', { noremap = false })
+    vim.keymap.set('i', '<A-g>', '<Plug>(copilot-dismiss)', { noremap = false })
   end
 })
+
+-- use({
+--   'Exafunction/codeium.vim',
+--   config = function()
+--     -- vim.g.codeium_manual = true
+--     vim.g.codeium_disable_bindings = 1
+--     vim.keymap.set('i', '<A-=>', function() return vim.fn['codeium#Accept']() end, { expr = true })
+--     vim.keymap.set('i', '<A-]>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
+--     vim.keymap.set('i', '<A-[>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
+--     vim.keymap.set('i', '<A-g>', function() return vim.fn['codeium#Clear']() end, { expr = true })
+--   end
+-- })
 
 use({
   "jackMort/ChatGPT.nvim",
