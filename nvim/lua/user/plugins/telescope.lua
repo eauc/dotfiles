@@ -47,5 +47,9 @@ vim.keymap.set('n', '<leader>bb', [[<cmd>lua require('telescope.builtin').buffer
 
 vim.keymap.set('n', '<leader>gg', [[<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>]],
 { desc = 'grep in files' })
-vim.keymap.set('n', '<leader>gr', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]],
+vim.keymap.set('n', '<leader>gr', [[<cmd>lua require('telescope.builtin').lsp_references()<CR>]],
 { desc = 'find references' })
+vim.keymap.set('n', '<leader>gd', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]],
+{ desc = 'show document symbols' })
+vim.keymap.set('n', '<leader>gt', [[<cmd>lua require('telescope.builtin').treesitter()<CR>]],
+{ desc = 'show treesitter symbols' })
