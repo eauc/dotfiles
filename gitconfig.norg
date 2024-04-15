@@ -2,7 +2,7 @@
 title: gitconfig
 authors: auclair
 created: 2023-04-17
-updated: 2023-04-26
+updated: 2024-02-21T00:26:49+0100
 version: 1.0.0
 tangle: {
   languages: {
@@ -25,12 +25,9 @@ tangle: {
    - show a word diff.
    - detect file rename with 75% similarity threshold.
    @code sh
-     d = diff --ignore-all-space --color-words --find-renames=75
-     dt = difftool
-     dc = show --ignore-all-space --color-words --find-renames=75
-     dtc = "!diffCommit() { git dt "$1~" "$1"; }; diffCommit"
+     d = diff --ignore-all-space --find-renames=75
+     dc = show --ignore-all-space --find-renames=75
      dch = "!git dc HEAD"
-     dth = "!git dtc HEAD"
    @end
 
    Diff between staging > working:
@@ -459,33 +456,31 @@ tangle: {
 
 * Pretty diff
 
-  Pretty diff pager:
-  - `npm install -g diff-so-fancy`
-  - one tab = 2 spaces.
-  - raw control chars :: -R.
-  - quit if one screen :: -F.
-  - no init :: -X.
+  - use delta pager everywhere
+  - required: install with .deb at https://github.com/dandavison/delta/releases - git-delta-musl_<version>_amd64.deb
   @code sh
-  [pager]
-    diff = diff-so-fancy | less --tabs=2 -RFX
-    difftool = true
-    show = diff-so-fancy | less --tabs=2 -RFX
+  [core]
+    pager = delta
   [interactive]
-    diffFilter = "less --tabs=2 -RFX"
+    diffFilter = delta --color-only
   @end
 
+  - GitHub theme to go with kitty theme
+  - display line numbers
+  - activate navigate (n/N) shortcuts to jump between files
+  @code sh
+  [delta]
+    syntax-theme = GitHub
+    line-numbers = true
+    navigate = true
+  @end
+
+  - activate moved code blocks support with default theme
   - show submodules commit logs in super projet diffs.
-  - use `icdiff` as a diff tool for side-by-side comparison.
   @code sh
   [diff]
+    colorMoved = default
     submodule = log
-    tool = difftastic
-  [difftool]
-    prompt = false
-  [difftool "difftastic"]
-    cmd = difft "$MERGED" "$LOCAL" "$REMOTE"
-  [difftool "icdiff"]
-    cmd = icdiff --line-numbers $LOCAL $REMOTE
   @end
 
 * Colors

@@ -1,117 +1,183 @@
 [alias]
-  d = diff --ignore-all-space --color-words --find-renames=75
-  dt = difftool
-  dc = show --ignore-all-space --color-words --find-renames=75
-  dtc = "!diffCommit() { git dt "$1~" "$1"; }; diffCommit"
+
+  d = diff --ignore-all-space --find-renames=75
+  dc = show --ignore-all-space --find-renames=75
   dch = "!git dc HEAD"
-  dth = "!git dtc HEAD"
+
   dsw = "!git d"
+
   dhw = "!git d HEAD"
+
   dhs = "!git d --cached"
+
   dsm = "!git d; git submodule foreach 'git d'"
   dsmsw = "!git dsw; git submodule foreach 'git dsw'"
   dsmhs = "!git dhs; git submodule foreach 'git dhs'"
   dsmhw = "!git dhw; git submodule foreach 'git dhw'"
+
   log-format = log --format=format:"%C(yellow)%h%C(bold\\ green)%d%C(reset)\\ %s\\ %C(magenta)%ar\\ %C(blue)%an"
+
   l = "!git log-format --graph"
+
   la = "!git l --all"
+
   ll = "!git la --stat"
+
   lam = "!git la --author=Auclair"
   llm = "!git ll --author=Auclair"
+
   lh = "!git log-format -n 1"
   llh = "!git lh --stat"
+
   ld = "!git l --author-date-order"
   lad = "!git ld --all"
+
   lf = "!git la --follow"
+
   li = "!logintro() { git log-format -S$1 --pickaxe-regex; }; logintro"
+
   lm = "!logmod() { git log-format -G$1; }; logmod"
+
   st = stash save --patch
   stw = "!git st"
+
   stsw = "!git st --no-keep-index"
+
   sta = stash apply --index
   stp = stash pop --index
+
   sts = stash show
+
   stdiff = stash show --patch
+
   ap = add --patch
   c = commit -v
   ca = "!git c --amend"
   oops = "!git ca --no-edit"
+
   us = reset HEAD
   usi = reset --patch HEAD
+
   addrm = "!git rm $(git ls-files --deleted)"
+
   mt = mergetool
+
   m = merge --no-ff
+
   ff = merge --no-commit
+
   fix = "!fixcommit() { git commit --fixup=$1; }; fixcommit"
+
   ms = merge --squash
+
   rh = reset --soft
+
   rhs = reset --merge
+
   ra = reset --hard
+
   discard = checkout --
   dis = "!git discard"
   disi = checkout --patch --
+
   cl = clean -d -f
+
   purge = clean -x -d -f
+
   b = branch
   bd = branch -d
+
   bh = symbolic-ref --short HEAD
+
   bl = "!git f && git branch -vv"
+
   ba = "!git bl --all"
+
   bc = checkout -b
+
   rbc = "!git rebase --continue"
   rba = "!git rebase --abort"
+
   rb = rebase --interactive
+
   rbm = "!git fetch && git rb origin/master"
   rbfm = "!git fetch && git rb origin/refonte-master"
+
   rbx = "!git rb --exec"
+
   g = grep -I --break
+
   gw = "!git g --untracked"
+
   gs = "!git g --cached"
+
   p = push
   oopf = "!git oops && git pf"
+
   clone = clone --recursive
+
   f = fetch --prune --tags
+
   ft = fetch -p origin +refs/tags/*:refs/tags/*
+
   pf = push --force-with-lease
+
   pup = push --set-upstream
   pub = "!git pup origin `git bh`"
+
   purc= push --recurse-submodules=check
+
   purd= push --recurse-submodules=on-demand
+
   sms = submodule status
+
   smhw = submodule summary
+
   smhs = submodule summary --cached -- HEAD
+
   smsw = submodule summary --files
+
   smf = "!foreach() { git submodule foreach \"$1 || true\"; }; foreach"
+
   smu = submodule update
+
   smur = submodule update --remote
+
   s = status
   co = checkout
+
   lal = "!git config -l | grep alias | cut -c 7-"
+
   sal = "!search_alias() { git lal | grep -i --color \"$1\"; }; search_alias"
+
   lasttag = describe --tags --abbrev=0
+
   changed = update-index --no-assume-unchanged
   unchanged = update-index --assume-unchanged
+
   bourrin = "!retry() { until $(git $1); do sleep 2; echo "Retrying"; date; done; }; retry"
+
   ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
+
   hooks = config core.hooksPath
+
 [user]
   name = Auclair Emmanuel
   email = auclair.emmanuel@gmail.com
-[pager]
-  diff = diff-so-fancy | less --tabs=2 -RFX
-  difftool = true
-  show = diff-so-fancy | less --tabs=2 -RFX
+[core]
+  pager = delta
 [interactive]
-  diffFilter = "less --tabs=2 -RFX"
+  diffFilter = delta --color-only
+
+[delta]
+  syntax-theme = GitHub
+  line-numbers = true
+  navigate = true
+
 [diff]
+  colorMoved = default
   submodule = log
-  tool = difftastic
-[difftool]
-  prompt = false
-[difftool "difftastic"]
-  cmd = difft "$MERGED" "$LOCAL" "$REMOTE"
-[difftool "icdiff"]
-  cmd = icdiff --line-numbers $LOCAL $REMOTE
+
 [color]
   ui = true
 [color "diff"]
@@ -135,28 +201,38 @@
   changed = red
   untracked = cyan
   unmerged = magenta
+
 [grep]
   lineNumber = true
+
 [push]
   default = simple
+
 [blame]
   date = relative
+
 [help]
   autocorrect = 1
+
 [interactive]
   singleKey = true
+
 [pull]
   rebase = true
+
 [rebase]
   autostash = true
   autosquash = true
   missingCommitsCheck = ignore
+
 [credential]
   helper = store
+
 [merge]
   tool = kdiff3
   conflictstyle = diff3
 [mergetool]
   keepBackup = false
+
 [rerere]
   enabled = true
