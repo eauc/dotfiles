@@ -315,6 +315,7 @@ use({
 
 use({
   "nvim-neorg/neorg",
+  tag = "*",
   requires = {
     -- sudo apt install uuid-runtime
     "nvim-lua/plenary.nvim",
