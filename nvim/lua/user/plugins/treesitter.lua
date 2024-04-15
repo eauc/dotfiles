@@ -14,7 +14,4 @@ require('nvim-treesitter.configs').setup({
       node_decremental = "-",
     },
   },
-  context_commentstring = {
-    enable = true,
-  },
 })
