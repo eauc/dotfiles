@@ -328,16 +328,22 @@ use({
 })
 
 use({
-  'guns/vim-sexp',
+  "dundalek/parpar.nvim",
+  requires = {
+    "gpanders/nvim-parinfer",
+    "julienvincent/nvim-paredit"
+  },
   config = function()
-    vim.g.sexp_filetypes = ''
+    require("parpar").setup()
   end
 })
 
 use({
   'Olical/conjure',
   config = function()
-    vim.g['conjure#mapping#prefix'] = ","
+    -- vim.g['conjure#mapping#prefix'] = ","
+    vim.g['conjure#highlight#enabled'] = true
+    vim.g['conjure#client_on_load'] = false
   end
 })
 
