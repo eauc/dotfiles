@@ -12,7 +12,7 @@ vim.keymap.set('', '<C-PageUp>', ':bprevious<CR>', { desc = 'previous buffer' })
 vim.keymap.set('', '<C-PageDown>', ':bnext<CR>', { desc = 'next buffer' })
 
 -- Allow gf to open non-existent files
-vim.keymap.set('', 'gf', ':edit <cfile><CR>', { desc = 'goto file' })
+-- vim.keymap.set('', 'gf', ':edit <cfile><CR>', { desc = 'goto file' })
 
 -- Reselect visual selection after indenting
 vim.keymap.set('v', '<', '<gv', { desc = 'indent left' })
@@ -31,7 +31,7 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 vim.keymap.set('v', 'p', '"_dP')
 
 -- Open the current file in the default program (on Mac this should just be just `open`)
-vim.keymap.set('n', '<leader>fx', ':!xdg-open %<cr><cr>', { desc = 'open file with default app' })
+-- vim.keymap.set('n', '<leader>fx', ':!xdg-open %<cr><cr>', { desc = 'open file with default app' })
 
 -- Disable annoying command line thing
 vim.keymap.set('n', 'q:', ':q<CR>')
