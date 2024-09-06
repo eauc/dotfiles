@@ -13,6 +13,15 @@ local on_attach_keymap = function()
   vim.keymap.set('n', '<leader>=', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>', { desc = 'format file' })
 end
 
+require('lspconfig').clangd.setup({
+  capabilities = capabilities,
+  cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
+  init_options = {
+    fallback_flags = { '-std=c++17' },
+  },
+  on_attach = on_attach_keymap,
+})
+
 require('lspconfig').eslint.setup({
   capabilities = capabilities,
   on_attach = function()
