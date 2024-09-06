@@ -1,14 +1,13 @@
 require('mason').setup()
 require('mason-lspconfig').setup({ automatic_installation = true })
-require("mason-null-ls").setup({ automatic_installation = true })
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local on_attach_keymap = function()
   vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { desc = 'goto definition' })
   vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', { desc = 'goto implementation' })
   vim.keymap.set('n', 'gr', ':Telescope lsp_references<CR>', { desc = 'goto references' })
-  vim.keymap.set('n', '<leader>hh', '<cmd>lua vim.lsp.buf.hover()<CR>', { desc = 'info hover' })
-  vim.keymap.set('n', '<leader>hs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { desc = 'signature help' })
+  vim.keymap.set('n', '<leader>HH', '<cmd>lua vim.lsp.buf.hover()<CR>', { desc = 'info hover' })
+  vim.keymap.set('n', '<leader>HS', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { desc = 'signature help' })
   vim.keymap.set('n', '<leader>ra', '<cmd>lua vim.lsp.buf.code_action()<CR>', { desc = 'code action' })
   vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { desc = 'refacto rename' })
   vim.keymap.set('n', '<leader>=', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>', { desc = 'format file' })
@@ -19,15 +18,6 @@ require('lspconfig').eslint.setup({
   on_attach = function()
     vim.keymap.set('n', '<leader>rf', '<cmd>EslintFixAll<CR>', { desc = 'eslint fix all' })
   end,
-})
-
-require('lspconfig').jsonls.setup({
-  capabilities = capabilities,
-  settings = {
-    json = {
-      schemas = require('schemastore').json.schemas(),
-    },
-  },
 })
 
 require('lspconfig').clojure_lsp.setup({
@@ -58,7 +48,7 @@ require('lspconfig').lua_ls.setup({
   },
 })
 
-require('lspconfig').tsserver.setup({
+require('lspconfig').ts_ls.setup({
   capabilities = capabilities,
   on_attach = function(client)
     client.server_capabilities.documentFormattingProvider = false
@@ -77,11 +67,4 @@ require('lspconfig').volar.setup({
   on_attach = on_attach_keymap,
 })
 
-require('null-ls').setup({
-  root_dir = function()
-    return nil
-  end,
-  sources = {
-    require('null-ls').builtins.formatting.prettierd,
-  },
 })
