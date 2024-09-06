@@ -137,3 +137,8 @@ export PATH="/home/auclair/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 export PYENV_VERSION=3.7.2
+
+export PATH="$HOME/bin/zig:$PATH"
+
+export PATH="$PATH:/opt/nvim-linux64/bin"
+
