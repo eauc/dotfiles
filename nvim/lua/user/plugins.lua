@@ -277,14 +277,12 @@ use({
   'hrsh7th/nvim-cmp',
   tags = "*",
   requires = {
-    'L3MON4D3/LuaSnip',
-    'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-cmdline',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lsp-signature-help',
+    'hrsh7th/cmp-path',
     'onsails/lspkind-nvim',
-    'PaterJason/cmp-conjure'
   },
   config = function()
     require('user.plugins.cmp')
