@@ -281,26 +281,7 @@ use({
 })
 
 use({
-  "rest-nvim/rest.nvim",
-  requires = { "nvim-lua/plenary.nvim" },
-  config = function()
-    vim.filetype.add({ extension = { http = 'http' } })
-    require("rest-nvim").setup()
-  end
-})
-
--- use({
---   'github/copilot.vim',
---   config = function()
---     -- vim.g.copilot_no_tab_map = true
---     -- vim.keymap.set('i', '<A-=>', 'copilot#Accept("<CR>")', { expr = true, silent = true })
---     vim.keymap.set('i', '<A-]>', '<Plug>(copilot-next)', { noremap = false })
---     vim.keymap.set('i', '<A-[>', '<Plug>(copilot-previous)', { noremap = false })
---     vim.keymap.set('i', '<A-g>', '<Plug>(copilot-dismiss)', { noremap = false })
---   end
--- })
-
-use({
+  -- codeium IA
   'Exafunction/codeium.vim',
   tags = "*",
   dependencies = { "dundalek/parpar.nvim" },
@@ -321,28 +302,9 @@ use({
 })
 
 use({
-  "nvim-neorg/neorg",
-  tag = "*",
-  requires = {
-    -- sudo apt install uuid-runtime
-    "nvim-lua/plenary.nvim",
-    "folke/zen-mode.nvim"
-  },
-  run = ":Neorg sync-parsers",
-  config = function()
-    require('user.plugins.neorg')
-  end,
-})
-
-use({
-  "dundalek/parpar.nvim",
-  requires = {
-    "gpanders/nvim-parinfer",
-    "julienvincent/nvim-paredit"
-  },
-  config = function()
-    require("parpar").setup()
-  end
+  -- conjure autocomplete integration
+  'PaterJason/cmp-conjure',
+  tags = "*",
 })
 
 use({
