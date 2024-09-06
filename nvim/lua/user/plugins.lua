@@ -104,9 +104,14 @@ use({ 'jessarcher/vim-heritage', tags = "*" })        -- create parent directori
 use({ 'sickill/vim-pasta', tags = "*" })              -- better support for indentation on paste
 
 use({
-  'luochen1990/rainbow',
+  "dundalek/parpar.nvim",
+  tags = "*",
+  requires = {
+    "gpanders/nvim-parinfer",
+    "julienvincent/nvim-paredit"
+  },
   config = function()
-    vim.g.rainbow_active = 1
+    require("parpar").setup()
   end
 })
 
@@ -298,6 +303,7 @@ use({
 use({
   'Exafunction/codeium.vim',
   tags = "*",
+  dependencies = { "dundalek/parpar.nvim" },
   config = function()
     require('user.plugins.codeium')
   end
