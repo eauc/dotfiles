@@ -27,3 +27,16 @@ vim.opt.wildmode = 'longest:full,full' -- complete the longest common match, and
 vim.opt.signcolumn = 'yes:2'
 vim.opt.redrawtime = 10000 -- Allow more time for loading syntax on large files
 vim.wo.cursorline = true
+vim.diagnostic.config({
+  float = {
+    source = true,
+  },
+  jump = {
+    float = true,
+  },
+  virtual_text = false,
+})
+vim.fn.sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSignError' })
+vim.fn.sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticSignWarn' })
+vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticSignInfo' })
+vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })

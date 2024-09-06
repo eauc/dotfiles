@@ -82,22 +82,12 @@ use({
     require('neoscroll').setup()
   end,
 })
---
--- use({
-  --   -- rainbow parens
---   'luochen1990/rainbow',
---   config = function()
---     vim.g.rainbow_active = 1
---   end
--- })
 
--- use({ 'tpope/vim-commentary', tags = "*" })           -- better comments support
 use({ 'tpope/vim-eunuch', tags = "*" })               -- unix file commands like :Copy etc
 use({ 'tpope/vim-surround', tags = "*" })             -- edit surrounding pairs
 -- use({ 'tpope/vim-unimpaired', tags = "*" })           -- [] keybindings
 use({ 'tpope/vim-sleuth', tags = "*" })               -- buffer indent settings heuristics
 use({ 'tpope/vim-repeat', tags = "*" })               -- support for command repeat with .
--- use({ 'sheerun/vim-polyglot', tags = "*" })           -- adds lot of prog langs support
 use({ 'farmergreg/vim-lastplace', tags = "*" })       -- open files buffers at last edit place
 use({ 'bronson/vim-visual-star-search', tags = "*" }) -- search for selected text with * or #
 use({ 'jessarcher/vim-heritage', tags = "*" })        -- create parent directories when creating files
@@ -167,14 +157,6 @@ use({
 })
 
 use({
-  "folke/trouble.nvim",
-  requires = "nvim-tree/nvim-web-devicons",
-  config = function()
-    require('user.plugins.trouble')
-  end
-})
-
-use({
   -- file explorer
   'kyazdani42/nvim-tree.lua',
   tags = "*",
@@ -191,8 +173,6 @@ use({
   requires = 'nvim-lua/plenary.nvim',
   config = function()
     require('gitsigns').setup()
-    -- vim.keymap.set('n', ']h', '<cmd>Gitsigns next_hunk<CR>', { desc = 'next git diff' })
-    -- vim.keymap.set('n', '[h', '<cmd>Gitsigns prev_hunk<CR>', { desc = 'previous git diff' })
     vim.api.nvim_set_hl(0, 'GitsignsAdd', { fg = 'green' })
     vim.api.nvim_set_hl(0, 'GitsignsChange', { fg = 'orange' })
     vim.api.nvim_set_hl(0, 'GitsignsDelete', { fg = 'red' })

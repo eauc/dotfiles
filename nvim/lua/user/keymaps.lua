@@ -41,3 +41,8 @@ vim.keymap.set('i', '<A-j>', '<Esc>:move .+1<CR>==gi')
 vim.keymap.set('i', '<A-k>', '<Esc>:move .-2<CR>==gi')
 vim.keymap.set('x', '<A-j>', ":move '>+1<CR>gv-gv")
 vim.keymap.set('x', '<A-k>', ":move '<-2<CR>gv-gv")
+
+-- Diagnostics
+vim.keymap.set('n', '<leader>do', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'open diagnostics' })
+vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = 'previous diagnostic' })
+vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = 'next diagnostic' })
