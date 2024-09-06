@@ -299,12 +299,7 @@ use({
   'Exafunction/codeium.vim',
   tags = "*",
   config = function()
-    -- vim.g.codeium_manual = true
-    vim.g.codeium_disable_bindings = 1
-    vim.keymap.set('i', '<A-=>', function() return vim.fn['codeium#Accept']() end, { expr = true })
-    vim.keymap.set('i', '<A-]>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
-    vim.keymap.set('i', '<A-[>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
-    vim.keymap.set('i', '<A-g>', function() return vim.fn['codeium#Clear']() end, { expr = true })
+    require('user.plugins.codeium')
   end
 })
 
