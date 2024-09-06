@@ -191,8 +191,11 @@ use({
   requires = 'nvim-lua/plenary.nvim',
   config = function()
     require('gitsigns').setup()
-    vim.keymap.set('n', ']h', '<cmd>Gitsigns next_hunk<CR>', { desc = 'next git diff' })
-    vim.keymap.set('n', '[h', '<cmd>Gitsigns prev_hunk<CR>', { desc = 'previous git diff' })
+    -- vim.keymap.set('n', ']h', '<cmd>Gitsigns next_hunk<CR>', { desc = 'next git diff' })
+    -- vim.keymap.set('n', '[h', '<cmd>Gitsigns prev_hunk<CR>', { desc = 'previous git diff' })
+    vim.api.nvim_set_hl(0, 'GitsignsAdd', { fg = 'green' })
+    vim.api.nvim_set_hl(0, 'GitsignsChange', { fg = 'orange' })
+    vim.api.nvim_set_hl(0, 'GitsignsDelete', { fg = 'red' })
   end,
 })
 
@@ -218,6 +221,30 @@ use({
 })
 
 use({
+  -- Coverage info gutter
+  "andythigpen/nvim-coverage",
+  tags = "*",
+  requires = "nvim-lua/plenary.nvim",
+  config = function()
+    require("coverage").setup({
+      commands = true,
+      auto_reload = true,
+      highlights = {
+        covered = { fg = "green" },
+        uncovered = { fg = "red" },
+        partial = { fg = "orange" },
+      },
+      signs = {
+        covered = { hl = "CoverageCovered", text = "▌" },
+        uncovered = { hl = "CoverageUncovered", text = "▌" },
+        partial = { hl = "CoveragePartial", text = "▌" },
+      },
+    })
+  end,
+})
+
+use({
+  -- treesitter config
   'nvim-treesitter/nvim-treesitter',
   tags = "*",
   run = function()
