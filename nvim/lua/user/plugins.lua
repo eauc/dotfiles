@@ -27,7 +27,9 @@ local use = require('packer').use
 use('wbthomason/packer.nvim')
 
 use({
+  -- visual theme
   'EdenEast/nightfox.nvim',
+  tags = "*",
   config = function()
     require('nightfox').setup({
       options = {
@@ -51,15 +53,20 @@ use({
 })
 
 use({
+  -- status line at bottom
   'nvim-lualine/lualine.nvim',
+  tags = "*",
   requires = 'kyazdani42/nvim-web-devicons',
+  after = 'nightfox.nvim',
   config = function()
     require('user.plugins.lualine')
   end,
 })
 
 use({
+  -- buffer line for open buffers at top
   'akinsho/bufferline.nvim',
+  tags = "*",
   requires = 'kyazdani42/nvim-web-devicons',
   after = 'nightfox.nvim',
   config = function()
@@ -68,11 +75,33 @@ use({
 })
 
 use({
+  -- smooth scrolling
   'karb94/neoscroll.nvim',
+  tags = "*",
   config = function()
     require('neoscroll').setup()
   end,
 })
+--
+-- use({
+  --   -- rainbow parens
+--   'luochen1990/rainbow',
+--   config = function()
+--     vim.g.rainbow_active = 1
+--   end
+-- })
+
+-- use({ 'tpope/vim-commentary', tags = "*" })           -- better comments support
+use({ 'tpope/vim-eunuch', tags = "*" })               -- unix file commands like :Copy etc
+use({ 'tpope/vim-surround', tags = "*" })             -- edit surrounding pairs
+-- use({ 'tpope/vim-unimpaired', tags = "*" })           -- [] keybindings
+use({ 'tpope/vim-sleuth', tags = "*" })               -- buffer indent settings heuristics
+use({ 'tpope/vim-repeat', tags = "*" })               -- support for command repeat with .
+-- use({ 'sheerun/vim-polyglot', tags = "*" })           -- adds lot of prog langs support
+use({ 'farmergreg/vim-lastplace', tags = "*" })       -- open files buffers at last edit place
+use({ 'bronson/vim-visual-star-search', tags = "*" }) -- search for selected text with * or #
+use({ 'jessarcher/vim-heritage', tags = "*" })        -- create parent directories when creating files
+use({ 'sickill/vim-pasta', tags = "*" })              -- better support for indentation on paste
 
 use({
   'luochen1990/rainbow',
@@ -81,20 +110,9 @@ use({
   end
 })
 
-use('tpope/vim-commentary')
-use('tpope/vim-eunuch')
-use('tpope/vim-surround')
-use('tpope/vim-unimpaired')
-use('tpope/vim-sleuth') -- setup indentation config
-use('tpope/vim-repeat')
-use('sheerun/vim-polyglot')
-use('farmergreg/vim-lastplace')
-use('nelstrom/vim-visual-star-search') -- search for selected text with *or #
-use('jessarcher/vim-heritage')
-use('sickill/vim-pasta')               -- auto indent paster text
-
 use({
   'folke/which-key.nvim',
+  tags = "*",
   config = function()
     vim.o.timeout = true
     vim.o.timeoutlen = 300
@@ -103,22 +121,24 @@ use({
 })
 
 use({
+  'HiPhish/rainbow-delimiters.nvim',
+  tags = "*",
+})
+
+use({
+  -- indentation line visual markers
   'lukas-reineke/indent-blankline.nvim',
+  tags = "*",
+  dependencies = { 'HiPhish/rainbow-delimiters.nvim' },
   config = function()
-    require('ibl').setup()
+    require('user.plugins.ibl-rainbow')
   end,
 })
 
 use({
-  "cshuaimin/ssr.nvim",
-  config = function()
-    require("ssr").setup()
-    vim.keymap.set("n", "<leader>ss", '<cmd>lua require("ssr").open()<CR>', { desc = 'structured search' })
-  end
-})
-
-use({
+  -- jump to any place in view with s and S
   'ggandor/leap.nvim',
+  tags = "*",
   requires = { 'tpope/vim-repeat' },
   config = function()
     require('leap').add_default_mappings()
@@ -126,22 +146,14 @@ use({
 })
 
 use({
-  'airblade/vim-rooter',
-  setup = function()
-    vim.g.rooter_manual_only = 1
-  end,
-  config = function()
-    vim.cmd('Rooter')
-  end,
-})
-
-use({ 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' })
-
-use({
   'nvim-telescope/telescope.nvim',
+  tags = "*",
   requires = {
     { 'nvim-lua/plenary.nvim' },
     { 'kyazdani42/nvim-web-devicons' },
+    -- better search perf
+    { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+    -- support passing args to rg command
     { 'nvim-telescope/telescope-live-grep-args.nvim' },
   },
   config = function()
@@ -158,7 +170,9 @@ use({
 })
 
 use({
+  -- file explorer
   'kyazdani42/nvim-tree.lua',
+  tags = "*",
   requires = 'kyazdani42/nvim-web-devicons',
   config = function()
     require('user.plugins.nvim-tree')
@@ -166,7 +180,9 @@ use({
 })
 
 use({
+  -- git gutter
   'lewis6991/gitsigns.nvim',
+  tags = "*",
   requires = 'nvim-lua/plenary.nvim',
   config = function()
     require('gitsigns').setup()
@@ -176,16 +192,19 @@ use({
 })
 
 use({
+  -- git commands
   'emmanueltouzery/agitator.nvim',
+  tags = "*",
   config = function()
     vim.keymap.set('n', '<leader>Gb', '<cmd>lua require("agitator").git_blame_toggle()<CR>', { desc = 'git blame file' })
-    vim.keymap.set('n', '<leader>Gt', '<cmd>lua require("agitator").git_time_machine()<CR>',
-      { desc = 'git time machine' })
+    vim.keymap.set('n', '<leader>Gt', '<cmd>lua require("agitator").git_time_machine()<CR>', { desc = 'git time machine' })
   end
 })
 
 use({
+  -- git blame line
   'f-person/git-blame.nvim',
+  tags = "*",
   config = function()
     vim.g.gitblame_enabled = 0
     vim.keymap.set('n', '<leader>GB', '<cmd>GitBlameToggle<CR>', { desc = 'toggle git blame line' })
@@ -195,6 +214,7 @@ use({
 
 use({
   'nvim-treesitter/nvim-treesitter',
+  tags = "*",
   run = function()
     require('nvim-treesitter.install').update({ with_sync = true })
   end,
@@ -208,7 +228,9 @@ use({
 })
 
 use({
+  -- fold based on treesitter
   'kevinhwang91/nvim-ufo',
+  tags = "*",
   requires = {
     'kevinhwang91/promise-async',
     'nvim-treesitter/nvim-treesitter',
@@ -219,7 +241,9 @@ use({
 })
 
 use({
+  -- completion
   'hrsh7th/nvim-cmp',
+  tags = "*",
   requires = {
     'L3MON4D3/LuaSnip',
     'saadparwaiz1/cmp_luasnip',
@@ -237,6 +261,7 @@ use({
 
 use({
   'neovim/nvim-lspconfig',
+  tags = "*",
   requires = {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
@@ -272,6 +297,7 @@ use({
 
 use({
   'Exafunction/codeium.vim',
+  tags = "*",
   config = function()
     -- vim.g.codeium_manual = true
     vim.g.codeium_disable_bindings = 1
@@ -282,34 +308,14 @@ use({
   end
 })
 
--- use({
---   "jackMort/ChatGPT.nvim",
---   requires = {
---     "MunifTanjim/nui.nvim",
---     "nvim-lua/plenary.nvim",
---     "nvim-telescope/telescope.nvim"
---   },
---   config = function()
---     require('user.plugins.chatgpt')
---   end,
--- })
-
 use({
-  "folke/zen-mode.nvim",
+  -- clojure interactive client
+  'Olical/conjure',
+  tags = "*",
   config = function()
-    require("zen-mode").setup({
-      window = {
-        options = {
-          signcolumn = "no",      -- disable signcolumn
-          number = false,         -- disable number column
-          relativenumber = false, -- disable relative numbers
-          cursorline = false,     -- disable cursorline
-          cursorcolumn = false,   -- disable cursor column
-          foldcolumn = "0",       -- disable fold column
-          list = false,           -- disable whitespace characters
-        },
-      },
-    })
+    vim.g['conjure#mapping#prefix'] = "<localleader>c"
+    vim.g['conjure#highlight#enabled'] = true
+    vim.g['conjure#client_on_load'] = false
   end
 })
 
