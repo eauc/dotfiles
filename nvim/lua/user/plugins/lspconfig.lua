@@ -67,4 +67,7 @@ require('lspconfig').volar.setup({
   on_attach = on_attach_keymap,
 })
 
+require('lspconfig').zls.setup({
+  capabilities = capabilities,
+  on_attach = on_attach_keymap,
 })

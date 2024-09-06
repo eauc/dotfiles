@@ -329,12 +329,8 @@ use({
 })
 
 use({
-  'Olical/conjure',
-  config = function()
-    -- vim.g['conjure#mapping#prefix'] = ","
-    vim.g['conjure#highlight#enabled'] = true
-    vim.g['conjure#client_on_load'] = false
-  end
+  'ziglang/zig.vim',
+  tags = "*",
 })
 
 if packer_bootstrap then
