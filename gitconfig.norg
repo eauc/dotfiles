@@ -2,7 +2,7 @@
 title: gitconfig
 authors: auclair
 created: 2023-04-17
-updated: 2024-02-21T00:26:49+0100
+updated: 2025-02-27T00:37:18+0100
 version: 1.0.0
 tangle: {
   languages: {
@@ -336,7 +336,7 @@ tangle: {
    - remote tags.
    - remove remote-tracking branches that do not exists on remote.
    @code sh
-     f = fetch --prune --tags
+     f = fetch
    @end
 
    Synchronize tags with remote:
@@ -446,15 +446,15 @@ tangle: {
      hooks = config core.hooksPath
    @end
 
-* User Info
+* Commit
 
+  - include a diff in the commit message's comments
   @code sh
-  [user]
-    name = Auclair Emmanuel
-    email = auclair.emmanuel@gmail.com
+  [commit]
+    verbose = true
   @end
 
-* Pretty diff
+* Diff
 
   - use delta pager everywhere
   - required: install with .deb at https://github.com/dandavison/delta/releases - git-delta-musl_<version>_amd64.deb
@@ -475,16 +475,102 @@ tangle: {
     navigate = true
   @end
 
+  - force algorithm to histogram (better than default myers)
   - activate moved code blocks support with default theme
+  - use mnemonic prefixes for files refs: (i)ndex/(w)orking/(c)ommit
+  - detect files renames
   - show submodules commit logs in super projet diffs.
   @code sh
   [diff]
+    algorithm = histogram
     colorMoved = default
+    mnemonicPrefix = true
+    renames = true
     submodule = log
   @end
 
-* Colors
+*  Merge
 
+  - use `kdiff3` as mergetool
+  - do not keep `.orig` backup files after successful merge
+  @code sh
+  [merge]
+    tool = kdiff3
+    conflictstyle = zdiff3
+  [mergetool]
+    keepBackup = false
+  @end
+
+  Remember and auto apply conflicts resolutions
+  @code sh
+  [rerere]
+    enabled = true
+    autoupdate = true
+  @end
+
+* Rebase
+
+  - auto stash local modifs before/after rebase
+  - auto fix/squash commit with message starting with =!fixup= or =!squash=
+  - takes stacked refs in a branch and makes sure they're also moved when a branch is rebased
+  @code sh
+  [rebase]
+    autoStash = true
+    autoSquash = true
+    missingCommitsCheck = ignore
+    updateRefs = true
+  @end
+
+* Remotes
+
+  Push:
+  - by default push current branch to same branch on remote
+  - automatically set the upstream branch if it does not exists
+  @code sh
+  [push]
+    default = simple
+    autoSetupRemote = true
+  @end
+
+  Fetch:
+  - automatically prune remote.branches
+  - automatically prune remote.tags
+  - fetch all refs by default
+  @code sh
+  [fetch]
+    prune = true
+    pruneTags = true
+    all = true
+  @end
+
+  Pull:
+  - use rebase strategie to merge
+  @code sh
+  [pull]
+    rebase = true
+  @end
+
+* Credentials
+
+  User infos
+  @code sh
+  [user]
+    name = Auclair Emmanuel
+    email = auclair.emmanuel@gmail.com
+  [includeIf "gitdir:~/code/thelichedev/"]
+    path = ~/dotfiles/thelichedev.gitconfig
+  @end
+
+  Credentials
+  - remember credentials in local store
+  @code sh
+  [credential]
+    helper = store
+  @end
+
+* UI
+
+  Colors
   @code sh
   [color]
     ui = true
@@ -511,28 +597,20 @@ tangle: {
     unmerged = magenta
   @end
 
-* Miscellaneous
-
-  Grep:
-  - display lines numbers in results
+  - use auto column layout
   @code sh
-  [grep]
-    lineNumber = true
+  [column]
+    ui = auto
+    status = never
   @end
 
-  Push:
-  - push to origin/upstream, or <other>/<current>
+  - sort tag in more logical order instead of alphabetical
   @code sh
-  [push]
-    default = simple
+  [tag]
+    sort = version:refname
   @end
 
-  Blame:
-  - display relative dates
-  @code sh
-  [blame]
-    date = relative
-  @end
+* Interactive
 
   Help:
   - auto correct git command and execute after 1x 0.1s
@@ -548,43 +626,24 @@ tangle: {
     singleKey = true
   @end
 
-  Pull:
-  - use rebase strategie to merge
+* Miscellaneous
+
+  - default branch name
   @code sh
-  [pull]
-    rebase = true
+  [init]
+    defaultBranch = main
   @end
 
-  Rebase:
-  - auto stash local modifs before/after rebase
-  - auto fix/squash commit with message starting with =!fixup= or =!squash=
+  Grep:
+  - display lines numbers in results
   @code sh
-  [rebase]
-    autostash = true
-    autosquash = true
-    missingCommitsCheck = ignore
+  [grep]
+    lineNumber = true
   @end
 
-  Credentials
-  - remember credentials in local store
+  Blame:
+  - display relative dates
   @code sh
-  [credential]
-    helper = store
-  @end
-
-  Merge:
-  - use `kdiff3` as mergetool
-  - do not keep `.orig` backup files after successful merge
-  @code sh
-  [merge]
-    tool = kdiff3
-    conflictstyle = diff3
-  [mergetool]
-    keepBackup = false
-  @end
-
-  Remember conflicts resolutions
-  @code sh
-  [rerere]
-    enabled = true
+  [blame]
+    date = relative
   @end

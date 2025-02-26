@@ -116,7 +116,7 @@
 
   clone = clone --recursive
 
-  f = fetch --prune --tags
+  f = fetch
 
   ft = fetch -p origin +refs/tags/*:refs/tags/*
 
@@ -161,9 +161,9 @@
 
   hooks = config core.hooksPath
 
-[user]
-  name = Auclair Emmanuel
-  email = auclair.emmanuel@gmail.com
+[commit]
+  verbose = true
+
 [core]
   pager = delta
 [interactive]
@@ -175,8 +175,48 @@
   navigate = true
 
 [diff]
+  algorithm = histogram
   colorMoved = default
+  mnemonicPrefix = true
+  renames = true
   submodule = log
+
+[merge]
+  tool = kdiff3
+  conflictstyle = zdiff3
+[mergetool]
+  keepBackup = false
+
+[rerere]
+  enabled = true
+  autoupdate = true
+
+[rebase]
+  autoStash = true
+  autoSquash = true
+  missingCommitsCheck = ignore
+  updateRefs = true
+
+[push]
+  default = simple
+  autoSetupRemote = true
+
+[fetch]
+  prune = true
+  pruneTags = true
+  all = true
+
+[pull]
+  rebase = true
+
+[user]
+  name = Auclair Emmanuel
+  email = auclair.emmanuel@gmail.com
+[includeIf "gitdir:~/code/thelichedev/"]
+  path = ~/dotfiles/thelichedev.gitconfig
+
+[credential]
+  helper = store
 
 [color]
   ui = true
@@ -202,14 +242,12 @@
   untracked = cyan
   unmerged = magenta
 
-[grep]
-  lineNumber = true
+[column]
+  ui = auto
+  status = never
 
-[push]
-  default = simple
-
-[blame]
-  date = relative
+[tag]
+  sort = version:refname
 
 [help]
   autocorrect = 1
@@ -217,22 +255,11 @@
 [interactive]
   singleKey = true
 
-[pull]
-  rebase = true
+[init]
+  defaultBranch = main
 
-[rebase]
-  autostash = true
-  autosquash = true
-  missingCommitsCheck = ignore
+[grep]
+  lineNumber = true
 
-[credential]
-  helper = store
-
-[merge]
-  tool = kdiff3
-  conflictstyle = diff3
-[mergetool]
-  keepBackup = false
-
-[rerere]
-  enabled = true
+[blame]
+  date = relative
