@@ -71,11 +71,6 @@ require('lspconfig').ts_ls.setup({
   },
 })
 
-require('lspconfig').volar.setup({
-  capabilities = capabilities,
-  on_attach = on_attach_keymap,
-})
-
 require('lspconfig').zls.setup({
   capabilities = capabilities,
   on_attach = on_attach_keymap,
