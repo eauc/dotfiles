@@ -119,7 +119,7 @@ shopt -s cdspell
 
 export UID
 
-export PATH=~/bin:~/.local/bin:$PATH
+export PATH=~/bin:~/.local/bin:$PATH:/opt/nvim-linux-x86_64/bin
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
