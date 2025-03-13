@@ -95,12 +95,6 @@ alias lldir='tree -phugDF'
 alias cd='pushd'
 alias pd='popd'
 
-alias lzd='lazydocker'
-
-alias ghpc='gh pr create --assignee eauc --label core --reviewer GeorgesTech/team-core'
-alias ghpt='gh pr create --assignee eauc --label Transactions'
-alias ghpta='gh pr create --assignee eauc --label Transactions --label accounting'
-
 alias t='source ~/dotfiles/scripts/t'
 alias v='nvim'
 
