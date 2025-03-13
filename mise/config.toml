@@ -1,0 +1,6 @@
+[tools]
+delta = "latest"
+lua = "5.1"
+node = "latest"
+ripgrep = "latest"
+usage = "latest"

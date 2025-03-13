@@ -121,15 +121,10 @@ export UID
 
 export PATH=~/bin:~/.local/bin:$PATH:/opt/nvim-linux-x86_64/bin
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-export PATH="$HOME/bin/zig:$PATH"
-
-export PATH="$PATH:/opt/nvim-linux64/bin"
+if [ -f ~/.local/bin/mise ]; then
+    export MISE_CONFIG_DIR=~/dotfiles/mise
+    eval "$(~/.local/bin/mise activate bash)"
+fi
 
 if [ -s ~/.profile_creds ]; then
     . ~/.profile_creds
