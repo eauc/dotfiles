@@ -131,3 +131,6 @@ export PATH="$HOME/bin/zig:$PATH"
 
 export PATH="$PATH:/opt/nvim-linux64/bin"
 
+if [ -s ~/.profile_creds ]; then
+    . ~/.profile_creds
+fi
