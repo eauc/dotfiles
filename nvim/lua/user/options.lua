@@ -40,3 +40,8 @@ vim.fn.sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSi
 vim.fn.sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticSignWarn' })
 vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticSignInfo' })
 vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
+vim.api.nvim_set_hl(0, 'RainbowDelimiterRed', { fg = '#F00000', bold = true })
+vim.api.nvim_set_hl(0, 'RainbowDelimiterBlue', { fg = '#00C0F0', bold = true })
+vim.api.nvim_set_hl(0, 'RainbowDelimiterOrange', { fg = '#8A6240', bold = true })
+vim.api.nvim_set_hl(0, 'RainbowDelimiterGreen', { fg = '#00F0C0', bold = true })
+vim.api.nvim_set_hl(0, 'RainbowDelimiterViolet', { fg = '#F000F0', bold = true })

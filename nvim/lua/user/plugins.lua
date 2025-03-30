@@ -118,6 +118,17 @@ use({
 use({
   'HiPhish/rainbow-delimiters.nvim',
   tags = "*",
+  config = function()
+    require('rainbow-delimiters.setup').setup({
+      highlight = {
+        'RainbowDelimiterRed',
+        'RainbowDelimiterBlue',
+        'RainbowDelimiterOrange',
+        'RainbowDelimiterGreen',
+        'RainbowDelimiterViolet',
+      },
+    })
+  end
 })
 
 use({
@@ -173,9 +184,9 @@ use({
   requires = 'nvim-lua/plenary.nvim',
   config = function()
     require('gitsigns').setup()
-    vim.api.nvim_set_hl(0, 'GitsignsAdd', { fg = 'green' })
-    vim.api.nvim_set_hl(0, 'GitsignsChange', { fg = 'orange' })
-    vim.api.nvim_set_hl(0, 'GitsignsDelete', { fg = 'red' })
+    vim.api.nvim_set_hl(0, 'GitsignsAdd', { fg = '#00F0C0' })
+    vim.api.nvim_set_hl(0, 'GitsignsChange', { fg = '#F000F0' })
+    vim.api.nvim_set_hl(0, 'GitsignsDelete', { fg = '#F00000' })
   end,
 })
 
@@ -211,9 +222,9 @@ use({
       commands = true,
       auto_reload = true,
       highlights = {
-        covered = { fg = "green" },
-        uncovered = { fg = "red" },
-        partial = { fg = "orange" },
+        covered = { fg = "#00F0C0" },
+        uncovered = { fg = "#F00000" },
+        partial = { fg = "#F000F0" },
       },
       signs = {
         covered = { hl = "CoverageCovered", text = "▌" },
