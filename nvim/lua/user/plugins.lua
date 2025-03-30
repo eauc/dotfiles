@@ -185,7 +185,8 @@ use({
   tags = "*",
   config = function()
     vim.keymap.set('n', '<leader>Gb', '<cmd>lua require("agitator").git_blame_toggle()<CR>', { desc = 'git blame file' })
-    vim.keymap.set('n', '<leader>Gt', '<cmd>lua require("agitator").git_time_machine()<CR>', { desc = 'git time machine' })
+    vim.keymap.set('n', '<leader>Gt', '<cmd>lua require("agitator").git_time_machine()<CR>',
+      { desc = 'git time machine' })
   end
 })
 
