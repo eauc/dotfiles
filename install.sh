@@ -2,14 +2,15 @@
 
 echo "Installing apt packages"
 sudo apt install -y \
+  build-essential \
   curl \
   git \
-  tree \
-  build-essential \
-  autotools-dev dh-autoreconf \
-  fzf \
-  libreadline-dev \
-  wl-clipboard xsel
+  tree \ # for lsdir aliases
+  fzf \ # for t script and neovim
+  rlwrap \ # for clj cli
+  autotools-dev dh-autoreconf \ # for lua rocks
+  libreadline-dev \ # for lua rocks
+  wl-clipboard xsel # for neovim copy-paste integration
 
 if ! command -v -- "kitty" > /dev/null 2>&1; then
   echo "Installing kitty"
