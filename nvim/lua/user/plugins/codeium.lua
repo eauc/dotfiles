@@ -13,6 +13,7 @@ local accept = function()
   return vim.fn["codeium#Accept"]()
 end
 
+vim.keymap.set('i', '<A-->', accept, { expr = true })
 vim.keymap.set('i', '<A-=>', accept, { expr = true })
 vim.keymap.set('i', '<A-]>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
 vim.keymap.set('i', '<A-[>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
