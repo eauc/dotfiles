@@ -55,22 +55,21 @@ vim.keymap.set('n', '<leader>gg', [[<cmd>lua require('telescope').extensions.liv
 vim.keymap.set('n', '<leader>gw', live_grep_args_shortcuts.grep_word_under_cursor, { desc = 'grep word under cursor' })
 vim.keymap.set('v', '<leader>gv', live_grep_args_shortcuts.grep_visual_selection, { desc = 'grep selection' })
 
-vim.keymap.set('n', '<leader>hf', [[<cmd>lua require('telescope.builtin').command_history()<CR>]],
-  { desc = 'repeat recent command' })
-vim.keymap.set('n', '<leader>hs', [[<cmd>lua require('telescope.builtin').search_history()<CR>]],
-  { desc = 'repeat recent search' })
-
 vim.keymap.set('n', '<leader>lr', [[<cmd>lua require('telescope.builtin').lsp_references()<CR>]],
   { desc = 'find references' })
 vim.keymap.set('n', '<leader>ld', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]],
   { desc = 'show document symbols' })
 
-vim.keymap.set('n', '<leader>bb', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { desc = 'find buffer' })
-vim.keymap.set('n', '<leader>dd', [[<cmd>lua require('telescope.builtin').diagnostics()<CR>]],
+vim.keymap.set('n', '<leader>tb', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { desc = 'find buffer' })
+vim.keymap.set('n', '<leader>td', [[<cmd>lua require('telescope.builtin').diagnostics()<CR>]],
   { desc = 'list all diagnostics' })
-vim.keymap.set('n', '<leader>pp', [[<cmd>lua require('telescope.builtin').registers()<CR>]],
+vim.keymap.set('n', '<leader>th', [[<cmd>lua require('telescope.builtin').command_history()<CR>]],
+  { desc = 'repeat recent command' })
+vim.keymap.set('n', '<leader>tp', [[<cmd>lua require('telescope.builtin').registers()<CR>]],
   { desc = 'paste from register' })
-vim.keymap.set('n', '<leader>ss', [[<cmd>lua require('telescope.builtin').spell_suggest()<CR>]],
-  { desc = 'spell suggest' })
+vim.keymap.set('n', '<leader>ts', [[<cmd>lua require('telescope.builtin').search_history()<CR>]],
+  { desc = 'repeat recent search' })
 vim.keymap.set('n', '<leader>tt', [[<cmd>lua require('telescope.builtin').treesitter()<CR>]],
   { desc = 'show treesitter symbols' })
+vim.keymap.set('n', '<leader>tz', [[<cmd>lua require('telescope.builtin').spell_suggest()<CR>]],
+  { desc = 'spell suggest' })
