@@ -5,27 +5,19 @@ require('lualine').setup({
     section_separators = '',
     component_separators = '',
     globalstatus = true,
-    theme = {
-      normal = {
-        a = 'StatusLine',
-        b = 'StatusLine',
-        c = 'StatusLine',
-      },
-    },
+    theme = 'ayu_light',
   },
   sections = {
     lualine_a = {
       'mode',
-      separator,
     },
     lualine_b = {
       'branch',
       'diff',
       separator,
-      '"🖧  " .. tostring(#vim.tbl_keys(vim.lsp.buf_get_clients()))',
+      '"🖧  " .. tostring(#vim.tbl_keys(vim.lsp.get_clients({ bufnr = 0 })))',
       { 'diagnostics', sources = { 'nvim_diagnostic' } },
       '"󱃖 " .. vim.fn["codeium#GetStatusString"]()',
-      separator,
     },
     lualine_c = {
       'filename'
@@ -36,9 +28,7 @@ require('lualine').setup({
       'fileformat',
     },
     lualine_y = {
-      separator,
-      '(vim.bo.expandtab and "␠ " or "⇥ ") .. " " .. vim.bo.shiftwidth',
-      separator,
+      '(vim.bo.expandtab and "SPC" or "TAB") .. " " .. vim.bo.shiftwidth',
     },
     lualine_z = {
       'location',

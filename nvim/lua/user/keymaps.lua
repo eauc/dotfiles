@@ -8,8 +8,8 @@ vim.g.maplocalleader = ' '
 
 vim.keymap.set('n', '<leader>k', ':nohlsearch<CR>', { desc = 'clear search' })
 vim.keymap.set('n', '<leader>bd', ':bdelete<CR>', { desc = 'close buffer' })
-vim.keymap.set('', '<C-PageUp>', ':bprevious<CR>', { desc = 'previous buffer' })
-vim.keymap.set('', '<C-PageDown>', ':bnext<CR>', { desc = 'next buffer' })
+-- vim.keymap.set('', '<C-PageUp>', ':bprevious<CR>', { desc = 'previous buffer' })
+-- vim.keymap.set('', '<C-PageDown>', ':bnext<CR>', { desc = 'next buffer' })
 
 -- Allow gf to open non-existent files
 -- vim.keymap.set('', 'gf', ':edit <cfile><CR>', { desc = 'goto file' })
@@ -44,5 +44,5 @@ vim.keymap.set('x', '<A-k>', ":move '<-2<CR>gv-gv")
 
 -- Diagnostics
 vim.keymap.set('n', '<leader>do', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'open diagnostics' })
-vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = 'previous diagnostic' })
-vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = 'next diagnostic' })
+-- vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = 'previous diagnostic' })
+-- vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = 'next diagnostic' })
